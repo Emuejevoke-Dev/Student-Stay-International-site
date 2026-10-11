@@ -698,5 +698,13 @@ html.dark .mobile-bottom-tab.active-bottom-tab {
   }
 }
 
+/* High-contrast Dream Student Home Heading Title Highlight */
+.dream-home-highlight {
+  color: #0284c7 !important; /* Deep vibrant sky blue in Light Mode - highly visible against white/light backgrounds */
+  font-weight: 800 !important;
+  display: inline-block;
+}
 
-
+html.dark .dream-home-highlight {
+  color: #38bdf8 !important; /* Radiant cyan sky blue in Dark Mode */
+}

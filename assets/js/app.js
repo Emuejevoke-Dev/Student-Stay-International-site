@@ -977,7 +977,7 @@ const AuthManager = {
             <i class="fa-solid fa-sparkles mr-1.5 text-amber-500 dark:text-amber-300"></i> ${timeGreeting}, ${user.name.split(' ')[0]}!
           </span>
           <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-4 brand-font">
-            Find & Tour Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-sky-400 dark:from-sky-400 dark:to-cyan-200">Dream Student Home</span>
+            Find & Tour Your <span class="dream-home-highlight text-sky-600 dark:text-sky-400 font-extrabold">Dream Student Home</span>
           </h1>
           <p class="text-base sm:text-lg text-slate-600 dark:text-slate-200 max-w-2xl mx-auto drop-shadow-xs leading-relaxed mb-6 font-medium">
             How can we help you today, <strong class="text-slate-900 dark:text-white">${user.name}</strong>? Explore 100% physically inspected student residences with 360° virtual tours, verified commutes to <em class="text-sky-600 dark:text-sky-300 font-semibold">${user.university}</em>, and zero scam risk guarantee.
@@ -989,7 +989,7 @@ const AuthManager = {
             <i class="fa-solid fa-shield-halved mr-1.5 text-emerald-600 dark:text-emerald-400"></i> 100% Verified International Student Accommodation
           </span>
           <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-4 brand-font">
-            Find & Tour Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-sky-400 dark:from-sky-400 dark:to-cyan-200">Dream Student Home</span>
+            Find & Tour Your <span class="dream-home-highlight text-sky-600 dark:text-sky-400 font-extrabold">Dream Student Home</span>
           </h1>
           <p class="text-base sm:text-lg text-slate-600 dark:text-slate-200 max-w-2xl mx-auto drop-shadow-xs leading-relaxed mb-6 font-medium">
             Zero scam risk, physical inspections, and verified campus commutes across the UK, Germany, USA, Canada & Australia. Inspect rooms in 360° and lock in safe escrow before landing.
@@ -1067,19 +1067,31 @@ const AuthManager = {
           </div>
         `;
       } else {
-        // SIGNED OUT / GUEST STATE: Clean, Prominent Create Account & Sign In Buttons
-        container.innerHTML = `
-          <div class="flex items-center space-x-1.5 sm:space-x-2">
-            <a href="signup.html?mode=signup" class="inline-flex items-center space-x-1 sm:space-x-1.5 px-3.5 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold transition-all shadow-xs shadow-sky-600/25 shrink-0">
-              <i class="fa-solid fa-user-plus text-[11px]"></i>
-              <span>Create Account</span>
-            </a>
-            <a href="signup.html?mode=signin" class="inline-flex items-center space-x-1 sm:space-x-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 text-xs font-bold transition-all shadow-xs shrink-0">
-              <i class="fa-solid fa-arrow-right-to-bracket text-[11px] text-sky-600"></i>
-              <span>Sign In</span>
-            </a>
-          </div>
-        `;
+        // SIGNED OUT / GUEST STATE
+        const isHomePage = typeof window !== 'undefined' && window.location && (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '');
+        if (isHomePage) {
+          container.innerHTML = `
+            <div class="flex items-center space-x-1.5 sm:space-x-2">
+              <a href="signup.html?mode=signin" class="inline-flex items-center space-x-1 sm:space-x-1.5 px-3.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 text-xs font-bold transition-all shadow-xs shrink-0">
+                <i class="fa-solid fa-arrow-right-to-bracket text-[11px] text-sky-600"></i>
+                <span>Sign In</span>
+              </a>
+            </div>
+          `;
+        } else {
+          container.innerHTML = `
+            <div class="flex items-center space-x-1.5 sm:space-x-2">
+              <a href="signup.html?mode=signup" class="inline-flex items-center space-x-1 sm:space-x-1.5 px-3.5 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold transition-all shadow-xs shadow-sky-600/25 shrink-0">
+                <i class="fa-solid fa-user-plus text-[11px]"></i>
+                <span>Create Account</span>
+              </a>
+              <a href="signup.html?mode=signin" class="inline-flex items-center space-x-1 sm:space-x-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 text-xs font-bold transition-all shadow-xs shrink-0">
+                <i class="fa-solid fa-arrow-right-to-bracket text-[11px] text-sky-600"></i>
+                <span>Sign In</span>
+              </a>
+            </div>
+          `;
+        }
       }
     });
   }
