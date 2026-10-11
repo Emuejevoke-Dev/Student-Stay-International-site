@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Peer Chat | StudentStay International</title>
+  <meta name="description" content="Chat 1-on-1 with verified international students living in Glasgow accommodations. Get genuine advice and real room photos before booking.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              600: '#0284c7',
+              700: '#0369a1',
+              900: '#070d18'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-slate-100 dark:bg-[#070d18] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col antialiased">
+
+  <!-- Top Announcement Bar -->
+  <div class="bg-gradient-to-r from-sky-900 via-sky-800 to-slate-900 text-white text-xs py-2 px-4 shadow-inner">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center space-x-2">
+        <span class="bg-emerald-500/30 text-emerald-300 border border-emerald-400/40 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full flex items-center">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span> Live Chat Active
+        </span>
+        <span class="text-slate-200">
+          Chatting with Ama Konadu (MSc Business @ Glasgow Caledonian • Resident at Buchanan View)
+        </span>
+      </div>
+      <div class="text-xs text-slate-300 flex items-center space-x-3">
+        <a href="tours.html" class="text-sky-300 hover:text-white flex items-center">
+          <i class="fa-solid fa-arrows-spin mr-1"></i> Open 360° Room Tour
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Universal Header Navigation Bar with Easy Navigation Tabs -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-[#0b1324]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/80 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Top Row: Logo & CTAs -->
+      <div class="h-16 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <a href="index.html" class="flex items-center space-x-2.5">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-700 to-sky-500 text-white flex items-center justify-center shadow-md">
+              <i class="fa-solid fa-house-chimney-window text-lg"></i>
+            </div>
+            <div>
+              <span class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white brand-font">
+                Student<span class="text-sky-600 dark:text-sky-400">Stay</span>
+              </span>
+              <span class="text-[10px] font-semibold text-slate-400 tracking-wider uppercase block -mt-1">
+                Verified Global Living
+              </span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Desktop Action Buttons -->
+        <div class="flex items-center space-x-2 sm:space-x-3">
+          <button class="theme-toggle-btn px-3 py-1.5 rounded-xl border text-xs font-semibold flex items-center transition-all cursor-pointer shadow-xs">
+            <i class="fa-solid fa-moon mr-1.5"></i>
+            <span class="hidden sm:inline">Theme</span>
+          </button>
+
+          <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl px-2 py-1 border border-slate-200 dark:border-slate-700 text-xs">
+            <i class="fa-solid fa-coins text-sky-600 dark:text-sky-400 mr-1.5"></i>
+            <select id="currency-selector" class="bg-transparent text-xs font-bold text-slate-800 dark:text-slate-200 outline-none cursor-pointer">
+              <option value="GBP">£ GBP</option>
+              <option value="USD">$ USD</option>
+              <option value="EUR">€ EUR</option>
+              <option value="NGN">₦ NGN</option>
+              <option value="INR">₹ INR</option>
+              <option value="CNY">¥ CNY</option>
+            </select>
+          </div>
+
+          <div class="auth-container"></div>
+
+          <button onclick="openBookingModal('buchanan-view')" class="hidden sm:flex px-4 py-2 text-xs font-bold text-white bg-sky-600 hover:bg-sky-700 rounded-xl shadow-sm transition-all items-center">
+            <i class="fa-solid fa-key mr-1.5 text-[10px]"></i> Reserve Room
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Tabs Toggle Row (Positioned down at the left hand side) -->
+      <div class="md:hidden py-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-start">
+        <button type="button" id="mobile-nav-toggle" aria-label="Toggle navigation tabs" aria-expanded="false" class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 text-xs font-bold transition-all shadow-xs cursor-pointer border border-slate-200/80 dark:border-slate-700">
+          <i id="mobile-nav-toggle-icon" class="fa-solid fa-bars text-sky-600 dark:text-sky-400 text-xs"></i>
+          <span>All Tabs</span>
+          <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 dark:text-slate-500 ml-0.5"></i>
+        </button>
+      </div>
+
+      <!-- Navigation Tabs (Desktop only; on small screens only the toggle tab is shown) -->
+      <nav class="hidden md:flex items-center space-x-1 sm:space-x-2 py-2 overflow-x-auto no-scrollbar border-t border-slate-100 dark:border-slate-800 text-xs font-semibold">
+        <a href="index.html" class="px-3.5 sm:px-4 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0">
+          <i class="fa-solid fa-house mr-1.5 text-sky-600 text-[11px]"></i> Home
+        </a>
+        <a href="about.html" class="px-3.5 sm:px-4 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0">
+          <i class="fa-solid fa-circle-info mr-1.5 text-sky-600 text-[11px]"></i> About Us
+        </a>
+        <a href="find-home.html" class="px-3.5 sm:px-4 py-2 rounded-xl font-bold bg-sky-600 text-white shadow-xs whitespace-nowrap transition-all flex items-center shrink-0">
+          <i class="fa-solid fa-magnifying-glass-location mr-1.5 text-[11px]"></i> Find Your New Home
+        </a>
+        <a href="profile.html" class="px-3.5 sm:px-4 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0">
+          <i class="fa-solid fa-id-badge mr-1.5 text-sky-600 text-[11px]"></i> Student Profile
+        </a>
+      </nav>
+
+      <!-- Mobile Expandable Navigation Drawer (Showing All Tabs on Small Screens) -->
+      <div id="mobile-nav-menu" class="hidden md:hidden border-t border-slate-200/80 dark:border-slate-800 bg-white/98 dark:bg-[#0b1324]/98 backdrop-blur-xl py-4 px-3 sm:px-4 shadow-xl transition-all">
+        <div class="space-y-4">
+          <!-- 1. Core Navigation Tabs -->
+          <div>
+            <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2 flex items-center justify-between">
+              <span>Core Navigation Tabs</span>
+              <span class="text-[9px] text-sky-600 dark:text-sky-400 font-extrabold uppercase">Primary 4</span>
+            </div>
+            <div class="grid grid-cols-2 gap-1.5">
+              <a href="index.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl font-bold text-xs transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-page="index.html">
+                <div class="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-house text-xs"></i>
+                </div>
+                <span class="truncate">Home</span>
+              </a>
+              <a href="about.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl font-bold text-xs transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-page="about.html">
+                <div class="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-circle-info text-xs"></i>
+                </div>
+                <span class="truncate">About Us</span>
+              </a>
+              <a href="find-home.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl font-bold text-xs transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-page="find-home.html">
+                <div class="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-magnifying-glass-location text-xs"></i>
+                </div>
+                <span class="truncate">Find Home</span>
+              </a>
+              <a href="profile.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl font-bold text-xs transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-page="profile.html">
+                <div class="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-id-badge text-xs"></i>
+                </div>
+                <span class="truncate">Student Profile</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 2. Exploration & Community Tools -->
+          <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80">
+            <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2 flex items-center justify-between">
+              <span>Exploration & Living Tools</span>
+              <span class="text-[9px] text-teal-600 dark:text-teal-400 font-extrabold uppercase">Current Section</span>
+            </div>
+            <div class="grid grid-cols-2 gap-1.5">
+              <a href="tours.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="tours.html">
+                <div class="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-arrows-spin text-xs"></i>
+                </div>
+                <span class="truncate">360° Tours</span>
+              </a>
+              <a href="map.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="map.html">
+                <div class="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-map-location-dot text-xs"></i>
+                </div>
+                <span class="truncate">Campus Map</span>
+              </a>
+              <a href="insights.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="insights.html">
+                <div class="w-7 h-7 rounded-lg bg-purple-100 dark:bg-purple-950/80 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-lightbulb text-xs"></i>
+                </div>
+                <span class="truncate">Rent Insights</span>
+              </a>
+              <a href="residents.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="residents.html">
+                <div class="w-7 h-7 rounded-lg bg-amber-100 dark:bg-amber-950/80 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-users text-xs"></i>
+                </div>
+                <span class="truncate">Residents</span>
+              </a>
+              <a href="chat.html" class="mobile-nav-link col-span-2 flex items-center space-x-2.5 p-2.5 rounded-xl font-bold text-xs transition-all bg-sky-600 text-white shadow-xs" data-page="chat.html">
+                <div class="w-7 h-7 rounded-lg bg-white/20 text-white flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-comments text-xs"></i>
+                </div>
+                <div class="flex-1 min-w-0 flex items-center justify-between">
+                  <span class="truncate">Direct Landlord Chat</span>
+                  <span class="text-[9px] px-2 py-0.5 rounded-full bg-white/20 text-white font-extrabold uppercase">Live Escrow</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- 3. Portals & Quick Account Access -->
+          <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2 text-xs">
+            <a href="agent.html" class="flex-1 py-2.5 px-3 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-400/40 font-bold transition-all flex items-center justify-center space-x-1.5">
+              <i class="fa-solid fa-user-tie text-amber-500 text-xs"></i>
+              <span>Owner Portal</span>
+            </a>
+            <a href="signup.html" class="flex-1 py-2.5 px-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold transition-all shadow-xs flex items-center justify-center space-x-1.5">
+              <i class="fa-solid fa-user-plus text-xs"></i>
+              <span>Create Account</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-Navigation Toolbar (Under Find Your New Home) -->
+      <div class="py-2 border-t border-slate-200/80 dark:border-slate-800 flex items-center space-x-2 overflow-x-auto no-scrollbar text-xs">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mr-1 shrink-0 flex items-center">
+          <i class="fa-solid fa-compass mr-1 text-sky-600"></i> Explore Tools:
+        </span>
+        <a href="find-home.html" class="px-3.5 py-1.5 rounded-lg font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-600 whitespace-nowrap flex items-center shrink-0 transition-colors">
+          <i class="fa-solid fa-list mr-1.5 text-[10px]"></i> All Verified Homes
+        </a>
+        <a href="tours.html" class="px-3.5 py-1.5 rounded-lg font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-600 whitespace-nowrap flex items-center shrink-0 transition-colors">
+          <i class="fa-solid fa-arrows-spin mr-1.5 text-[10px]"></i> 360° Virtual Tours
+        </a>
+        <a href="residents.html" class="px-3.5 py-1.5 rounded-lg font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-600 whitespace-nowrap flex items-center shrink-0 transition-colors">
+          <i class="fa-solid fa-users mr-1.5 text-[10px]"></i> Ask Residents
+        </a>
+        <a href="chat.html" class="px-3.5 py-1.5 rounded-lg font-bold bg-sky-600 text-white shadow-xs whitespace-nowrap flex items-center shrink-0">
+          <i class="fa-solid fa-comments mr-1.5 text-[10px]"></i> Live Peer Chat
+          <span class="w-2 h-2 rounded-full bg-emerald-400 ml-1.5 animate-pulse"></span>
+        </a>
+        <a href="map.html" class="px-3.5 py-1.5 rounded-lg font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-600 whitespace-nowrap flex items-center shrink-0 transition-colors">
+          <i class="fa-solid fa-map-location-dot mr-1.5 text-[10px]"></i> Campus Transit Map
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Chat Application Container -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex flex-col">
+    
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1 min-h-[640px]">
+      
+      <!-- Left Sidebar: Resident Directory Switcher -->
+      <div class="lg:col-span-4 bg-white dark:bg-[#0f1a30] rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-sm p-4 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3 px-1">
+            <h2 class="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center">
+              <i class="fa-solid fa-address-book text-sky-600 dark:text-sky-400 mr-2"></i> Verified Directory
+            </h2>
+            <span id="chat-online-count" class="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">Online Now</span>
+          </div>
+
+          <div class="space-y-2 max-h-[520px] overflow-y-auto pr-1" id="chat-sidebar-residents">
+            <!-- Dynamic resident list -->
+          </div>
+        </div>
+
+        <!-- Trust Box at bottom of sidebar -->
+        <div class="mt-4 p-3.5 bg-sky-50 dark:bg-sky-950/40 rounded-2xl border border-sky-100 dark:border-sky-800/80 text-xs">
+          <div class="font-bold text-sky-900 dark:text-sky-200 mb-1 flex items-center">
+            <i class="fa-solid fa-shield-halved text-sky-600 dark:text-sky-400 mr-1.5"></i> 100% Honest Peer Guarantee
+          </div>
+          <p class="text-slate-600 dark:text-slate-300 text-[11px] leading-relaxed">
+            Ambassadors are verified international students. Connect with them or our on-site Residence Concierge Desk for unbiased building insights before reserving.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Main Chat Window -->
+      <div class="lg:col-span-8 bg-white dark:bg-[#0f1a30] rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-lg overflow-hidden flex flex-col h-[700px]">
+        
+        <!-- Chat Header -->
+        <div class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 p-4 flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="relative">
+              <img id="chat-header-avatar" src="assets/images/concierge_manager.jpg" alt="Resident" class="w-12 h-12 rounded-full object-cover border-2 border-sky-300 shadow-sm">
+              <span class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-emerald-500 border-2 border-white dark:border-slate-900 rounded-full"></span>
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <h3 id="chat-header-name" class="font-bold text-slate-900 dark:text-slate-100 text-base">Sarah Jenkins</h3>
+                <span id="chat-header-flag" class="text-xs px-2.5 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 font-semibold border border-indigo-200 dark:border-indigo-800">
+                  🏢 Verified Management
+                </span>
+              </div>
+              <div id="chat-header-sub" class="text-xs text-slate-500 dark:text-slate-400">Licensed Building Management • StudentStay On-Site Concierge Desk</div>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <a id="chat-header-tour-btn" href="tours.html" class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold transition-colors flex items-center">
+              <i class="fa-solid fa-arrows-spin text-sky-600 dark:text-sky-400 mr-1"></i> 360° Tour
+            </a>
+            <button id="chat-header-book-btn" onclick="openBookingModal('buchanan-view')" class="px-4 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold shadow-xs cursor-pointer flex items-center">
+              <i class="fa-solid fa-key mr-1.5 text-[10px]"></i> Book Room
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat Messages Feed -->
+        <div id="chat-messages-container" class="flex-1 p-5 overflow-y-auto bg-slate-50/50 dark:bg-[#070d18]/50 space-y-3">
+          <!-- Rendered dynamically via app.js -->
+        </div>
+
+        <!-- Typing Indicator -->
+        <div id="chat-typing-indicator" class="hidden px-5 py-2 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 flex items-center space-x-2">
+          <div class="flex space-x-1 items-center">
+            <span class="w-2 h-2 rounded-full bg-sky-400 animate-bounce"></span>
+            <span class="w-2 h-2 rounded-full bg-sky-400 animate-bounce" style="animation-delay: 0.15s"></span>
+            <span class="w-2 h-2 rounded-full bg-sky-400 animate-bounce" style="animation-delay: 0.3s"></span>
+          </div>
+          <span id="typing-resident-name">Resident is typing an honest reply...</span>
+        </div>
+
+        <!-- Quick Question Topic Pills -->
+        <div class="bg-white dark:bg-[#0f1a30] px-4 py-2.5 border-t border-slate-100 dark:border-slate-800 flex items-center space-x-2 overflow-x-auto no-scrollbar" id="chat-quick-prompts">
+          <!-- Rendered dynamically via app.js -->
+        </div>
+
+        <!-- Message Input -->
+        <div class="p-3.5 bg-white dark:bg-[#0f1a30] border-t border-slate-200 dark:border-slate-800 flex items-center space-x-2">
+          <input type="text" id="chat-input-field" placeholder="Ask about heating, wifi, safety, groceries, room layout..." class="flex-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 focus:bg-white dark:focus:bg-slate-900 text-sm text-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-700 focus:border-sky-500 rounded-2xl px-4 py-2.5 outline-none transition-all">
+          <button id="chat-send-btn" class="w-10 h-10 rounded-2xl bg-sky-600 hover:bg-sky-700 text-white flex items-center justify-center shadow-sm hover:shadow transition-all shrink-0 cursor-pointer">
+            <i class="fa-solid fa-paper-plane text-sm"></i>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initChatEngine();
+
+      document.getElementById('chat-send-btn')?.addEventListener('click', () => sendChatMessage());
+      document.getElementById('chat-input-field')?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendChatMessage();
+      });
+    });
+  </script>
+</body>
+</html>

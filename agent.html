@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent & Founder Portal — StudentStay Global Monitoring</title>
+  <meta name="description" content="Exclusive founder and letting agent dashboard for StudentStay. Monitor global student bookings, regional tenancy rosters, Barclays escrow reserves, and room reassignments.">
+
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              900: '#0c4a6e'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-slate-50 dark:bg-[#070d18] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-white">
+
+  <!-- Founder Security Notice Top Bar -->
+  <div class="bg-slate-950 text-white text-xs py-2 px-4 border-b border-amber-500/30">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center space-x-2">
+        <span class="bg-amber-500/20 text-amber-300 border border-amber-400/40 text-[10px] uppercase font-black tracking-wider px-2 py-0.5 rounded-full flex items-center">
+          <i class="fa-solid fa-shield-halved mr-1"></i> Authorized Personnel Only
+        </span>
+        <span class="text-slate-300">StudentStay Official Letting Agent & Founder Command Center • 256-Bit SSL Encrypted</span>
+      </div>
+      <div class="flex items-center space-x-4 text-xs">
+        <span class="text-slate-400">Escrow Trustee: <strong class="text-white">Barclays Bank UK PLC</strong></span>
+        <span class="text-emerald-400 font-bold flex items-center">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span> Escrow Live (£27,600 Held)
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Viewport Container -->
+  <div id="main-viewport-container" class="flex-1 flex flex-col w-full">
+
+    <!-- Universal Header Navigation -->
+    <header class="sticky top-0 z-40 bg-white/95 dark:bg-[#0b1324]/95 backdrop-blur-md border-b border-slate-200/90 dark:border-slate-800/80 shadow-xs transition-colors">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="h-16 flex items-center justify-between">
+          <!-- Logo & Portal Tag -->
+          <div class="flex items-center space-x-3">
+            <a href="agent.html" class="flex items-center space-x-2.5 group">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 text-white flex items-center justify-center shadow-md shadow-amber-600/30 group-hover:scale-105 transition-transform">
+                <i class="fa-solid fa-user-tie text-lg"></i>
+              </div>
+              <div>
+                <span class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white brand-font flex items-center">
+                  Student<span class="text-amber-500 dark:text-amber-400">Stay</span>
+                </span>
+                <span class="text-[10px] font-bold text-amber-600 dark:text-amber-400 tracking-wider uppercase block -mt-1">
+                  Property Owner & Agent Portal
+                </span>
+              </div>
+            </a>
+
+            <span class="hidden md:inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700">
+              Agent ID: #AGY-UK-9018
+            </span>
+          </div>
+
+          <!-- Controls -->
+          <div class="flex items-center space-x-1.5 sm:space-x-3">
+            <button class="theme-toggle-btn px-2.5 sm:px-3 py-1.5 rounded-xl border text-xs font-semibold flex items-center transition-all cursor-pointer shadow-xs" title="Toggle Dark / Light Mode">
+              <i class="fa-solid fa-moon sm:mr-1.5"></i>
+              <span class="hidden sm:inline">Theme</span>
+            </button>
+
+            <!-- Currency Selector -->
+            <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl px-2 py-1 border border-slate-200 dark:border-slate-700 text-xs">
+              <i class="fa-solid fa-coins text-amber-600 dark:text-amber-400 mr-1 sm:mr-1.5 text-[11px]"></i>
+              <select id="currency-selector" class="bg-transparent text-xs font-bold text-slate-800 dark:text-slate-200 outline-none cursor-pointer">
+                <option value="GBP">£ GBP</option>
+                <option value="USD">$ USD</option>
+                <option value="EUR">€ EUR</option>
+                <option value="NGN">₦ NGN</option>
+                <option value="INR">₹ INR</option>
+                <option value="CNY">¥ CNY</option>
+              </select>
+            </div>
+
+            <!-- Agent Profile Monogram & Name -->
+            <div class="flex items-center space-x-2 bg-slate-100 dark:bg-slate-800 py-1 px-2.5 rounded-xl border border-slate-200 dark:border-slate-700">
+              <div id="owner-header-avatar" class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-black text-[11px] flex items-center justify-center">
+                ED
+              </div>
+              <div class="flex flex-col text-left">
+                <span id="owner-header-name" class="text-xs font-bold text-slate-700 dark:text-slate-200 hidden sm:inline">Founder (E. Dev)</span>
+                <span id="owner-header-role" class="text-[9px] text-amber-600 dark:text-amber-400 font-semibold hidden sm:inline leading-none">Property Owner & Agent</span>
+              </div>
+            </div>
+
+            <!-- Visible Sign Out Button -->
+            <button type="button" onclick="logoutStudent(event)" class="sign-out-global-btn px-2.5 sm:px-3 py-1.5 rounded-xl border border-rose-200 dark:border-rose-900/60 bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/70 text-rose-600 dark:text-rose-400 text-xs font-bold transition-all cursor-pointer shadow-xs flex items-center space-x-1" title="Sign out">
+              <i class="fa-solid fa-arrow-right-from-bracket text-[11px] pointer-events-none"></i>
+              <span class="pointer-events-none hidden sm:inline">Sign Out</span>
+            </button>
+
+            <button onclick="quickExportAuditCSV()" class="hidden sm:inline-flex px-3.5 py-1.5 text-xs font-bold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 rounded-xl border border-slate-200 dark:border-slate-700 transition-all items-center cursor-pointer">
+              <i class="fa-solid fa-download mr-1.5 text-sky-600"></i> Export Audit
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Owner Navigation Toggle Row (Positioned down at the left hand side) -->
+        <div class="lg:hidden py-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-start">
+          <button type="button" id="owner-mobile-nav-toggle" aria-label="Toggle owner sections" aria-expanded="false" class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/60 hover:bg-amber-100 dark:hover:bg-amber-900/60 text-amber-900 dark:text-amber-200 text-xs font-bold transition-all shadow-xs cursor-pointer border border-amber-300 dark:border-amber-700">
+            <i id="owner-mobile-nav-toggle-icon" class="fa-solid fa-bars text-amber-600 dark:text-amber-400 text-xs"></i>
+            <span>All 7 Tabs</span>
+            <i class="fa-solid fa-chevron-down text-[9px] text-amber-600 dark:text-amber-400 ml-0.5"></i>
+          </button>
+        </div>
+
+        <!-- Dedicated Owner & Letting Agent Dashboard Navigation Bar (Desktop only) -->
+        <nav class="hidden lg:flex items-center justify-between py-2 border-t border-slate-100 dark:border-slate-800 text-xs font-semibold gap-2 overflow-x-auto no-scrollbar">
+          <div class="flex items-center space-x-1 sm:space-x-1.5 shrink-0">
+            <a href="#section-kpis" class="owner-nav-btn px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 font-bold shadow-xs whitespace-nowrap transition-all flex items-center shrink-0">
+              <i class="fa-solid fa-chart-pie mr-1.5 text-[11px]"></i> Executive KPIs
+            </a>
+            <a href="#section-roster" class="owner-nav-btn px-3 py-1.5 rounded-xl text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0">
+              <i class="fa-solid fa-users mr-1.5 text-amber-500 text-[11px]"></i> Tenancy Roster
+            </a>
+            <a href="#section-refunds" class="owner-nav-btn px-3 py-1.5 rounded-xl text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0">
+              <i class="fa-solid fa-vault mr-1.5 text-rose-500 text-[11px]"></i> Barclays Escrow & Refunds
+            </a>
+            <a href="#section-companies" class="owner-nav-btn px-3 py-1.5 rounded-xl text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0">
+              <i class="fa-solid fa-city mr-1.5 text-sky-500 text-[11px]"></i> Managed Properties
+            </a>
+            <a href="#section-stream" class="owner-nav-btn px-3 py-1.5 rounded-xl text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0">
+              <i class="fa-solid fa-bolt mr-1.5 text-amber-500 text-[11px]"></i> Live Traffic
+            </a>
+            <a href="#section-feedback" class="owner-nav-btn px-3 py-1.5 rounded-xl text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0">
+              <i class="fa-solid fa-star mr-1.5 text-amber-500 text-[11px]"></i> Reviews
+            </a>
+            <a href="#section-issues" class="owner-nav-btn px-3 py-1.5 rounded-xl text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0">
+              <i class="fa-solid fa-screwdriver-wrench mr-1.5 text-rose-500 text-[11px]"></i> Helpdesk
+            </a>
+          </div>
+
+          <!-- Owner Live Portfolio Details Pill -->
+          <div class="hidden lg:flex items-center space-x-2 shrink-0 text-[11px]">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 font-semibold">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+              <span id="owner-portfolio-units">5 Properties • 184 Units</span>
+            </span>
+            <span class="inline-flex items-center px-2.5 py-1 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-700 font-bold">
+              <i class="fa-solid fa-vault mr-1 text-amber-600 text-[10px]"></i>
+              <span>£27,600 Escrow Trust</span>
+            </span>
+            <span class="inline-flex items-center px-2.5 py-1 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 font-bold">
+              <i class="fa-solid fa-shield-halved mr-1 text-emerald-600 text-[10px]"></i>
+              <span>Scottish Landlord #39281</span>
+            </span>
+          </div>
+        </nav>
+
+        <!-- Mobile Expandable Navigation Drawer (Showing All 7 Owner Tabs on Small Screens) -->
+        <div id="owner-mobile-nav-menu" class="hidden lg:hidden border-t border-slate-200/80 dark:border-slate-800 bg-white/98 dark:bg-[#0b1324]/98 backdrop-blur-xl py-4 px-3 sm:px-4 shadow-xl transition-all">
+          <div class="space-y-3">
+            <div class="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400 px-2 flex items-center justify-between">
+              <span>Owner & Letting Agent Dashboard Sections</span>
+              <span class="text-[9px] bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 px-1.5 py-0.5 rounded font-extrabold uppercase">All 7 Tabs</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs font-bold">
+              <a href="#section-kpis" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl bg-amber-500 text-slate-950 shadow-xs">
+                <i class="fa-solid fa-chart-pie text-sm"></i><span>1. Executive KPIs</span>
+              </a>
+              <a href="#section-roster" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                <i class="fa-solid fa-users text-amber-500 text-sm"></i><span>2. Tenancy Roster</span>
+              </a>
+              <a href="#section-refunds" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                <i class="fa-solid fa-vault text-rose-500 text-sm"></i><span>3. Escrow Trust & Refunds</span>
+              </a>
+              <a href="#section-companies" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                <i class="fa-solid fa-building text-sky-500 text-sm"></i><span>4. Partner Companies</span>
+              </a>
+              <a href="#section-stream" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                <i class="fa-solid fa-satellite-dish text-emerald-500 text-sm"></i><span>5. Live Tenancy Stream</span>
+              </a>
+              <a href="#section-feedback" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                <i class="fa-solid fa-star text-amber-500 text-sm"></i><span>6. Tenancy Reviews</span>
+              </a>
+              <a href="#section-issues" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                <i class="fa-solid fa-triangle-exclamation text-amber-500 text-sm"></i><span>7. Issue Resolution</span>
+              </a>
+            </div>
+            <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2 text-xs">
+              <a href="index.html" class="flex-1 py-2 px-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-center font-bold">
+                <i class="fa-solid fa-arrow-left mr-1"></i> Student Home
+              </a>
+              <button type="button" onclick="logoutStudent(event)" class="sign-out-global-btn flex-1 py-2 px-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800 font-bold text-center">
+                <i class="fa-solid fa-arrow-right-from-bracket mr-1"></i> Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main Content Flow -->
+    <main class="flex-1 pb-16 space-y-8">
+
+      <!-- 1. FOUNDER EXECUTIVE KPIS BAR -->
+      <section id="section-kpis" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          
+          <!-- KPI 1: Active Student Bookings -->
+          <div class="bg-white dark:bg-[#0f1a30] rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Total Active Tenants</span>
+              <div class="w-8 h-8 rounded-xl bg-sky-100 dark:bg-sky-950/60 text-sky-600 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-users"></i>
+              </div>
+            </div>
+            <div class="text-2xl font-black text-slate-900 dark:text-slate-100 brand-font">184 Students</div>
+            <p class="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold mt-1 flex items-center">
+              <i class="fa-solid fa-arrow-up mr-1 text-[10px]"></i> +18 from West Africa this week
+            </p>
+          </div>
+
+          <!-- KPI 2: Total Escrow Reserves Held -->
+          <div class="bg-white dark:bg-[#0f1a30] rounded-3xl p-5 border border-amber-300/60 dark:border-amber-500/30 shadow-sm relative overflow-hidden">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">Barclays Escrow Trust</span>
+              <div class="w-8 h-8 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-600 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-vault"></i>
+              </div>
+            </div>
+            <div class="text-2xl font-black text-slate-900 dark:text-slate-100 brand-font" data-price-gbp="27600">
+              £27,600.00
+            </div>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium mt-1">
+              £150.00 held safely per room
+            </p>
+          </div>
+
+          <!-- KPI 3: Occupancy Rate -->
+          <div class="bg-white dark:bg-[#0f1a30] rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">UK Room Occupancy</span>
+              <div class="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-bed"></i>
+              </div>
+            </div>
+            <div class="text-2xl font-black text-slate-900 dark:text-slate-100 brand-font">94.2%</div>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium mt-1">
+              Glasgow: 98% • Edinburgh: 92%
+            </p>
+          </div>
+
+          <!-- KPI 4: Pending Visa Reviews -->
+          <div class="bg-white dark:bg-[#0f1a30] rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Visa / CAS In Review</span>
+              <div class="w-8 h-8 rounded-xl bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-passport"></i>
+              </div>
+            </div>
+            <div class="text-2xl font-black text-indigo-600 dark:text-indigo-400 brand-font">12 Awaiting</div>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium mt-1">
+              172 fully approved & clear
+            </p>
+          </div>
+
+          <!-- KPI 5: 48h Visa Refunds Queue -->
+          <div class="bg-white dark:bg-[#0f1a30] rounded-3xl p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">48h Refund Queue</span>
+              <div class="w-8 h-8 rounded-xl bg-rose-100 dark:bg-rose-950/60 text-rose-600 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-hand-holding-dollar"></i>
+              </div>
+            </div>
+            <div class="text-2xl font-black text-slate-900 dark:text-slate-100 brand-font">2 Pending</div>
+            <p class="text-[11px] text-emerald-600 font-semibold mt-1">
+              0 delayed • All within SLA
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 2. FOUNDER CONTROLS & AREA UPDATE BROADCASTER -->
+      <section id="section-broadcaster" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-gradient-to-r from-amber-500/10 via-sky-500/10 to-indigo-500/10 border-2 border-amber-500/40 rounded-3xl p-6 sm:p-7 shadow-sm">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-start space-x-3.5 max-w-2xl">
+              <div class="w-12 h-12 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center text-xl shrink-0 shadow-md">
+                <i class="fa-solid fa-bullhorn"></i>
+              </div>
+              <div>
+                <span class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-800 dark:text-amber-300 text-[10px] font-black uppercase tracking-wider mb-1 inline-block">
+                  Agent Action • Area & Room Reassignment Tool
+                </span>
+                <h3 class="text-base sm:text-lg font-black text-slate-900 dark:text-slate-100 brand-font">
+                  Push Room Opening / Upgrade Alert to Student Profiles
+                </h3>
+                <p class="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+                  When a higher floor studio or premium unit becomes vacant, dispatch a 1-click update alert directly to booked students matching that building (e.g. Ama Konadu at Buchanan View).
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-center space-x-2">
+              <button onclick="broadcastRoomUpgradeAlert()" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs rounded-xl shadow-md transition-all cursor-pointer">
+                <i class="fa-solid fa-paper-plane mr-1.5"></i> Broadcast Skyline Studio Alert
+              </button>
+              <button onclick="openAddTenantModal()" class="px-4 py-2.5 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold text-xs rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 transition-colors cursor-pointer">
+                + Register New Tenant
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. GLOBAL MULTI-REGION STUDENT ROSTER (FILTERABLE BY REGION) -->
+      <section id="section-roster" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-[#0f1a30] rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+          
+          <!-- Header & Region Filter Tabs -->
+          <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 block mb-0.5">
+                Global Tenant Management
+              </span>
+              <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 brand-font">
+                International Student Tenancy Roster
+              </h2>
+            </div>
+
+            <!-- Region Filter Tabs -->
+            <div class="flex items-center space-x-1.5 overflow-x-auto no-scrollbar bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl text-xs font-bold">
+              <button onclick="filterRegion('all')" id="tab-region-all" class="region-tab-btn px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 shadow-xs cursor-pointer">
+                All Regions (184)
+              </button>
+              <button onclick="filterRegion('africa')" id="tab-region-africa" class="region-tab-btn px-3 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:text-amber-500 cursor-pointer">
+                Africa (48)
+              </button>
+              <button onclick="filterRegion('asia')" id="tab-region-asia" class="region-tab-btn px-3 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:text-amber-500 cursor-pointer">
+                South & East Asia (80)
+              </button>
+              <button onclick="filterRegion('europe')" id="tab-region-europe" class="region-tab-btn px-3 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:text-amber-500 cursor-pointer">
+                UK & Europe (38)
+              </button>
+              <button onclick="filterRegion('americas')" id="tab-region-americas" class="region-tab-btn px-3 py-1.5 rounded-xl text-slate-600 dark:text-slate-300 hover:text-amber-500 cursor-pointer">
+                Americas (18)
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Search & Status Filter Bar -->
+          <div class="flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex items-center bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 w-full sm:w-80">
+              <i class="fa-solid fa-magnifying-glass text-slate-400 mr-2"></i>
+              <input type="text" id="agent-student-search" oninput="searchStudents(this.value)" placeholder="Search by student name, country, or GCU/CAS..." class="bg-transparent outline-none w-full text-slate-800 dark:text-slate-100 text-xs">
+            </div>
+
+            <div class="flex items-center space-x-2">
+              <span class="text-slate-500 dark:text-slate-400 font-semibold">City Filter:</span>
+              <select id="agent-city-filter" onchange="filterCity(this.value)" class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 font-bold text-slate-700 dark:text-slate-200 outline-none cursor-pointer">
+                <option value="all">All Cities</option>
+                <option value="Glasgow" selected>Glasgow</option>
+                <option value="Edinburgh">Edinburgh</option>
+                <option value="London">London</option>
+                <option value="New York">New York</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Student Roster Table -->
+          <div class="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100/80 dark:bg-slate-850 text-slate-700 dark:text-slate-300 font-bold uppercase tracking-wider text-[10px] border-b border-slate-200 dark:border-slate-800">
+                <tr>
+                  <th class="p-3.5">Student / Origin</th>
+                  <th class="p-3.5">University & Course</th>
+                  <th class="p-3.5">Booked Residence & Room</th>
+                  <th class="p-3.5">Check-In Date</th>
+                  <th class="p-3.5">Escrow Reserve</th>
+                  <th class="p-3.5">CAS / Visa Status</th>
+                  <th class="p-3.5 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="agent-roster-tbody" class="divide-y divide-slate-100 dark:divide-slate-800 font-medium">
+                <!-- Dynamically populated via renderAgentRoster() -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 4. ESCROW REVIEWS & VISA REFUND APPROVAL QUEUE -->
+      <section id="section-refunds" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+        <div class="bg-white dark:bg-[#0f1a30] rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-rose-600 block mb-0.5">
+                Guarantee Compliance Center
+              </span>
+              <h3 class="text-base sm:text-lg font-black text-slate-900 dark:text-slate-100 brand-font flex items-center">
+                <i class="fa-solid fa-shield-halved text-rose-500 mr-2"></i> 48-Hour Zero-Fee Visa Refund Queue
+              </h3>
+            </div>
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-semibold">
+              Authorized Escrow Trustee: Barclays UK
+            </span>
+          </div>
+
+          <p class="text-xs text-slate-600 dark:text-slate-300">
+            Under our strict "No Visa No Pay" guarantee, students whose visa was refused or delayed by UKVI can claim 100% of their £150 holding deposit back within 48 hours. Review and approve refund requests below:
+          </p>
+
+          <div id="agent-refund-queue" class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. REAL-TIME PLATFORM ACTIVITY STREAM & LIVE USERS DESK -->
+      <section id="section-stream" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          <!-- Live Active Users & Traffic Card -->
+          <div class="bg-white dark:bg-[#0f1a30] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                  Real-Time Traffic
+                </span>
+                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-800">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-ping"></span> Live Monitor
+                </span>
+              </div>
+
+              <div class="space-y-1 mb-4">
+                <div class="text-4xl font-black text-slate-900 dark:text-slate-100 brand-font flex items-center">
+                  <span id="agent-live-users-count">42</span>
+                  <span class="text-xs font-bold text-slate-400 ml-2">Students Online Now</span>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400">
+                  Active sessions across Munich, Glasgow, London, New York & Toronto.
+                </p>
+              </div>
+
+              <!-- Country Distribution of Live Users -->
+              <div class="space-y-2 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs">
+                <div class="flex justify-between items-center text-slate-600 dark:text-slate-300">
+                  <span>🇬🇧 United Kingdom (GCU, Strathclyde, UCL)</span>
+                  <strong class="font-mono text-slate-900 dark:text-slate-100">19 users</strong>
+                </div>
+                <div class="flex justify-between items-center text-slate-600 dark:text-slate-300">
+                  <span>🇩🇪 Germany (TUM Munich, HU Berlin)</span>
+                  <strong class="font-mono text-slate-900 dark:text-slate-100">12 users</strong>
+                </div>
+                <div class="flex justify-between items-center text-slate-600 dark:text-slate-300">
+                  <span>🇺🇸 United States (Columbia NYC, Harvard)</span>
+                  <strong class="font-mono text-slate-900 dark:text-slate-100">6 users</strong>
+                </div>
+                <div class="flex justify-between items-center text-slate-600 dark:text-slate-300">
+                  <span>🇨🇦 Canada & 🇦🇺 Australia (UofT, USYD)</span>
+                  <strong class="font-mono text-slate-900 dark:text-slate-100">5 users</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-400">
+              <span>Average Session: 8m 42s</span>
+              <span class="text-emerald-500 font-bold">100% Server Uptime</span>
+            </div>
+          </div>
+
+          <!-- Real-Time Activity Feed -->
+          <div class="lg:col-span-2 bg-white dark:bg-[#0f1a30] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+              <div>
+                <span class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 block mb-0.5">
+                  Platform Operations
+                </span>
+                <h3 class="text-base font-black text-slate-900 dark:text-slate-100 brand-font flex items-center">
+                  <i class="fa-solid fa-bolt text-amber-500 mr-2"></i> Live Student Activity Stream
+                </h3>
+              </div>
+              <span class="text-[11px] text-slate-400">Auto-refreshing every 10s</span>
+            </div>
+
+            <!-- Activity List -->
+            <div id="agent-activity-stream" class="space-y-3 max-h-80 overflow-y-auto no-scrollbar text-xs">
+              <!-- Dynamically populated via renderActivityStream() -->
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 6. PARTNER ACCOMMODATION COMPANIES DIRECTORY -->
+      <section id="section-companies" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-[#0f1a30] rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 block mb-0.5">
+                Operator Alliances
+              </span>
+              <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 brand-font flex items-center">
+                <i class="fa-solid fa-city text-sky-600 mr-2.5 text-lg"></i> Managed Accommodation Companies & Housing Entities
+              </h2>
+            </div>
+            <span class="text-xs font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700">
+              5 Registered Operating Groups • 1,600+ Managed Beds
+            </span>
+          </div>
+
+          <div id="agent-companies-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Dynamically populated via renderCompaniesGrid() -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. STUDENT FEEDBACK & REVIEWS CENTER (GOOD & BAD FEEDBACK) -->
+      <section id="section-feedback" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-[#0f1a30] rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 block mb-0.5">
+                Sentiment & Quality Audit
+              </span>
+              <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 brand-font flex items-center">
+                <i class="fa-solid fa-comments text-amber-500 mr-2.5 text-lg"></i> Student Experience Feedback & Reviews
+              </h2>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span class="text-xs font-black text-amber-500 bg-amber-50 dark:bg-amber-950/40 px-3 py-1.5 rounded-xl border border-amber-300 dark:border-amber-800 flex items-center">
+                <i class="fa-solid fa-star mr-1.5 text-amber-400"></i> Overall 4.8 / 5.0 Rating
+              </span>
+            </div>
+          </div>
+
+          <!-- Feedback Columns: Positive Praise & Critical Points -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <!-- Positive Feedback (Praise) -->
+            <div class="space-y-3">
+              <div class="flex items-center space-x-2 text-xs font-bold text-emerald-700 dark:text-emerald-400">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Verified Positive Praise (5★ Reviews)</span>
+              </div>
+              <div id="agent-positive-feedback-list" class="space-y-3">
+                <!-- Injected via renderFeedback() -->
+              </div>
+            </div>
+
+            <!-- Critical / Issues Feedback (Requiring Attention) -->
+            <div class="space-y-3">
+              <div class="flex items-center space-x-2 text-xs font-bold text-rose-700 dark:text-rose-400">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <span>Critical Student Alerts & Low Ratings (Action Needed)</span>
+              </div>
+              <div id="agent-critical-feedback-list" class="space-y-3">
+                <!-- Injected via renderFeedback() -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. INTERACTIVE ISSUE RESOLUTION DESK -->
+      <section id="section-issues" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+        <div class="bg-white dark:bg-[#0f1a30] rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+          <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-rose-600 block mb-0.5">
+                Operations Helpdesk
+              </span>
+              <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 brand-font flex items-center">
+                <i class="fa-solid fa-screwdriver-wrench text-rose-500 mr-2.5 text-lg"></i> Interactive Student Issue Resolution Desk
+              </h2>
+            </div>
+            <div class="flex items-center space-x-2">
+              <span id="agent-open-issues-badge" class="text-xs font-bold bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 px-3 py-1.5 rounded-xl border border-rose-300 dark:border-rose-800">
+                3 Open Tickets
+              </span>
+            </div>
+          </div>
+
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+            Directly resolve tenancy maintenance, key distribution, Wi-Fi connectivity, or parcel locker disputes with 1-click execution to ensure full operational excellence.
+          </p>
+
+          <div id="agent-issue-tickets-list" class="space-y-3">
+            <!-- Injected via renderIssueTickets() -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- OWNER & AGENT COMPLIANCE FOOTER -->
+    <footer class="bg-slate-900 text-slate-300 pt-12 pb-16 border-t border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-10">
+          <div class="lg:col-span-2 space-y-4">
+            <div class="flex items-center space-x-2">
+              <div class="w-8 h-8 rounded-lg bg-amber-500 text-slate-950 flex items-center justify-center">
+                <i class="fa-solid fa-user-tie"></i>
+              </div>
+              <span class="text-xl font-black text-white brand-font">Student<span class="text-amber-400">Stay</span> Owner</span>
+            </div>
+            <p class="text-xs text-slate-400 max-w-sm leading-relaxed">
+              Property Owner & Letting Agent Command Portal. Regulated under Scottish Landlord Register #39281-2026 and UK Escrow Tenancy Protection Scheme.
+            </p>
+          </div>
+          <div>
+            <h5 class="text-xs font-bold text-white uppercase tracking-wider mb-3">Portfolio Operations</h5>
+            <ul class="space-y-2 text-xs text-slate-400">
+              <li><a href="#section-roster" class="hover:text-amber-400">Tenancy Roster</a></li>
+              <li><a href="#section-refunds" class="hover:text-amber-400">Barclays Escrow Trust</a></li>
+              <li><a href="#section-companies" class="hover:text-amber-400">Managed Properties</a></li>
+              <li><a href="#section-issues" class="hover:text-amber-400">Issue Resolution Desk</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5 class="text-xs font-bold text-white uppercase tracking-wider mb-3">Compliance & Security</h5>
+            <ul class="space-y-2 text-xs text-slate-400">
+              <li><span class="text-slate-300 font-semibold">Scottish Landlord #39281</span></li>
+              <li><span class="text-slate-300 font-semibold">TDS Tenancy Deposit Scheme</span></li>
+              <li><span class="text-slate-300 font-semibold">256-Bit SSL Protected</span></li>
+              <li><span class="text-slate-300 font-semibold">Barclays Trustee Account</span></li>
+            </ul>
+          </div>
+          <div>
+            <h5 class="text-xs font-bold text-white uppercase tracking-wider mb-3">Quick Navigation</h5>
+            <ul class="space-y-2 text-xs text-slate-400">
+              <li><a href="#section-kpis" class="text-amber-400 font-bold hover:underline">Executive Overview</a></li>
+              <li><button type="button" onclick="quickExportAuditCSV()" class="hover:text-white cursor-pointer text-left">Export Audit CSV</button></li>
+              <li><a href="index.html" class="hover:text-white flex items-center"><i class="fa-solid fa-arrow-up-right-from-square mr-1 text-[10px]"></i> View Public Student Site</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pt-8 border-t border-slate-800 text-xs text-slate-500 flex flex-wrap items-center justify-between gap-4">
+          <p>© 2026 StudentStay International. All rights reserved.</p>
+          <span>Official Letting Agent License #SCOT-LETTING-8819 • Barclays Escrow Protected</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- TENANT DETAILS MODAL -->
+  <div id="modal-tenant-details" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-[#0f1a30] rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800">
+      <div class="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+        <div>
+          <h3 id="modal-tenant-name" class="font-extrabold text-base text-slate-900 dark:text-slate-100">Student Tenancy File</h3>
+          <p id="modal-tenant-sub" class="text-xs text-slate-500 dark:text-slate-400">Booking Reference & Documents</p>
+        </div>
+        <button onclick="closeTenantModal()" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-slate-900 flex items-center justify-center cursor-pointer">
+          ✕
+        </button>
+      </div>
+
+      <div id="modal-tenant-body" class="p-6 space-y-4 text-xs">
+        <!-- Injected dynamically -->
+      </div>
+
+      <div class="p-4 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex justify-end space-x-2">
+        <button onclick="closeTenantModal()" class="px-4 py-2 bg-slate-200 dark:bg-slate-800 font-bold text-xs rounded-xl cursor-pointer">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    // Comprehensive Global Roster Dataset for Agent Portal
+    const globalStudentRoster = [
+      // 1. WEST & SUB-SAHARAN AFRICA
+      {
+        id: 'user-ama',
+        name: 'Ama Konadu',
+        region: 'africa',
+        country: 'Ghana 🇬🇭',
+        city: 'Glasgow',
+        university: 'Glasgow Caledonian (GCU)',
+        course: 'MSc International Business & Data',
+        property: 'Buchanan View - City Centre',
+        room: 'Flat 304B (Floor 3)',
+        depositGBP: 150,
+        rentGBP: 189,
+        checkIn: '12 Sept 2026',
+        tenancyWeeks: '51 Weeks',
+        casStatus: 'CAS Issued & Verified',
+        visaStatus: 'Biometrics Completed (Ready)',
+        escrowStatus: 'Secured in Barclays Trust',
+        escrowId: 'ESC-SCOT-99214',
+        avatar: 'assets/images/ama.jpg'
+      },
+      {
+        id: 'user-kwame',
+        name: 'Kwame Mensah',
+        region: 'africa',
+        country: 'Ghana 🇬🇭',
+        city: 'Glasgow',
+        university: 'Univ of Strathclyde',
+        course: 'MSc Civil & Environmental Eng',
+        property: 'Merchant Studios - High St',
+        room: 'Room 214 (Floor 2)',
+        depositGBP: 150,
+        rentGBP: 215,
+        checkIn: '12 Sept 2026',
+        tenancyWeeks: '44 Weeks',
+        casStatus: 'CAS Issued & Verified',
+        visaStatus: 'Visa Granted 🇬🇧',
+        escrowStatus: 'Secured in Barclays Trust',
+        escrowId: 'ESC-SCOT-99288',
+        avatar: 'assets/images/diverse_students.jpg'
+      },
+      {
+        id: 'user-aisha-b',
+        name: 'Aisha Bello',
+        region: 'africa',
+        country: 'Nigeria 🇳🇬',
+        city: 'London',
+        university: 'King’s College London (KCL)',
+        course: 'LLM International Commercial Law',
+        property: 'Chapter Spitalfields',
+        room: 'Sky Studio #812',
+        depositGBP: 200,
+        rentGBP: 345,
+        checkIn: '19 Sept 2026',
+        tenancyWeeks: '51 Weeks',
+        casStatus: 'CAS Issued & Verified',
+        visaStatus: 'Visa Granted 🇬🇧',
+        escrowStatus: 'Secured in Barclays Trust',
+        escrowId: 'ESC-LON-44102',
+        avatar: 'assets/images/meilin.jpg'
+      },
+      {
+        id: 'user-emmanuel',
+        name: 'Emmanuel Adeyemi',
+        region: 'africa',
+        country: 'Nigeria 🇳🇬',
+        city: 'Glasgow',
+        university: 'Glasgow Caledonian (GCU)',
+        course: 'BSc Public Health & Nursing',
+        property: 'Buchanan View - City Centre',
+        room: 'Room 102 (Floor 1)',
+        depositGBP: 150,
+        rentGBP: 189,
+        checkIn: '12 Sept 2026',
+        tenancyWeeks: '44 Weeks',
+        casStatus: 'CAS Issued & Verified',
+        visaStatus: 'Visa Granted 🇬🇧',
+        escrowStatus: 'Secured in Barclays Trust',
+        escrowId: 'ESC-SCOT-99304',
+        avatar: 'assets/images/james.jpg'
+      },
+      {
+        id: 'user-brian-k',
+        name: 'Brian Kiprono',
+        region: 'africa',
+        country: 'Kenya 🇰🇪',
+        city: 'Edinburgh',
+        university: 'University of Edinburgh',
+        course: 'MSc Financial Technology',
+        property: 'Fountainbridge Student Village',
+        room: 'Room 410 (Floor 4)',
+        depositGBP: 180,
+        rentGBP: 245,
+        checkIn: '19 Sept 2026',
+        tenancyWeeks: '51 Weeks',
+        casStatus: 'CAS Issued & Verified',
+        visaStatus: 'Biometrics Completed',
+        escrowStatus: 'Secured in Barclays Trust',
+        escrowId: 'ESC-EDIN-11209',
+        avatar: 'assets/images/ravi.jpg'
+      },
+
+      // 2. SOUTH & EAST ASIA
+      {
+        id: 'user-priya',
+        name: 'Priya Patel',
+        region: 'asia',
+        country: 'India 🇮🇳',
+        city: 'Glasgow',
+        university: 'University of Glasgow',
+        course: 'MSc Data Science & AI',
+        property: 'Riverside Quay Residence',
+        room: 'Room 302 (Floor 3)',
+        depositGBP: 150,
+        rentGBP: 175,
+        checkIn: '12 Sept 2026',
+        tenancyWeeks: '51 Weeks',
+        casStatus: 'CAS Issued & Verified',
+        visaStatus: 'Visa Granted 🇬🇧',
+        escrowStatus: 'Secured in Barclays Trust',
+        escrowId: 'ESC-SCOT-99120',
+        avatar: 'assets/images/meilin.jpg'
+      },
+      {
+        id: 'user-ravi',
+        name: 'Ravi Sharma',
+        region: 'asia',
+        country: 'Malaysia 🇲🇾',
+        city: 'Glasgow',
+        university: 'Glasgow Caledonian (GCU)',
+        course: 'BSc Cyber Security',
+        property: 'Buchanan View (Block B)',
+        room: 'Flat 208B',
+        depositGBP: 150,
+        rentGBP: 189,
+        checkIn: '12 Sept 2026',
+        tenancyWeeks: '44 Weeks',
+        casStatus: 'CAS Issued & Verified',
+        visaStatus: 'Visa Granted 🇬🇧',
+        escrowStatus: 'Secured in Barclays Trust',
+        escrowId: 'ESC-SCOT-99144',
+        avatar: 'assets/images/ravi.jpg'
+      },
+      {
+        id: 'user-chen',
+        name: 'Chen Wei',
+        region: 'asia',
+        country: 'China 🇨🇳',
+        city: 'London',
+        university: 'UCL London',
+        course: 'MSc Architecture & Urban Design',
+        property: 'Kings Cross Student Living',
+        room: 'Studio #504',
+        depositGBP: 200,
+        rentGBP: 320,
+        checkIn: '19 Sept 2026',
+        tenancyWeeks: '51 Weeks',
+        casStatus: 'CAS Issued & Verified',
+        visaStatus: 'Visa Granted 🇬🇧',
+        escrowStatus: 'Secured in Barclays Trust',
+        escrowId: 'ESC-LON-44021',
+        avatar: 'assets/images/james.jpg'
+      },
+
+      // 3. UK & EUROPE
+      {
+        id: 'user-david',
+        name: 'David Smith',
+        region: 'europe',
+        country: 'United Kingdom 🇬🇧',
+        city: 'Glasgow',
+        university: 'Univ of Strathclyde',
+        course: 'BSc Mechanical Engineering',
+        property: 'Merchant Studios - High St',
+        room: 'Studio 114 (Floor 1)',
+        depositGBP: 150,
+        rentGBP: 215,
+        checkIn: '12 Sept 2026',
+        tenancyWeeks: '44 Weeks',
+        casStatus: 'UK Citizen / Home Student',
+        visaStatus: 'Not Required (UK Resident)',
+        escrowStatus: 'Secured in Barclays Trust',
+        escrowId: 'ESC-SCOT-99002',
+        avatar: 'assets/images/james.jpg'
+      },
+      {
+        id: 'user-sophie',
+        name: 'Sophie Müller',
+        region: 'europe',
+        country: 'Germany 🇩🇪',
+        city: 'Edinburgh',
+        university: 'University of Edinburgh',
+        course: 'MSc Sustainable Architecture',
+        property: 'Fountainbridge Student Village',
+        room: 'Studio #308',
+        depositGBP: 180,
+        rentGBP: 245,
+        checkIn: '19 Sept 2026',
+        tenancyWeeks: '51 Weeks',
+        casStatus: 'CAS Issued & Verified',
+        visaStatus: 'Student Visa Granted',
+        escrowStatus: 'Secured in Barclays Trust',
+        escrowId: 'ESC-EDIN-11004',
+        avatar: 'assets/images/sophie.jpg'
+      },
+
+      // 4. AMERICAS
+      {
+        id: 'user-alex',
+        name: 'Alex Turner',
+        region: 'americas',
+        country: 'United States 🇺🇸',
+        city: 'New York',
+        university: 'New York University (NYU)',
+        course: 'BA Economics & Media',
+        property: 'Manhattan Student Suites',
+        room: 'Apt 12B',
+        depositGBP: 250,
+        rentGBP: 380,
+        checkIn: '01 Sept 2026',
+        tenancyWeeks: '51 Weeks',
+        casStatus: 'US Citizen / Domestic',
+        visaStatus: 'Not Required (Domestic)',
+        escrowStatus: 'Secured in Chase Escrow',
+        escrowId: 'ESC-USA-88102',
+        avatar: 'assets/images/diverse_students.jpg'
+      }
+    ];
+
+    let currentRegion = 'all';
+    let currentCity = 'Glasgow';
+    let searchQuery = '';
+
+    function renderAgentRoster() {
+      const tbody = document.getElementById('agent-roster-tbody');
+      if (!tbody) return;
+
+      let list = globalStudentRoster;
+      if (currentRegion !== 'all') {
+        list = list.filter(s => s.region === currentRegion);
+      }
+      if (currentCity !== 'all') {
+        list = list.filter(s => s.city.toLowerCase() === currentCity.toLowerCase());
+      }
+      if (searchQuery.trim() !== '') {
+        const q = searchQuery.toLowerCase();
+        list = list.filter(s => s.name.toLowerCase().includes(q) || s.country.toLowerCase().includes(q) || s.university.toLowerCase().includes(q) || s.property.toLowerCase().includes(q));
+      }
+
+      if (!list.length) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" class="p-8 text-center text-slate-500">
+              No student tenancies matched your filter criteria. Try resetting region or city.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = list.map(s => `
+        <tr class="hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition-colors">
+          <td class="p-3.5">
+            <div class="flex items-center space-x-3">
+              <img src="${s.avatar}" alt="${s.name}" class="w-9 h-9 rounded-full object-cover border-2 border-amber-400">
+              <div>
+                <div class="font-bold text-slate-900 dark:text-slate-100">${s.name}</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400">${s.country}</div>
+              </div>
+            </div>
+          </td>
+          <td class="p-3.5">
+            <div class="font-bold text-slate-800 dark:text-slate-200">${s.university}</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400">${s.course}</div>
+          </td>
+          <td class="p-3.5">
+            <div class="font-bold text-slate-800 dark:text-slate-200">${s.property}</div>
+            <span class="inline-block mt-0.5 px-2 py-0.5 rounded-md bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 text-[10px] font-bold">
+              ${s.room}
+            </span>
+          </td>
+          <td class="p-3.5">
+            <div class="font-semibold text-slate-700 dark:text-slate-300">${s.checkIn}</div>
+            <div class="text-[10px] text-slate-400">${s.tenancyWeeks}</div>
+          </td>
+          <td class="p-3.5">
+            <div class="font-black text-emerald-600 dark:text-emerald-400" data-price-gbp="${s.depositGBP}">
+              £${s.depositGBP}.00 Held
+            </div>
+            <div class="text-[10px] font-mono text-slate-400">${s.escrowId}</div>
+          </td>
+          <td class="p-3.5">
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${s.visaStatus.includes('Granted') ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800' : 'bg-sky-100 dark:bg-sky-950/60 text-sky-800 dark:text-sky-300'}">
+              <i class="fa-solid fa-check mr-1 text-[9px]"></i> ${s.visaStatus}
+            </span>
+          </td>
+          <td class="p-3.5 text-right space-x-1">
+            <button onclick="viewStudentDetails('${s.id}')" class="px-2.5 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-amber-500 text-xs font-bold transition-colors cursor-pointer" title="View Tenancy Record">
+              <i class="fa-regular fa-file-lines"></i> File
+            </button>
+            <a href="chat.html?resident=ama-k" class="px-2.5 py-1.5 rounded-lg bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 hover:bg-sky-100 text-xs font-bold transition-colors inline-block" title="Message Student">
+              <i class="fa-solid fa-comment-dots"></i>
+            </a>
+          </td>
+        </tr>
+      `).join('');
+
+      CurrencyManager.updateAllPricesOnPage();
+    }
+
+    function filterRegion(reg) {
+      currentRegion = reg;
+      document.querySelectorAll('.region-tab-btn').forEach(b => {
+        b.classList.remove('bg-amber-500', 'text-slate-950', 'shadow-xs');
+        b.classList.add('text-slate-600', 'dark:text-slate-300');
+      });
+      const tab = document.getElementById(`tab-region-${reg}`);
+      if (tab) {
+        tab.classList.remove('text-slate-600', 'dark:text-slate-300');
+        tab.classList.add('bg-amber-500', 'text-slate-950', 'shadow-xs');
+      }
+      renderAgentRoster();
+    }
+
+    function filterCity(city) {
+      currentCity = city;
+      renderAgentRoster();
+    }
+
+    function searchStudents(val) {
+      searchQuery = val;
+      renderAgentRoster();
+    }
+
+    function viewStudentDetails(studentId) {
+      const s = globalStudentRoster.find(x => x.id === studentId);
+      if (!s) return;
+
+      document.getElementById('modal-tenant-name').textContent = `${s.name} (${s.country})`;
+      document.getElementById('modal-tenant-sub').textContent = `Official Tenancy File • Escrow ID: ${s.escrowId}`;
+
+      document.getElementById('modal-tenant-body').innerHTML = `
+        <div class="grid grid-cols-2 gap-3 p-3 bg-slate-50 dark:bg-slate-800 rounded-2xl">
+          <div>
+            <span class="text-slate-400 block text-[10px] uppercase font-bold">University & Course</span>
+            <span class="font-bold text-slate-800 dark:text-slate-200">${s.university}</span>
+            <div class="text-[11px] text-slate-500">${s.course}</div>
+          </div>
+          <div>
+            <span class="text-slate-400 block text-[10px] uppercase font-bold">Allocated Accommodation</span>
+            <span class="font-bold text-slate-800 dark:text-slate-200">${s.property}</span>
+            <div class="text-[11px] text-sky-600 font-bold">${s.room}</div>
+          </div>
+        </div>
+
+        <div class="p-3 bg-emerald-50 dark:bg-emerald-950/40 rounded-2xl border border-emerald-200 dark:border-emerald-800 space-y-1">
+          <div class="font-bold text-emerald-800 dark:text-emerald-300 flex items-center">
+            <i class="fa-solid fa-lock mr-1.5"></i> Escrow Funds Protected
+          </div>
+          <div class="text-emerald-900 dark:text-emerald-200 text-[11px]">
+            Holding deposit £${s.depositGBP}.00 is currently held in trust with Barclays Bank UK PLC.
+          </div>
+        </div>
+
+        <div class="space-y-2 pt-2">
+          <div class="flex justify-between border-b border-slate-100 dark:border-slate-800 pb-1">
+            <span class="text-slate-500">Weekly Rent:</span>
+            <span class="font-bold text-slate-900 dark:text-slate-100">£${s.rentGBP} / week (All Bills Included)</span>
+          </div>
+          <div class="flex justify-between border-b border-slate-100 dark:border-slate-800 pb-1">
+            <span class="text-slate-500">Tenancy Length:</span>
+            <span class="font-bold text-slate-900 dark:text-slate-100">${s.tenancyWeeks} (Check-in: ${s.checkIn})</span>
+          </div>
+          <div class="flex justify-between border-b border-slate-100 dark:border-slate-800 pb-1">
+            <span class="text-slate-500">CAS Offer Reference:</span>
+            <span class="font-mono font-bold text-sky-600">CAS-${s.city.toUpperCase()}-2026-8819</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-500">UKVI Visa Clearance:</span>
+            <span class="font-bold text-emerald-600">${s.visaStatus}</span>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('modal-tenant-details').classList.remove('hidden');
+    }
+
+    function closeTenantModal() {
+      document.getElementById('modal-tenant-details').classList.add('hidden');
+    }
+
+    function broadcastRoomUpgradeAlert() {
+      alert("🚀 Area Update Alert Broadcasted!\n\nAll booked students at Buchanan View (including Ama Konadu) have received a real-time notification on their profiles offering an immediate switch to Floor 4 Skyline Room 408 at zero extra charge.");
+    }
+
+    function openAddTenantModal() {
+      alert("Registration form opened. Entering new international tenant under Scottish Tenancy Escrow Standards.");
+    }
+
+    function quickExportAuditCSV() {
+      alert("Generating Official Letting Escrow Audit Report (CSV) for 184 active tenants across Glasgow, Edinburgh, and London. Download will begin shortly.");
+    }
+
+    // Refund Queue Implementation
+    const refundRequests = [
+      {
+        id: 'ref-01',
+        studentName: 'Tariq Al-Mansoor',
+        country: 'Oman 🇴🇲',
+        property: 'Buchanan View - Bronze Studio',
+        depositGBP: 150,
+        reason: 'UKVI Visa Processing Delay past university intake date. Refusal form uploaded.',
+        requestDate: '10 Oct 2026, 09:15 AM',
+        status: 'Pending Founder Approval'
+      },
+      {
+        id: 'ref-02',
+        studentName: 'Fatima Zahra',
+        country: 'Morocco 🇲🇦',
+        property: 'Riverside Quay Residence',
+        depositGBP: 150,
+        reason: 'Academic CAS deferred to Spring 2027 intake. 100% refund requested under Escrow clause 4.2.',
+        requestDate: '10 Oct 2026, 11:30 AM',
+        status: 'Pending Founder Approval'
+      }
+    ];
+
+    function renderRefundQueue() {
+      const container = document.getElementById('agent-refund-queue');
+      if (!container) return;
+
+      container.innerHTML = refundRequests.map(r => `
+        <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 flex flex-col justify-between space-y-3">
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="font-extrabold text-xs text-slate-900 dark:text-slate-100">${r.studentName} (${r.country})</span>
+              <span class="text-[10px] font-bold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 px-2 py-0.5 rounded-full">
+                ${r.status}
+              </span>
+            </div>
+            <div class="text-[11px] text-slate-500 mb-2">${r.property} • ${r.requestDate}</div>
+            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed bg-white dark:bg-slate-900 p-2.5 rounded-xl border border-slate-100 dark:border-slate-800">
+              "${r.reason}"
+            </p>
+          </div>
+
+          <div class="pt-3 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between">
+            <span class="font-black text-rose-600 dark:text-rose-400 text-sm" data-price-gbp="${r.depositGBP}">
+              Refund: £${r.depositGBP}.00
+            </span>
+            <button onclick="approveRefund('${r.id}', '${r.studentName}')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer">
+              <i class="fa-solid fa-check mr-1"></i> Authorize 48h Refund
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function approveRefund(refId, studentName) {
+      alert(`✅ Refund Authorized for ${studentName}!\n\nBarclays Client Escrow Trustee has been instructed to wire £150.00 back to the student's original payment method within 48 hours without fees.`);
+      const idx = refundRequests.findIndex(x => x.id === refId);
+      if (idx > -1) {
+        refundRequests[idx].status = 'Approved & Wiring £150';
+        renderRefundQueue();
+      }
+    }
+
+    // Real-Time Activity Feed Data
+    const platformActivities = [
+      {
+        id: 'act-01',
+        icon: 'fa-solid fa-lock',
+        color: 'emerald',
+        text: '<strong>Lukas Müller</strong> locked <em>TUM Olympia Studio</em> with £150 escrow deposit (Munich 🇩🇪).',
+        time: 'Just now'
+      },
+      {
+        id: 'act-02',
+        icon: 'fa-solid fa-arrows-spin',
+        color: 'sky',
+        text: '<strong>Sarah Jenkins</strong> completed full 360° virtual inspection of <em>Columbia Morningside Penthouse</em> (New York 🇺🇸).',
+        time: '2 mins ago'
+      },
+      {
+        id: 'act-03',
+        icon: 'fa-solid fa-comments',
+        color: 'indigo',
+        text: '<strong>Ama Konadu</strong> started live peer chat with GCU resident ambassador regarding heating & campus commute.',
+        time: '5 mins ago'
+      },
+      {
+        id: 'act-04',
+        icon: 'fa-solid fa-calendar-check',
+        color: 'amber',
+        text: '<strong>Chen Wei</strong> confirmed intake arrival at London Heathrow for 20 Sept check-in at Kings Cross.',
+        time: '11 mins ago'
+      },
+      {
+        id: 'act-05',
+        icon: 'fa-solid fa-passport',
+        color: 'emerald',
+        text: '<strong>Liam Tremblay</strong> uploaded approved Canadian Study Permit for UofT St. George Studio.',
+        time: '18 mins ago'
+      }
+    ];
+
+    function renderActivityStream() {
+      const container = document.getElementById('agent-activity-stream');
+      if (!container) return;
+
+      container.innerHTML = platformActivities.map(act => `
+        <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 flex items-start space-x-3">
+          <div class="w-7 h-7 rounded-lg bg-${act.color}-100 dark:bg-${act.color}-950/60 text-${act.color}-600 dark:text-${act.color}-400 flex items-center justify-center shrink-0 text-xs shadow-xs">
+            <i class="${act.icon}"></i>
+          </div>
+          <div class="flex-1">
+            <p class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">${act.text}</p>
+            <span class="text-[10px] text-slate-400 mt-0.5 block">${act.time}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Managed Accommodation Companies & Housing Entities
+    const partnerCompanies = [
+      {
+        name: 'Unite Students UK',
+        logoIcon: 'fa-solid fa-building-flag',
+        country: 'United Kingdom 🇬🇧',
+        managedUnits: 450,
+        occupancy: 96,
+        properties: 'Buchanan View, Merchant Studios, Kelvin Court',
+        contact: 'operations@unitestudents.com',
+        rating: 4.9
+      },
+      {
+        name: 'Student Roost Scotland',
+        logoIcon: 'fa-solid fa-city',
+        country: 'United Kingdom 🇬🇧',
+        managedUnits: 380,
+        occupancy: 94,
+        properties: "Dobbie's Point, St Mungo's, Riverside Quay",
+        contact: 'scotland@studentroost.co.uk',
+        rating: 4.8
+      },
+      {
+        name: 'Studentenwerk München',
+        logoIcon: 'fa-solid fa-landmark',
+        country: 'Germany 🇩🇪',
+        managedUnits: 520,
+        occupancy: 99,
+        properties: 'TUM Olympiazentrum, Garching Campus Village',
+        contact: 'wohnen@studentenwerk-muenchen.de',
+        rating: 4.9
+      },
+      {
+        name: 'IQ Student Living',
+        logoIcon: 'fa-solid fa-hotel',
+        country: 'United Kingdom 🇬🇧',
+        managedUnits: 310,
+        occupancy: 92,
+        properties: 'City Road Studios, Kings Cross Living',
+        contact: 'partners@iqstudentliving.com',
+        rating: 4.7
+      },
+      {
+        name: 'Columbia University Residential Group',
+        logoIcon: 'fa-solid fa-graduation-cap',
+        country: 'United States 🇺🇸',
+        managedUnits: 240,
+        occupancy: 95,
+        properties: 'Columbia Morningside Heights Suites',
+        contact: 'housing@columbia.edu',
+        rating: 4.9
+      }
+    ];
+
+    function renderCompaniesGrid() {
+      const container = document.getElementById('agent-companies-grid');
+      if (!container) return;
+
+      container.innerHTML = partnerCompanies.map(c => `
+        <div class="p-5 rounded-3xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/80 flex flex-col justify-between space-y-4 hover:border-amber-400 transition-colors shadow-xs">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center space-x-2.5">
+                <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 flex items-center justify-center text-sm shadow-xs">
+                  <i class="${c.logoIcon}"></i>
+                </div>
+                <div>
+                  <h4 class="font-extrabold text-xs text-slate-900 dark:text-slate-100">${c.name}</h4>
+                  <span class="text-[10px] text-slate-500">${c.country}</span>
+                </div>
+              </div>
+              <span class="text-xs font-bold text-amber-500 flex items-center">
+                <i class="fa-solid fa-star text-[10px] mr-1"></i> ${c.rating}
+              </span>
+            </div>
+
+            <div class="space-y-1.5 text-xs">
+              <div class="flex justify-between text-slate-600 dark:text-slate-400">
+                <span>Managed Units:</span>
+                <strong class="text-slate-900 dark:text-slate-100">${c.managedUnits} Studios</strong>
+              </div>
+              <div class="flex justify-between text-slate-600 dark:text-slate-400">
+                <span>Current Occupancy:</span>
+                <strong class="text-emerald-600 font-bold">${c.occupancy}% Occupied</strong>
+              </div>
+              <div class="pt-2 text-[11px] text-slate-500 dark:text-slate-400 line-clamp-1">
+                <strong>Assets:</strong> ${c.properties}
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-200/80 dark:border-slate-700/80 flex items-center justify-between text-[11px]">
+            <span class="text-slate-400 truncate max-w-[150px] font-mono">${c.contact}</span>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold text-[10px]">
+              Active Partner
+            </span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Student Experience Feedback (Good & Bad Feedback)
+    const studentFeedback = {
+      positive: [
+        {
+          id: 'fb-01',
+          name: 'Ama Konadu',
+          country: 'Ghana 🇬🇭',
+          property: 'Buchanan View - Glasgow',
+          stars: 5,
+          date: 'Yesterday',
+          quote: 'The digital radiator heating was already turned on when I arrived in cold September. Having my deposit safely held in escrow gave my parents total peace of mind in Accra.'
+        },
+        {
+          id: 'fb-02',
+          name: 'Lukas Müller',
+          country: 'Germany 🇩🇪',
+          property: 'TUM Olympia - Munich',
+          stars: 5,
+          date: '3 days ago',
+          quote: 'The 360° tour accurately showed the desk layout and balcony view. Gigabit fiber worked immediately for my robotics simulator.'
+        },
+        {
+          id: 'fb-03',
+          name: 'Sarah Jenkins',
+          country: 'United States 🇺🇸',
+          property: 'Columbia Morningside - NYC',
+          stars: 5,
+          date: '5 days ago',
+          quote: 'No scam risk whatsoever. The building management issued my smart door fob in 3 minutes. Zero stress moving to campus.'
+        }
+      ],
+      critical: [
+        {
+          id: 'fb-04',
+          name: 'Ravi Patel',
+          country: 'India 🇮🇳',
+          property: 'Merchant Studios - Glasgow',
+          stars: 3,
+          date: '2 days ago',
+          issue: 'Elevator Maintenance',
+          quote: 'Elevator B in West wing had a 2-day squeak during morning rush hour. The building engineer should check the motor belt.'
+        },
+        {
+          id: 'fb-05',
+          name: 'Fatima Zahra',
+          country: 'Morocco 🇲🇦',
+          property: 'Riverside Quay - Glasgow',
+          stars: 2,
+          date: '4 days ago',
+          issue: 'Laundry Change Machine',
+          quote: 'The courtyard laundry coin dispenser ran out of £1 change coins late on Sunday night. Please enable card tap payments!'
+        }
+      ]
+    };
+
+    function renderFeedback() {
+      const posContainer = document.getElementById('agent-positive-feedback-list');
+      const critContainer = document.getElementById('agent-critical-feedback-list');
+
+      if (posContainer) {
+        posContainer.innerHTML = studentFeedback.positive.map(fb => `
+          <div class="p-4 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200/60 dark:border-emerald-800/40 text-xs space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="font-bold text-slate-900 dark:text-slate-100 flex items-center space-x-1.5">
+                <span>${fb.name}</span>
+                <span class="text-[10px] text-slate-400">(${fb.country})</span>
+              </div>
+              <div class="text-amber-400 text-xs">
+                ★★★★★
+              </div>
+            </div>
+            <p class="text-slate-700 dark:text-slate-300 italic leading-relaxed">
+              "${fb.quote}"
+            </p>
+            <div class="text-[10px] text-slate-400 flex items-center justify-between">
+              <span>${fb.property}</span>
+              <span>${fb.date}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      if (critContainer) {
+        critContainer.innerHTML = studentFeedback.critical.map(fb => `
+          <div class="p-4 rounded-2xl bg-rose-50/50 dark:bg-rose-950/20 border border-rose-200/60 dark:border-rose-800/40 text-xs space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="font-bold text-slate-900 dark:text-slate-100 flex items-center space-x-1.5">
+                <span>${fb.name}</span>
+                <span class="text-[10px] text-rose-600 dark:text-rose-400 font-bold px-1.5 py-0.2 bg-rose-100 dark:bg-rose-950 rounded">${fb.issue}</span>
+              </div>
+              <div class="text-amber-400 text-xs">
+                ${'★'.repeat(fb.stars)}${'☆'.repeat(5 - fb.stars)}
+              </div>
+            </div>
+            <p class="text-slate-700 dark:text-slate-300 italic leading-relaxed">
+              "${fb.quote}"
+            </p>
+            <div class="text-[10px] text-slate-400 flex items-center justify-between">
+              <span>${fb.property}</span>
+              <span class="text-rose-500 font-semibold font-mono">Ticket #FB-${fb.id.slice(-2)}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Interactive Student Issue Resolution Desk
+    let openIssueTickets = [
+      {
+        id: 'ISS-401',
+        title: 'Radiator Thermostat Adjustment in Room 304B',
+        property: 'Buchanan View (Glasgow)',
+        student: 'Ama Konadu',
+        priority: 'Normal',
+        dateLogged: 'Today, 08:30 AM',
+        description: 'Student requested assistance fine-tuning the digital heating preset schedule before the cold weekend.',
+        status: 'Open'
+      },
+      {
+        id: 'ISS-402',
+        title: 'Smart Key Fob Access Sync for West Wing Gym',
+        property: 'Merchant Studios (Glasgow)',
+        student: 'David Smith',
+        priority: 'Low',
+        dateLogged: 'Yesterday, 16:45 PM',
+        description: 'Key fob works on entrance and flat doors, but needs permission sync for evening gym access.',
+        status: 'Open'
+      },
+      {
+        id: 'ISS-403',
+        title: 'Parcel Locker QR Code Re-dispatch',
+        property: 'Kings Cross Living (London)',
+        student: 'Chen Wei',
+        priority: 'High',
+        dateLogged: 'Today, 10:15 AM',
+        description: 'Delivery courier scanned parcel with incomplete room number; student requires locker pin reset.',
+        status: 'Open'
+      }
+    ];
+
+    function renderIssueTickets() {
+      const container = document.getElementById('agent-issue-tickets-list');
+      const badge = document.getElementById('agent-open-issues-badge');
+      if (!container) return;
+
+      const openCount = openIssueTickets.filter(t => t.status === 'Open').length;
+      if (badge) {
+        badge.textContent = `${openCount} Open Tickets`;
+        badge.className = openCount === 0 
+          ? "text-xs font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 px-3 py-1.5 rounded-xl border border-emerald-300"
+          : "text-xs font-bold bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 px-3 py-1.5 rounded-xl border border-rose-300 dark:border-rose-800";
+      }
+
+      container.innerHTML = openIssueTickets.map(t => {
+        const isOpen = t.status === 'Open';
+        return `
+          <div class="p-4 rounded-2xl ${isOpen ? 'bg-white dark:bg-slate-800/80 border-slate-200 dark:border-slate-700' : 'bg-slate-50 dark:bg-slate-900/60 border-emerald-300 dark:border-emerald-800/60'} border flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs transition-all shadow-xs">
+            <div class="space-y-1">
+              <div class="flex items-center space-x-2">
+                <span class="font-mono font-bold ${isOpen ? 'text-rose-600' : 'text-emerald-600'}">#${t.id}</span>
+                <span class="font-extrabold text-slate-900 dark:text-slate-100">${t.title}</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                  t.priority === 'High' ? 'bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300' :
+                  t.priority === 'Normal' ? 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300' :
+                  'bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-300'
+                }">${t.priority}</span>
+              </div>
+              <div class="text-[11px] text-slate-500">
+                <strong>${t.student}</strong> • ${t.property} • <span>${t.dateLogged}</span>
+              </div>
+              <p class="text-slate-600 dark:text-slate-300 text-xs pt-1">${t.description}</p>
+            </div>
+
+            <div class="flex items-center space-x-2 shrink-0">
+              ${isOpen ? `
+                <button onclick="resolveIssue('${t.id}')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer flex items-center">
+                  <i class="fa-solid fa-check mr-1.5"></i> Resolve Issue
+                </button>
+              ` : `
+                <span class="px-3 py-1.5 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold text-xs flex items-center border border-emerald-300 dark:border-emerald-800">
+                  <i class="fa-solid fa-circle-check mr-1.5"></i> Resolved & Closed
+                </span>
+              `}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function resolveIssue(ticketId) {
+      const idx = openIssueTickets.findIndex(t => t.id === ticketId);
+      if (idx > -1) {
+        openIssueTickets[idx].status = 'Resolved';
+        renderIssueTickets();
+      }
+    }
+
+    function loadActiveOwnerDetails() {
+      try {
+        const raw = localStorage.getItem('studentstay_active_agent');
+        if (!raw) return;
+        const agent = JSON.parse(raw);
+        const nameEl = document.getElementById('owner-header-name');
+        const roleEl = document.getElementById('owner-header-role');
+        const avatarEl = document.getElementById('owner-header-avatar');
+        const unitsEl = document.getElementById('owner-portfolio-units');
+
+        const displayName = agent.company || agent.name || agent.rep || 'Property Owner';
+        if (nameEl) nameEl.textContent = displayName;
+        if (roleEl && agent.role) roleEl.textContent = agent.role;
+        if (avatarEl) {
+          const initials = displayName.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+          avatarEl.textContent = initials || 'PO';
+        }
+        if (unitsEl && agent.units) {
+          unitsEl.textContent = `${agent.units} Units Managed`;
+        }
+      } catch (err) {
+        console.error('Error loading active owner details:', err);
+      }
+    }
+
+    function initOwnerNavScrollHighlight() {
+      const navLinks = document.querySelectorAll('.owner-nav-btn');
+      const sections = ['section-kpis', 'section-roster', 'section-refunds', 'section-companies', 'section-stream', 'section-feedback', 'section-issues'];
+      
+      window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) {
+            const rect = el.getBoundingClientRect();
+            if (rect.top <= 160) {
+              current = id;
+            }
+          }
+        });
+        
+        navLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          if (href === `#${current}`) {
+            link.className = 'owner-nav-btn px-3 py-1.5 rounded-xl bg-amber-500 text-slate-950 font-bold shadow-xs whitespace-nowrap transition-all flex items-center shrink-0';
+          } else {
+            link.className = 'owner-nav-btn px-3 py-1.5 rounded-xl text-slate-700 dark:text-slate-300 hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0';
+          }
+        });
+      }, { passive: true });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadActiveOwnerDetails();
+      initOwnerNavScrollHighlight();
+      renderAgentRoster();
+      renderRefundQueue();
+      renderActivityStream();
+      renderCompaniesGrid();
+      renderFeedback();
+      renderIssueTickets();
+    });
+  </script>
+</body>
+</html>

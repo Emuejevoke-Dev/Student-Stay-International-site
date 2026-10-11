@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Your New Home | StudentStay Verified Accommodations</title>
+  <meta name="description" content="Search verified student accommodation by country, university, province, and room type. 360 virtual tours, campus transit maps, live resident chat, and multi-currency pricing.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Tailwind CSS CDN with class-based Dark Mode -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              850: '#0c1a30',
+              900: '#070d18',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Pannellum 360 Panorama Viewer CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+  <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-slate-50 dark:bg-[#070d18] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col antialiased selection:bg-sky-500 selection:text-white">
+
+  <!-- Top Announcement Bar -->
+  <div class="bg-gradient-to-r from-sky-900 via-sky-800 to-slate-900 text-white text-xs py-2 px-4 shadow-inner border-b border-sky-700/40">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center space-x-2">
+        <span id="top-announcement-tag" class="top-intake-announcement-tag bg-sky-500/30 text-sky-200 border border-sky-400/40 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full">
+          Global Verified Search
+        </span>
+        <span id="top-announcement-text" class="top-intake-announcement-text text-slate-200 font-medium">
+          Filter student residences by country, enrolled campus, and room budget with live multi-currency conversion.
+        </span>
+      </div>
+      <div class="flex items-center space-x-4 text-slate-300 text-xs">
+        <span class="font-semibold text-emerald-300 flex items-center">
+          <i class="fa-solid fa-shield-halved text-emerald-400 mr-1.5"></i> 100% Escrow Protected Tenancies
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Viewport Container -->
+  <div id="main-viewport-container" class="flex-1 flex flex-col w-full">
+
+    <!-- Universal Navigation Header -->
+    <header class="sticky top-0 z-40 bg-white/95 dark:bg-[#0b1324]/95 backdrop-blur-md border-b border-slate-200/90 dark:border-slate-800/80 shadow-xs transition-colors">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Top Row -->
+        <div class="h-16 flex items-center justify-between">
+          <div class="flex items-center space-x-3 sm:space-x-4">
+            <a href="index.html" class="flex items-center space-x-2.5 group">
+              <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-sky-400 text-white flex items-center justify-center shadow-md shadow-sky-600/30 group-hover:scale-105 transition-transform">
+                <i class="fa-solid fa-house-chimney-window text-lg"></i>
+              </div>
+              <div>
+                <span class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white brand-font flex items-center">
+                  Student<span class="text-sky-600 dark:text-sky-400">Stay</span>
+                </span>
+                <span class="text-[10px] font-semibold text-slate-400 tracking-wider uppercase block -mt-1">
+                  Verified Global Living
+                </span>
+              </div>
+            </a>
+          </div>
+
+          <!-- Right Action Controls -->
+          <div class="flex items-center space-x-2 sm:space-x-3">
+            
+            <!-- Dark / Light Mode High-Contrast Switcher -->
+            <button class="theme-toggle-btn px-3 py-1.5 rounded-xl border text-xs font-semibold flex items-center transition-all cursor-pointer shadow-xs" title="Toggle Dark / Light Mode">
+              <i class="fa-solid fa-moon mr-1.5"></i>
+              <span class="hidden sm:inline">Theme</span>
+            </button>
+
+            <!-- Multi-Currency Selector -->
+            <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl px-2 py-1 border border-slate-200 dark:border-slate-700 text-xs">
+              <i class="fa-solid fa-coins text-sky-600 dark:text-sky-400 mr-1.5"></i>
+              <select id="currency-selector" class="bg-transparent text-xs font-bold text-slate-800 dark:text-slate-200 outline-none cursor-pointer">
+                <option value="GBP">£ GBP</option>
+                <option value="USD">$ USD</option>
+                <option value="EUR">€ EUR</option>
+                <option value="NGN">₦ NGN</option>
+                <option value="INR">₹ INR</option>
+                <option value="CNY">¥ CNY</option>
+              </select>
+            </div>
+
+            <!-- Dynamic Auth Container -->
+            <div class="auth-container"></div>
+
+            <!-- Reserve Room Button -->
+            <button onclick="openBookingModal('buchanan-view')" class="hidden sm:inline-flex px-4 py-2 text-xs font-bold text-white bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-600 rounded-xl shadow-md shadow-sky-600/20 transition-all items-center cursor-pointer">
+              <i class="fa-solid fa-key mr-1.5 text-[10px]"></i> Reserve Room
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Navigation Tabs Toggle Row (Positioned down at the left hand side) -->
+        <div class="md:hidden py-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-start">
+          <button type="button" id="mobile-nav-toggle" aria-label="Toggle navigation tabs" aria-expanded="false" class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 text-xs font-bold transition-all shadow-xs cursor-pointer border border-slate-200/80 dark:border-slate-700">
+            <i id="mobile-nav-toggle-icon" class="fa-solid fa-bars text-sky-600 dark:text-sky-400 text-xs"></i>
+            <span>All Tabs</span>
+            <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 dark:text-slate-500 ml-0.5"></i>
+          </button>
+        </div>
+
+        <!-- Bottom Row: Navigation Tabs (Desktop only; on small screens only the toggle tab is shown) -->
+        <nav class="hidden md:flex items-center space-x-1 sm:space-x-2 py-2 overflow-x-auto no-scrollbar border-t border-slate-100 dark:border-slate-800 text-xs font-semibold">
+          <a href="index.html" class="px-3.5 sm:px-4 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0">
+            <i class="fa-solid fa-house mr-1.5 text-sky-600 text-[11px]"></i> Home
+          </a>
+          <a href="about.html" class="px-3.5 sm:px-4 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0">
+            <i class="fa-solid fa-circle-info mr-1.5 text-sky-600 text-[11px]"></i> About Us
+          </a>
+          <a href="find-home.html" class="px-3.5 sm:px-4 py-2 rounded-xl font-bold bg-sky-600 text-white shadow-xs whitespace-nowrap transition-all flex items-center shrink-0">
+            <i class="fa-solid fa-magnifying-glass-location mr-1.5 text-[11px]"></i> Find Your New Home
+          </a>
+          <a href="profile.html" class="px-3.5 sm:px-4 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0">
+            <i class="fa-solid fa-id-badge mr-1.5 text-sky-600 text-[11px]"></i> Student Profile
+          </a>
+        </nav>
+
+        <!-- Mobile Expandable Navigation Drawer (Showing All Tabs on Small Screens) -->
+        <div id="mobile-nav-menu" class="hidden md:hidden border-t border-slate-200/80 dark:border-slate-800 bg-white/98 dark:bg-[#0b1324]/98 backdrop-blur-xl py-4 px-3 sm:px-4 shadow-xl transition-all">
+          <div class="space-y-4">
+            <!-- 1. Core Navigation Tabs -->
+            <div>
+              <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2 flex items-center justify-between">
+                <span>Core Navigation Tabs</span>
+                <span class="text-[9px] text-sky-600 dark:text-sky-400 font-extrabold uppercase">Primary 4</span>
+              </div>
+              <div class="grid grid-cols-2 gap-1.5">
+                <a href="index.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl font-bold text-xs transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-page="index.html">
+                  <div class="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-house text-xs"></i>
+                  </div>
+                  <span class="truncate">Home</span>
+                </a>
+                <a href="about.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl font-bold text-xs transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-page="about.html">
+                  <div class="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-circle-info text-xs"></i>
+                  </div>
+                  <span class="truncate">About Us</span>
+                </a>
+                <a href="find-home.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl font-bold text-xs transition-all bg-sky-600 text-white shadow-xs" data-page="find-home.html">
+                  <div class="w-7 h-7 rounded-lg bg-white/20 text-white flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-magnifying-glass-location text-xs"></i>
+                  </div>
+                  <span class="truncate">Find Home</span>
+                </a>
+                <a href="profile.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl font-bold text-xs transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-page="profile.html">
+                  <div class="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-id-badge text-xs"></i>
+                  </div>
+                  <span class="truncate">Student Profile</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- 2. Exploration & Community Tools -->
+            <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80">
+              <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2 flex items-center justify-between">
+                <span>Exploration & Living Tools</span>
+                <span class="text-[9px] text-emerald-600 dark:text-emerald-400 font-extrabold uppercase">Interactive</span>
+              </div>
+              <div class="grid grid-cols-2 gap-1.5">
+                <a href="tours.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="tours.html">
+                  <div class="w-7 h-7 rounded-lg bg-indigo-100 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-arrows-spin text-xs"></i>
+                  </div>
+                  <span class="truncate">360° Tours</span>
+                </a>
+                <a href="map.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="map.html">
+                  <div class="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-map-location-dot text-xs"></i>
+                  </div>
+                  <span class="truncate">Campus Map</span>
+                </a>
+                <a href="insights.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="insights.html">
+                  <div class="w-7 h-7 rounded-lg bg-purple-100 dark:bg-purple-950/80 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-chart-line text-xs"></i>
+                  </div>
+                  <span class="truncate">Rent Insights</span>
+                </a>
+                <a href="residents.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="residents.html">
+                  <div class="w-7 h-7 rounded-lg bg-amber-100 dark:bg-amber-950/80 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-users text-xs"></i>
+                  </div>
+                  <span class="truncate">Residents</span>
+                </a>
+                <a href="chat.html" class="mobile-nav-link col-span-2 flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="chat.html">
+                  <div class="w-7 h-7 rounded-lg bg-teal-100 dark:bg-teal-950/80 text-teal-600 dark:text-teal-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-comments text-xs"></i>
+                  </div>
+                  <div class="flex-1 min-w-0 flex items-center justify-between">
+                    <span class="truncate">Direct Landlord Chat</span>
+                    <span class="text-[9px] px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 font-extrabold uppercase">Live Escrow</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <!-- 3. Portals & Quick Account Access -->
+            <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2 text-xs">
+              <a href="agent.html" class="flex-1 py-2.5 px-3 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-400/40 font-bold transition-all flex items-center justify-center space-x-1.5">
+                <i class="fa-solid fa-user-tie text-amber-500 text-xs"></i>
+                <span>Owner Portal</span>
+              </a>
+              <a href="signup.html" class="flex-1 py-2.5 px-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold transition-all shadow-xs flex items-center justify-center space-x-1.5">
+                <i class="fa-solid fa-user-plus text-xs"></i>
+                <span>Create Account</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main Content Flow -->
+    <main class="flex-1 pb-16">
+
+      <!-- Header Title Banner -->
+      <section class="bg-gradient-to-b from-sky-50/70 via-white to-slate-50 dark:from-[#0b1324] dark:via-[#070d18] dark:to-[#070d18] pt-8 pb-6 border-b border-slate-200/80 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+            <div>
+              <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-sky-100 dark:bg-sky-900/60 text-sky-800 dark:text-sky-200 text-xs font-bold border border-sky-200 dark:border-sky-800 mb-2">
+                <i class="fa-solid fa-building-circle-check text-sky-600 dark:text-sky-400"></i>
+                <span>100% Physically Inspected Accommodations</span>
+              </div>
+              <h1 class="text-2xl sm:text-4xl font-black text-slate-900 dark:text-slate-100 tracking-tight brand-font">
+                Find Your New Student Home
+              </h1>
+              <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-2xl leading-relaxed">
+                Filter by country, university campus, province, and room type. Inspect studios in 360°, check campus transit, chat with residents, and reserve safely with escrow.
+              </p>
+            </div>
+
+            <!-- Currency Quick Selector Card -->
+            <div class="bg-white dark:bg-[#0f1a30] p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex items-center space-x-3">
+              <div class="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-950/70 text-sky-600 dark:text-sky-400 flex items-center justify-center text-lg">
+                <i class="fa-solid fa-money-bill-transfer"></i>
+              </div>
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Active Currency</span>
+                <div class="flex items-center space-x-2 mt-0.5">
+                  <select class="currency-select-input bg-transparent font-extrabold text-sm text-slate-900 dark:text-slate-100 outline-none cursor-pointer">
+                    <option value="GBP">£ GBP (British Pound)</option>
+                    <option value="USD">$ USD (US Dollar)</option>
+                    <option value="EUR">€ EUR (Euro)</option>
+                    <option value="NGN">₦ NGN (Nigerian Naira)</option>
+                    <option value="INR">₹ INR (Indian Rupee)</option>
+                    <option value="CNY">¥ CNY (Chinese Yuan)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DEDICATED SUB-NAVIGATION BAR (UNDER "FIND YOUR NEW HOME") -->
+          <div class="pt-4 border-t border-slate-200/80 dark:border-slate-800 flex items-center space-x-2 overflow-x-auto no-scrollbar pb-1 text-xs">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mr-2 shrink-0 flex items-center">
+              <i class="fa-solid fa-compass mr-1.5 text-sky-600"></i> Explore Tools:
+            </span>
+            <a href="find-home.html" class="px-4 py-2 rounded-xl font-bold bg-sky-600 text-white shadow-xs whitespace-nowrap flex items-center shrink-0">
+              <i class="fa-solid fa-list mr-1.5 text-[11px]"></i> All Verified Homes
+            </a>
+            <a href="tours.html" class="px-4 py-2 rounded-xl font-semibold bg-white dark:bg-[#0f1a30] text-slate-700 dark:text-slate-200 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 whitespace-nowrap flex items-center shrink-0 transition-colors">
+              <i class="fa-solid fa-arrows-spin mr-1.5 text-sky-600 text-[11px]"></i> 360° Virtual Tours
+              <span class="ml-1.5 text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300">VR</span>
+            </a>
+            <a href="residents.html" class="px-4 py-2 rounded-xl font-semibold bg-white dark:bg-[#0f1a30] text-slate-700 dark:text-slate-200 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 whitespace-nowrap flex items-center shrink-0 transition-colors">
+              <i class="fa-solid fa-users mr-1.5 text-sky-600 text-[11px]"></i> Ask Residents
+            </a>
+            <a href="chat.html" class="px-4 py-2 rounded-xl font-semibold bg-white dark:bg-[#0f1a30] text-slate-700 dark:text-slate-200 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 whitespace-nowrap flex items-center shrink-0 transition-colors relative">
+              <i class="fa-solid fa-comments mr-1.5 text-sky-600 text-[11px]"></i> Live Peer Chat
+              <span class="w-2 h-2 rounded-full bg-emerald-500 ml-1.5 animate-pulse"></span>
+            </a>
+            <a href="map.html" class="px-4 py-2 rounded-xl font-semibold bg-white dark:bg-[#0f1a30] text-slate-700 dark:text-slate-200 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 whitespace-nowrap flex items-center shrink-0 transition-colors">
+              <i class="fa-solid fa-map-location-dot mr-1.5 text-sky-600 text-[11px]"></i> Campus Transit Map
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SEARCH & FILTER CONSOLE -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-3 mb-8">
+        <div class="bg-white dark:bg-[#0f1a30] rounded-3xl p-5 sm:p-7 shadow-xl border border-slate-200/90 dark:border-slate-800">
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            
+            <!-- 1. Country -->
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                1. Destination Country
+              </label>
+              <div class="flex items-center bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs">
+                <i class="fa-solid fa-globe text-sky-600 mr-2 shrink-0"></i>
+                <select id="filter-country" onchange="handleCountryChange()" class="bg-transparent font-semibold text-slate-800 dark:text-slate-100 w-full outline-none cursor-pointer">
+                  <option value="all">All Countries (Global)</option>
+                  <option value="uk" selected>United Kingdom 🇬🇧</option>
+                  <option value="usa">United States 🇺🇸</option>
+                  <option value="canada">Canada 🇨🇦</option>
+                  <option value="australia">Australia 🇦🇺</option>
+                  <option value="germany">Germany 🇩🇪</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- 2. Province / District -->
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                2. District / Province
+              </label>
+              <div class="flex items-center bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs">
+                <i class="fa-solid fa-map-location text-sky-600 mr-2 shrink-0"></i>
+                <select id="filter-district" onchange="handleDistrictChange()" class="bg-transparent font-semibold text-slate-800 dark:text-slate-100 w-full outline-none cursor-pointer">
+                  <option value="all">All Districts / Cities</option>
+                  <option value="Glasgow" selected>Glasgow City Centre / Cowcaddens</option>
+                  <option value="Edinburgh">Edinburgh City & Fountainbridge</option>
+                  <option value="London">London Central & Bloomsbury</option>
+                  <option value="New York">New York City & Manhattan</option>
+                  <option value="Toronto">Toronto Downtown</option>
+                  <option value="Munich">Munich & Schwabing</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- 3. University / School -->
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                3. University Attending
+              </label>
+              <div class="flex items-center bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs">
+                <i class="fa-solid fa-building-columns text-sky-600 mr-2 shrink-0"></i>
+                <select id="filter-university" onchange="handleUniversityChange()" class="bg-transparent font-semibold text-slate-800 dark:text-slate-100 w-full outline-none cursor-pointer">
+                  <option value="all">All Universities</option>
+                  <option value="gcu" selected>Glasgow Caledonian University (GCU)</option>
+                  <option value="strath">University of Strathclyde</option>
+                  <option value="uofg">University of Glasgow</option>
+                  <option value="uoe">University of Edinburgh</option>
+                  <option value="ucl">University College London (UCL)</option>
+                  <option value="nyu">New York University (NYU)</option>
+                  <option value="uoft">University of Toronto</option>
+                  <option value="tum">Technical University of Munich (TUM)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- 4. Room Type -->
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                4. Accommodation Type
+              </label>
+              <div class="flex items-center bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs">
+                <i class="fa-solid fa-bed text-sky-600 mr-2 shrink-0"></i>
+                <select id="filter-room-type" onchange="applyFilters()" class="bg-transparent font-semibold text-slate-800 dark:text-slate-100 w-full outline-none cursor-pointer">
+                  <option value="all">All Room Types</option>
+                  <option value="studio">Private En-suite Studio</option>
+                  <option value="ensuite">En-suite in Shared Apartment</option>
+                  <option value="apartment">1-Bedroom Private Apartment</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Filter Bar (Budget & Actions) -->
+          <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center space-x-2 text-xs">
+              <span class="font-bold text-slate-500 dark:text-slate-400">Quick Filters:</span>
+              <button onclick="setQuickFilter('all')" class="px-2.5 py-1 rounded-lg font-bold bg-sky-100 dark:bg-sky-900/60 text-sky-800 dark:text-sky-200 cursor-pointer">All Accommodations</button>
+              <button onclick="setQuickFilter('under200')" class="px-2.5 py-1 rounded-lg font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">Under £200 / wk</button>
+              <button onclick="setQuickFilter('studios')" class="px-2.5 py-1 rounded-lg font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">Private Studios</button>
+              <button onclick="setQuickFilter('walk')" class="px-2.5 py-1 rounded-lg font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">&lt; 10 min Walk</button>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <span id="results-count-badge" class="text-xs font-bold text-slate-700 dark:text-slate-300">
+                Showing 6 verified homes
+              </span>
+              <button onclick="resetAllFilters()" class="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-bold hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">
+                Reset Filters
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- RESULTS & PROPERTIES DIRECTORY -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+        
+        <!-- Interactive Accommodations Grid -->
+        <div id="find-home-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Dynamically populated via renderFindHomeProperties() -->
+        </div>
+
+      </section>
+
+      <!-- CONNECT & VERIFY BANNERS (CHAT WITH OWNERS & RESIDENTS) -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Banner 1: Chat with Owners / Concierge -->
+          <div class="bg-gradient-to-br from-sky-900 to-slate-900 text-white rounded-3xl p-6 sm:p-8 border border-sky-700/40 shadow-lg flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-2xl bg-sky-500/30 border border-sky-400/40 text-sky-200 flex items-center justify-center text-xl mb-4">
+                <i class="fa-solid fa-headset"></i>
+              </div>
+              <h3 class="text-xl font-extrabold brand-font mb-2">Chat with Residence Managers & Owners</h3>
+              <p class="text-xs text-slate-300 leading-relaxed mb-6">
+                Have specific queries about room orientation, dual occupancy, summer luggage storage, or parking? Connect directly with verified on-site accommodation management.
+              </p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <a href="chat.html?resident=residence-manager" class="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-md transition-all flex items-center cursor-pointer">
+                <i class="fa-solid fa-headset mr-2 text-sm"></i> Chat with Residence Concierge
+              </a>
+              <a href="https://wa.me/447492147822?text=Hi%20StudentStay,%20I%20have%20a%20question%20about%20student%20accommodations" target="_blank" class="px-4 py-2.5 rounded-xl bg-emerald-500/90 hover:bg-emerald-600 text-white font-bold text-xs shadow-md transition-all flex items-center">
+                <i class="fa-brands fa-whatsapp mr-1.5 text-sm"></i> WhatsApp Advisor
+              </a>
+            </div>
+          </div>
+
+          <!-- Banner 2: Ask Current Residents -->
+          <div class="bg-gradient-to-br from-indigo-900 to-slate-900 text-white rounded-3xl p-6 sm:p-8 border border-indigo-700/40 shadow-lg flex flex-col justify-between">
+            <div>
+              <div class="w-12 h-12 rounded-2xl bg-indigo-500/30 border border-indigo-400/40 text-indigo-200 flex items-center justify-center text-xl mb-4">
+                <i class="fa-solid fa-comments"></i>
+              </div>
+              <h3 class="text-xl font-extrabold brand-font mb-2">Ask Current International Residents</h3>
+              <p class="text-xs text-slate-300 leading-relaxed mb-6">
+                Connect 1-on-1 with students from Ghana, Nigeria, India, China, and the US living in these buildings right now. Get honest answers about Wi-Fi, heating, and flatmates.
+              </p>
+            </div>
+            <div class="flex items-center space-x-3">
+              <a href="residents.html" class="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs shadow-md transition-all flex items-center">
+                <i class="fa-solid fa-users mr-2"></i> Browse Student Ambassadors
+              </a>
+              <a href="chat.html" class="px-4 py-2.5 rounded-xl bg-white/20 hover:bg-white/30 text-white font-bold text-xs transition-all flex items-center">
+                Live Peer Chat
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- CAMPUS TRANSIT & COMMUTE PREVIEW -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+        <div class="bg-white dark:bg-[#0f1a30] rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-wrap items-center justify-between gap-6">
+          <div class="max-w-xl">
+            <span class="text-xs font-bold uppercase tracking-wider text-sky-600 block mb-1">
+              Campus Transit Map Integration
+            </span>
+            <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 brand-font">
+              Never Guess Your University Walking Distance
+            </h3>
+            <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Every residence in our directory has GPS walking, bus, and subway paths calculated directly to campus gates, libraries, and transport terminals.
+            </p>
+          </div>
+          <a href="map.html" class="px-6 py-3 rounded-2xl bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 text-white font-bold text-xs shadow-md transition-all flex items-center">
+            <i class="fa-solid fa-map-location-dot mr-2 text-sky-400"></i> Open Interactive Campus Map
+          </a>
+        </div>
+      </section>
+
+      <!-- INSIGHTS & FAQS ACCORDION SECTION -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+        <div class="bg-white dark:bg-[#0f1a30] rounded-3xl p-6 sm:p-10 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div class="max-w-2xl mb-8">
+            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-sky-100 dark:bg-sky-900/60 text-sky-800 dark:text-sky-200 text-xs font-bold mb-2">
+              <i class="fa-solid fa-circle-question text-sky-600"></i>
+              <span>International Student Housing FAQs</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 brand-font">
+              Essential Insights Before You Book
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              Frequently asked questions answered by current international students and compliance advisors.
+            </p>
+          </div>
+
+          <div class="space-y-3">
+            
+            <details class="group bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-4 border border-slate-200/80 dark:border-slate-700/80 cursor-pointer">
+              <summary class="font-bold text-xs sm:text-sm text-slate-900 dark:text-slate-100 flex items-center justify-between list-none">
+                <span>Are all utility bills (electricity, water, heating, and Wi-Fi) genuinely included?</span>
+                <i class="fa-solid fa-chevron-down text-xs text-slate-400 group-open:rotate-180 transition-transform"></i>
+              </summary>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">
+                Yes! 100% of our verified partner properties operate on an all-inclusive policy. This covers unlimited heating, hot water, electricity, and high-speed fiber internet (up to 250Mbps). You will never receive surprise winter utility surcharges.
+              </p>
+            </details>
+
+            <details class="group bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-4 border border-slate-200/80 dark:border-slate-700/80 cursor-pointer">
+              <summary class="font-bold text-xs sm:text-sm text-slate-900 dark:text-slate-100 flex items-center justify-between list-none">
+                <span>How does the 100% "No Visa, No Pay" Escrow Guarantee work?</span>
+                <i class="fa-solid fa-chevron-down text-xs text-slate-400 group-open:rotate-180 transition-transform"></i>
+              </summary>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">
+                When you pay your holding deposit (£150), it is locked in a licensed legal escrow trust account. If your international student visa application is refused or delayed past course start date, simply forward your official Home Office notice and 100% of your deposit is refunded within 48 hours.
+              </p>
+            </details>
+
+            <details class="group bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-4 border border-slate-200/80 dark:border-slate-700/80 cursor-pointer">
+              <summary class="font-bold text-xs sm:text-sm text-slate-900 dark:text-slate-100 flex items-center justify-between list-none">
+                <span>Do international students have to pay UK Council Tax?</span>
+                <i class="fa-solid fa-chevron-down text-xs text-slate-400 group-open:rotate-180 transition-transform"></i>
+              </summary>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">
+                No. Full-time enrolled students in the UK are completely exempt from Scottish and English Council Tax. Once you register with your university, you will download a Council Tax Exemption Certificate to submit to the local council.
+              </p>
+            </details>
+
+            <details class="group bg-slate-50 dark:bg-slate-800/60 rounded-2xl p-4 border border-slate-200/80 dark:border-slate-700/80 cursor-pointer">
+              <summary class="font-bold text-xs sm:text-sm text-slate-900 dark:text-slate-100 flex items-center justify-between list-none">
+                <span>Can I switch rooms or floors after booking?</span>
+                <i class="fa-solid fa-chevron-down text-xs text-slate-400 group-open:rotate-180 transition-transform"></i>
+              </summary>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-3 leading-relaxed">
+                Yes! From your <strong>Student Profile</strong> dashboard, you can request room reallocations, upgrades, or submit a tenancy transfer request if a friend or classmate takes over your contract.
+              </p>
+            </details>
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- TRUST FOOTER -->
+    <footer class="bg-slate-900 text-slate-300 pt-12 pb-16 border-t border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-10">
+          
+          <div class="lg:col-span-2 space-y-4">
+            <div class="flex items-center space-x-2">
+              <div class="w-8 h-8 rounded-lg bg-sky-500 text-white flex items-center justify-center">
+                <i class="fa-solid fa-house-chimney-window"></i>
+              </div>
+              <span class="text-xl font-black text-white brand-font">Student<span class="text-sky-400">Stay</span></span>
+            </div>
+            <p class="text-xs text-slate-400 max-w-sm leading-relaxed">
+              Find, inspect in 360°, and lock verified student rooms safely with escrow. Built for international students moving to Scotland and the UK.
+            </p>
+            <div class="flex items-center space-x-3 text-slate-400 text-sm">
+              <a href="#" class="hover:text-white"><i class="fa-brands fa-instagram"></i></a>
+              <a href="#" class="hover:text-white"><i class="fa-brands fa-whatsapp"></i></a>
+              <a href="#" class="hover:text-white"><i class="fa-brands fa-linkedin"></i></a>
+              <a href="#" class="hover:text-white"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+          </div>
+
+          <div>
+            <h5 class="text-xs font-bold text-white uppercase tracking-wider mb-3">Popular Cities</h5>
+            <ul class="space-y-2 text-xs text-slate-400">
+              <li><a href="find-home.html?country=uk&city=Glasgow" class="hover:text-white">Glasgow Accommodations</a></li>
+              <li><a href="find-home.html?country=uk&city=Edinburgh" class="hover:text-white">Edinburgh Student Flats</a></li>
+              <li><a href="find-home.html?country=uk&city=London" class="hover:text-white">London Student Living</a></li>
+              <li><a href="find-home.html?country=usa" class="hover:text-white">New York Student Housing</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h5 class="text-xs font-bold text-white uppercase tracking-wider mb-3">Key Features</h5>
+            <ul class="space-y-2 text-xs text-slate-400">
+              <li><a href="tours.html" class="hover:text-white">360° Virtual Tours</a></li>
+              <li><a href="residents.html" class="hover:text-white">Ask Residents Directory</a></li>
+              <li><a href="chat.html" class="hover:text-white">Live Peer Chat</a></li>
+              <li><a href="map.html" class="hover:text-white">Campus Transit Map</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h5 class="text-xs font-bold text-white uppercase tracking-wider mb-3">Safe Tenancy</h5>
+            <ul class="space-y-2 text-xs text-slate-400">
+              <li><a href="about.html" class="hover:text-white">Zero Scam Risk Policy</a></li>
+              <li><a href="about.html" class="hover:text-white">Escrow Holding Safeguards</a></li>
+              <li><a href="profile.html" class="hover:text-white">Student Profile Portal</a></li>
+              <li><a href="about.html" class="hover:text-white">About StudentStay</a></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="pt-8 border-t border-slate-800 text-xs text-slate-500 flex flex-wrap items-center justify-between gap-4">
+          <p>© 2026 StudentStay International. All rights reserved.</p>
+          <div class="flex items-center space-x-4">
+            <a href="about.html" class="hover:text-slate-400">Privacy Policy</a>
+            <a href="about.html" class="hover:text-slate-400">Tenancy Safeguards</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ESCROW RESERVATION MODAL (INCLUDED UNIVERSALLY) -->
+  <div id="modal-booking-escrow" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-[#0f1a30] rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800">
+      <div class="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/60 dark:bg-slate-900/60">
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+            <h3 id="booking-property-title" class="text-base font-extrabold text-slate-900 dark:text-slate-100 brand-font">
+              Buchanan View - Bronze En-suite
+            </h3>
+          </div>
+          <p id="booking-property-subtitle" class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+            Bronze Studio • £189 / week
+          </p>
+        </div>
+        <button onclick="closeBookingModal()" class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-500 hover:text-slate-800 dark:hover:white flex items-center justify-center cursor-pointer transition-colors">
+          ✕
+        </button>
+      </div>
+
+      <div class="px-6 py-3 bg-slate-100/60 dark:bg-slate-850 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-slate-500">
+        <div class="flex items-center space-x-2">
+          <div id="step-indicator-1" class="w-6 h-6 rounded-full bg-sky-600 text-white flex items-center justify-center text-xs">1</div>
+          <span>Room & Dates</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <div id="step-indicator-2" class="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 flex items-center justify-center text-xs">2</div>
+          <span>Student Info</span>
+        </div>
+        <div class="flex items-center space-x-2">
+          <div id="step-indicator-3" class="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 flex items-center justify-center text-xs">3</div>
+          <span>Escrow Protection</span>
+        </div>
+      </div>
+
+      <div class="p-6 space-y-4 max-h-[60vh] overflow-y-auto">
+        <div id="booking-step-1" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Select Tenancy Length</label>
+            <select class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 text-xs text-slate-800 dark:text-slate-100 font-medium">
+              <option>51 Weeks (Full Academic Year & Summer)</option>
+              <option>44 Weeks (Standard Academic Year)</option>
+              <option>Semester 1 Only (Autumn Intake)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Check-in Date</label>
+            <select class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 text-xs text-slate-800 dark:text-slate-100 font-medium">
+              <option>Saturday, 12 September 2026</option>
+              <option>Saturday, 19 September 2026</option>
+              <option>Saturday, 26 September 2026</option>
+            </select>
+          </div>
+          <div class="p-3 bg-sky-50 dark:bg-sky-950/40 rounded-xl border border-sky-200 dark:border-sky-800 text-xs text-sky-800 dark:text-sky-300">
+            <i class="fa-solid fa-plane-arrival mr-1.5"></i> Free Glasgow Airport welcome shuttle included for arrivals on 11-13 September.
+          </div>
+        </div>
+
+        <div id="booking-step-2" class="space-y-4 hidden">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Full Legal Name</label>
+            <input type="text" id="booking-student-name" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 text-xs text-slate-800 dark:text-slate-100">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Enrolled University & Course</label>
+            <input type="text" id="booking-student-uni" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2.5 text-xs text-slate-800 dark:text-slate-100">
+          </div>
+        </div>
+
+        <div id="booking-step-3" class="space-y-4 hidden">
+          <div class="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-2xl p-4 space-y-2">
+            <div class="flex items-center text-emerald-800 dark:text-emerald-300 text-xs font-bold">
+              <i class="fa-solid fa-shield-halved text-emerald-600 mr-2 text-base"></i> 100% Refundable Escrow Guarantee
+            </div>
+            <p class="text-xs text-emerald-900 dark:text-emerald-200 leading-relaxed">
+              Your holding deposit secures this room exclusively. If your student visa is delayed or denied, 100% is refunded within 48 hours without fee.
+            </p>
+          </div>
+          <div class="bg-slate-50 dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700 text-xs space-y-2">
+            <div class="flex justify-between">
+              <span class="text-slate-600 dark:text-slate-400">Weekly Rent:</span>
+              <span id="booking-summary-rent" class="font-bold text-slate-900 dark:text-slate-100">£189 / wk (All Bills Included)</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-slate-600 dark:text-slate-400">Holding Deposit Due Today:</span>
+              <span id="booking-summary-deposit" class="font-extrabold text-sky-600 dark:text-sky-400 text-sm">£150.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+        <button onclick="prevBookingStep()" class="px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 cursor-pointer">
+          Back
+        </button>
+        <div class="space-x-2">
+          <button onclick="nextBookingStep()" id="btn-booking-next" class="px-5 py-2.5 text-xs font-bold text-white bg-sky-600 hover:bg-sky-700 rounded-xl shadow-xs transition-all cursor-pointer">
+            Continue →
+          </button>
+          <button onclick="completeBooking()" id="btn-booking-submit" class="hidden px-5 py-2.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-xs transition-all cursor-pointer">
+            Lock Room in Escrow
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/data.js?v=20261010"></script>
+  <script src="assets/js/app.js?v=20261010"></script>
+  <script>
+    // Unified Comprehensive Accommodations Database Resolver
+    function getSafeProperties() {
+      if (typeof window !== 'undefined' && window.APP_DATA && Array.isArray(window.APP_DATA.properties) && window.APP_DATA.properties.length > 0) {
+        return window.APP_DATA.properties;
+      }
+      if (typeof APP_DATA !== 'undefined' && Array.isArray(APP_DATA.properties) && APP_DATA.properties.length > 0) {
+        return APP_DATA.properties;
+      }
+      return [];
+    }
+
+    let allFindProperties = getSafeProperties();
+
+    // Global Hierarchy Mapping for Country -> Cities & Universities
+    const globalCountryCityUniMap = {
+      uk: {
+        name: 'United Kingdom 🇬🇧',
+        currency: 'GBP',
+        cities: [
+          { value: 'all', label: 'All UK Cities (Glasgow, Edinburgh, Aberdeen, London, Manchester, Birmingham)' },
+          { value: 'Glasgow', label: 'Glasgow (Cowcaddens, West End, Merchant City)' },
+          { value: 'Edinburgh', label: 'Edinburgh (Old Town, Fountainbridge, Haymarket)' },
+          { value: 'Aberdeen', label: 'Aberdeen (King’s College, Old Aberdeen)' },
+          { value: 'London', label: 'London (Bloomsbury, Spitalfields, Central)' },
+          { value: 'Manchester', label: 'Manchester (Oxford Road, City Centre, Fallowfield)' },
+          { value: 'Birmingham', label: 'Birmingham (Selly Oak, Aston, Edgbaston)' }
+        ],
+        unis: [
+          { id: 'all', name: 'All UK Universities', city: 'all' },
+          { id: 'gcu', name: 'Glasgow Caledonian (GCU)', city: 'Glasgow' },
+          { id: 'strath', name: 'University of Strathclyde', city: 'Glasgow' },
+          { id: 'uofg', name: 'University of Glasgow', city: 'Glasgow' },
+          { id: 'uoe', name: 'University of Edinburgh', city: 'Edinburgh' },
+          { id: 'uab', name: 'University of Aberdeen', city: 'Aberdeen' },
+          { id: 'ucl', name: 'University College London (UCL)', city: 'London' },
+          { id: 'kcl', name: 'King’s College London (KCL)', city: 'London' },
+          { id: 'manchester', name: 'University of Manchester', city: 'Manchester' },
+          { id: 'birmingham', name: 'University of Birmingham', city: 'Birmingham' }
+        ]
+      },
+      usa: {
+        name: 'United States 🇺🇸',
+        currency: 'USD',
+        cities: [
+          { value: 'all', label: 'All US Cities (New York, Boston, Los Angeles, Berkeley)' },
+          { value: 'New York City', label: 'New York City (Manhattan, Morningside, Village)' },
+          { value: 'Boston / Cambridge', label: 'Boston / Cambridge (Harvard Sq, Kendall Sq)' },
+          { value: 'Los Angeles', label: 'Los Angeles (Westwood, Sunset Blvd)' },
+          { value: 'Berkeley', label: 'Berkeley (Telegraph Ave, Downtown)' }
+        ],
+        unis: [
+          { id: 'all', name: 'All US Universities', city: 'all' },
+          { id: 'columbia', name: 'Columbia University', city: 'New York City' },
+          { id: 'nyu', name: 'New York University (NYU)', city: 'New York City' },
+          { id: 'harvard', name: 'Harvard University', city: 'Boston / Cambridge' },
+          { id: 'mit', name: 'MIT', city: 'Boston / Cambridge' },
+          { id: 'ucla', name: 'UCLA', city: 'Los Angeles' },
+          { id: 'berkeley', name: 'UC Berkeley', city: 'Berkeley' }
+        ]
+      },
+      canada: {
+        name: 'Canada 🇨🇦',
+        currency: 'USD',
+        cities: [
+          { value: 'all', label: 'All Canadian Cities (Toronto, Waterloo, Vancouver)' },
+          { value: 'Toronto', label: 'Toronto (Downtown, Bay & Bloor, Annex)' },
+          { value: 'Waterloo', label: 'Waterloo (University Ave, Tech Corridor)' },
+          { value: 'Vancouver', label: 'Vancouver (Point Grey, Kitsilano)' }
+        ],
+        unis: [
+          { id: 'all', name: 'All Canadian Universities', city: 'all' },
+          { id: 'uoft', name: 'University of Toronto', city: 'Toronto' },
+          { id: 'waterloo', name: 'University of Waterloo', city: 'Waterloo' },
+          { id: 'ubc', name: 'University of British Columbia (UBC)', city: 'Vancouver' }
+        ]
+      },
+      australia: {
+        name: 'Australia 🇦🇺',
+        currency: 'USD',
+        cities: [
+          { value: 'all', label: 'All Australian Cities (Sydney, Melbourne)' },
+          { value: 'Sydney', label: 'Sydney (Broadway, Kensington, Darling Harbour)' },
+          { value: 'Melbourne', label: 'Melbourne (Parkville, Carlton, CBD)' }
+        ],
+        unis: [
+          { id: 'all', name: 'All Australian Universities', city: 'all' },
+          { id: 'usyd', name: 'University of Sydney', city: 'Sydney' },
+          { id: 'unsw', name: 'UNSW Sydney', city: 'Sydney' },
+          { id: 'unimelb', name: 'University of Melbourne', city: 'Melbourne' }
+        ]
+      },
+      germany: {
+        name: 'Germany 🇩🇪',
+        currency: 'EUR',
+        cities: [
+          { value: 'all', label: 'All German Cities (Munich, Berlin)' },
+          { value: 'Munich', label: 'Munich (Maxvorstadt, Schwabing, English Garden)' },
+          { value: 'Berlin', label: 'Berlin (Mitte, Unter den Linden, Alexanderplatz)' }
+        ],
+        unis: [
+          { id: 'all', name: 'All German Universities', city: 'all' },
+          { id: 'tum', name: 'Technical University of Munich (TUM)', city: 'Munich' },
+          { id: 'lmu', name: 'LMU Munich', city: 'Munich' },
+          { id: 'hu-berlin', name: 'Humboldt University of Berlin', city: 'Berlin' }
+        ]
+      }
+    };
+
+    function renderFindHomeProperties(items, fallbackInfo = null) {
+      const grid = document.getElementById('find-home-grid');
+      const countBadge = document.getElementById('results-count-badge');
+      if (!grid) return;
+
+      if (!items || !items.length) {
+        const allProps = getSafeProperties();
+        if (allProps && allProps.length > 0) {
+          renderFindHomeProperties(allProps, {
+            title: 'Showing all ' + allProps.length + ' verified accommodations',
+            message: 'No homes matched that specific combination, so we are displaying all available verified homes.',
+            badgeText: 'showing all global'
+          });
+          return;
+        }
+
+        grid.innerHTML = `
+          <div class="col-span-full py-16 text-center bg-white dark:bg-[#0f1a30] rounded-3xl border border-slate-200 dark:border-slate-800 p-8 shadow-sm">
+            <div class="w-16 h-16 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-600 flex items-center justify-center mx-auto mb-4 text-2xl">
+              <i class="fa-solid fa-house-circle-check"></i>
+            </div>
+            <h4 class="text-base font-bold text-slate-800 dark:text-slate-200 mb-1">Browse All Verified Accommodations</h4>
+            <p class="text-xs text-slate-500 max-w-sm mx-auto mb-4">Resetting filters will display all verified accommodations across all cities.</p>
+            <button onclick="resetAllFilters()" class="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs shadow-xs cursor-pointer">
+              Show All Accommodations
+            </button>
+          </div>
+        `;
+        if (countBadge) countBadge.textContent = 'Showing 0 verified homes';
+        return;
+      }
+
+      let bannerHtml = '';
+      if (fallbackInfo) {
+        bannerHtml = `
+          <div class="col-span-full mb-2 p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 flex items-center justify-between flex-wrap gap-3">
+            <div class="flex items-center space-x-3">
+              <div class="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center text-sm shrink-0">
+                <i class="fa-solid fa-lightbulb"></i>
+              </div>
+              <div>
+                <h4 class="text-xs sm:text-sm font-bold text-amber-900 dark:text-amber-200">${fallbackInfo.title}</h4>
+                <p class="text-[11px] text-amber-800 dark:text-amber-300">${fallbackInfo.message}</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2">
+              <button onclick="resetAllFilters()" class="px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs cursor-pointer shadow-xs">
+                Reset All Filters
+              </button>
+            </div>
+          </div>
+        `;
+        if (countBadge) countBadge.textContent = `Showing ${items.length} verified ${items.length === 1 ? 'home' : 'homes'} (${fallbackInfo.badgeText})`;
+      } else {
+        if (countBadge) countBadge.textContent = `Showing ${items.length} verified ${items.length === 1 ? 'home' : 'homes'}`;
+      }
+
+      const cardsHtml = items.map(p => {
+        const displayCity = p.city || p.district || 'City Centre';
+        const displayCountry = p.countryName ? p.countryName.split(' ')[0] : (p.country ? p.country.toUpperCase() : 'UK');
+        const price = p.pricePerWeekGBP || p.priceGBP || 189;
+        const deposit = p.depositGBP || 150;
+        const roomTitle = p.roomTypeTitle || p.roomType || 'Private En-suite Studio';
+        const uniLabel = p.uniName || p.universityName || 'Campus Partner';
+        const commuteText = p.commute || (p.commutes && p.commutes[0] ? p.commutes[0].time : 'Near Campus');
+        const residentId = p.residentId || p.featuredResidentId || 'ama-k';
+        const imgSrc = p.heroImage || p.image || 'assets/images/buchanan_view.jpg';
+
+        return `
+          <div class="property-card-hover bg-white dark:bg-[#0f1a30] rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs flex flex-col justify-between">
+            <div>
+              <div class="relative h-56 overflow-hidden">
+                <img src="${imgSrc}" alt="${p.title}" class="w-full h-full object-cover">
+                <span class="absolute top-3 left-3 bg-emerald-600 text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full shadow-sm">
+                  <i class="fa-solid fa-shield-check mr-1"></i> Verified Residence
+                </span>
+                <span class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-md text-amber-300 text-xs font-bold px-2 py-0.5 rounded-lg border border-amber-400/30">
+                  <i class="fa-solid fa-star text-[10px] mr-1"></i> ${p.rating || 4.9} (${p.reviewsCount || 80})
+                </span>
+                <span class="absolute bottom-3 left-3 bg-slate-900/80 backdrop-blur-md text-white text-[11px] font-medium px-2.5 py-1 rounded-lg">
+                  <i class="fa-solid fa-location-dot text-sky-400 mr-1"></i> ${commuteText}
+                </span>
+              </div>
+
+              <div class="p-5">
+                <div class="flex items-center space-x-1.5 mb-1 text-[11px] text-sky-600 dark:text-sky-400 font-bold uppercase tracking-wider">
+                  <span>${displayCity}, ${displayCountry}</span>
+                </div>
+                <h3 class="font-extrabold text-slate-900 dark:text-slate-100 text-base mb-1">${p.title}</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">${roomTitle} • ${uniLabel}</p>
+                
+                <div class="flex flex-wrap gap-1.5 mb-4 text-[11px] text-slate-600 dark:text-slate-300 font-medium">
+                  <span class="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 rounded-md">⚡ All Bills Included</span>
+                  <span class="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 rounded-md">📶 250Mbps Wi-Fi</span>
+                  <span class="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 rounded-md">🚿 Heated En-suite</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-5 pt-0">
+              <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between mb-3">
+                <div>
+                  <span class="text-[10px] text-slate-400 uppercase font-bold block">From</span>
+                  <span class="text-base font-extrabold text-sky-600 dark:text-sky-400" data-price-gbp="${price}" data-price-period="/ week">
+                    £${price} / week
+                  </span>
+                </div>
+                <div class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-950/40 px-2 py-1 rounded-lg border border-emerald-200 dark:border-emerald-800">
+                  Holding: £${deposit} (Escrow)
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="grid grid-cols-3 gap-1.5 mb-2">
+                <a href="tours.html?property=${p.id}" class="py-2 text-center bg-slate-100 dark:bg-slate-800 hover:bg-sky-50 dark:hover:bg-sky-950/40 text-slate-800 dark:text-slate-200 text-xs font-bold rounded-xl transition-colors flex items-center justify-center">
+                  <i class="fa-solid fa-arrows-spin mr-1 text-sky-600"></i> 360° VR
+                </a>
+                <a href="chat.html?resident=${residentId}" class="py-2 text-center bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 text-slate-800 dark:text-slate-200 text-xs font-bold rounded-xl transition-colors flex items-center justify-center">
+                  <i class="fa-solid fa-comments mr-1 text-indigo-600"></i> Chat
+                </a>
+                <a href="map.html?property=${p.id}" class="py-2 text-center bg-slate-100 dark:bg-slate-800 hover:bg-amber-50 dark:hover:bg-amber-950/40 text-slate-800 dark:text-slate-200 text-xs font-bold rounded-xl transition-colors flex items-center justify-center">
+                  <i class="fa-solid fa-map mr-1 text-amber-600"></i> Map
+                </a>
+              </div>
+
+              <button onclick="openBookingModal('${p.id}')" class="w-full py-2.5 bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all flex items-center justify-center cursor-pointer">
+                <i class="fa-solid fa-key mr-1.5 text-[10px]"></i> Reserve Room with Escrow
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      grid.innerHTML = bannerHtml + cardsHtml;
+
+      if (window.CurrencyManager && CurrencyManager.updateAllPricesOnPage) {
+        CurrencyManager.updateAllPricesOnPage();
+      }
+    }
+
+    // Dynamic Cascading Dropdowns Engine
+    function updateDropdownsForCountry(country, targetCity = 'all', targetUni = 'all') {
+      const districtSelect = document.getElementById('filter-district');
+      const uniSelect = document.getElementById('filter-university');
+      if (!districtSelect || !uniSelect) return;
+
+      if (country !== 'all' && globalCountryCityUniMap[country]) {
+        const countryData = globalCountryCityUniMap[country];
+
+        districtSelect.innerHTML = countryData.cities.map(c => `
+          <option value="${c.value}">${c.label}</option>
+        `).join('');
+
+        uniSelect.innerHTML = countryData.unis.map(u => `
+          <option value="${u.id}">${u.name}</option>
+        `).join('');
+      } else {
+        // All Global Destinations
+        districtSelect.innerHTML = `
+          <option value="all">All Districts & Cities Globally</option>
+          <option value="Glasgow">Glasgow, UK</option>
+          <option value="Edinburgh">Edinburgh, UK</option>
+          <option value="Aberdeen">Aberdeen, UK</option>
+          <option value="London">London, UK</option>
+          <option value="Manchester">Manchester, UK</option>
+          <option value="Birmingham">Birmingham, UK</option>
+          <option value="New York City">New York City, USA</option>
+          <option value="Boston / Cambridge">Boston / Cambridge, USA</option>
+          <option value="Los Angeles">Los Angeles, USA</option>
+          <option value="Berkeley">Berkeley, USA</option>
+          <option value="Toronto">Toronto, Canada</option>
+          <option value="Waterloo">Waterloo, Canada</option>
+          <option value="Vancouver">Vancouver, Canada</option>
+          <option value="Sydney">Sydney, Australia</option>
+          <option value="Melbourne">Melbourne, Australia</option>
+          <option value="Munich">Munich, Germany</option>
+          <option value="Berlin">Berlin, Germany</option>
+        `;
+
+        uniSelect.innerHTML = `
+          <option value="all">All Universities Globally</option>
+          <option value="gcu">Glasgow Caledonian (GCU)</option>
+          <option value="strath">University of Strathclyde</option>
+          <option value="uofg">University of Glasgow</option>
+          <option value="uoe">University of Edinburgh</option>
+          <option value="uab">University of Aberdeen</option>
+          <option value="ucl">UCL London</option>
+          <option value="kcl">King’s College London</option>
+          <option value="manchester">University of Manchester</option>
+          <option value="birmingham">University of Birmingham</option>
+          <option value="columbia">Columbia University</option>
+          <option value="nyu">New York University (NYU)</option>
+          <option value="harvard">Harvard University</option>
+          <option value="mit">MIT</option>
+          <option value="ucla">UCLA</option>
+          <option value="berkeley">UC Berkeley</option>
+          <option value="uoft">University of Toronto</option>
+          <option value="waterloo">University of Waterloo</option>
+          <option value="ubc">University of British Columbia</option>
+          <option value="usyd">University of Sydney</option>
+          <option value="unsw">UNSW Sydney</option>
+          <option value="unimelb">University of Melbourne</option>
+          <option value="tum">Technical University of Munich</option>
+          <option value="lmu">LMU Munich</option>
+          <option value="hu-berlin">Humboldt University of Berlin</option>
+        `;
+      }
+
+      // Preserve requested selection if present
+      districtSelect.value = targetCity;
+      if (districtSelect.value !== targetCity) districtSelect.value = 'all';
+
+      uniSelect.value = targetUni;
+      if (uniSelect.value !== targetUni) uniSelect.value = 'all';
+    }
+
+    function handleCountryChange() {
+      const country = document.getElementById('filter-country').value;
+      localStorage.setItem('studentstay_active_country', country);
+
+      if (window.IntakeAnnouncementManager) {
+        IntakeAnnouncementManager.update(country);
+      }
+
+      if (country === 'uk' && window.CurrencyManager) CurrencyManager.setCurrency('GBP');
+      else if ((country === 'usa' || country === 'canada' || country === 'australia') && window.CurrencyManager) CurrencyManager.setCurrency('USD');
+      else if (country === 'germany' && window.CurrencyManager) CurrencyManager.setCurrency('EUR');
+
+      // Reset city and university to 'all' on country change to prevent cross-country collisions
+      updateDropdownsForCountry(country, 'all', 'all');
+      applyFilters();
+    }
+
+    function handleDistrictChange() {
+      const country = document.getElementById('filter-country').value;
+      const district = document.getElementById('filter-district').value;
+      const uniSelect = document.getElementById('filter-university');
+
+      if (district !== 'all' && country !== 'all' && globalCountryCityUniMap[country]) {
+        // Filter universities to only those in the chosen city
+        const cityUnis = globalCountryCityUniMap[country].unis.filter(u => u.city === 'all' || u.city.toLowerCase() === district.toLowerCase());
+        
+        uniSelect.innerHTML = cityUnis.map(u => `
+          <option value="${u.id}">${u.city === 'all' ? 'All Universities in ' + district : u.name}</option>
+        `).join('');
+
+        // Reset university selection if previously chosen university is not in this city
+        const currentUni = uniSelect.value;
+        const uniExistsInCity = cityUnis.some(u => u.id === currentUni);
+        if (!uniExistsInCity) {
+          uniSelect.value = 'all';
+        }
+      } else if (district === 'all') {
+        // Restore all universities in country
+        const currentUni = uniSelect.value;
+        updateDropdownsForCountry(country, 'all', currentUni);
+      }
+
+      applyFilters();
+    }
+
+    function handleUniversityChange() {
+      const uni = document.getElementById('filter-university').value;
+      const country = document.getElementById('filter-country').value;
+      const districtSelect = document.getElementById('filter-district');
+
+      if (uni !== 'all') {
+        // Find the city for this university
+        let foundCity = null;
+        for (const cKey in globalCountryCityUniMap) {
+          const match = globalCountryCityUniMap[cKey].unis.find(u => u.id === uni);
+          if (match && match.city !== 'all') {
+            foundCity = match.city;
+            break;
+          }
+        }
+
+        if (foundCity && districtSelect) {
+          districtSelect.value = foundCity;
+        }
+      }
+
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const country = document.getElementById('filter-country').value;
+      const district = document.getElementById('filter-district').value;
+      const uni = document.getElementById('filter-university').value;
+      const roomType = document.getElementById('filter-room-type').value;
+
+      allFindProperties = getSafeProperties();
+      let filtered = allFindProperties;
+
+      // 1. Country Filter
+      if (country !== 'all') {
+        filtered = filtered.filter(p => p.country === country || p.countryCode === country);
+      }
+
+      // 2. City / District Filter
+      if (district !== 'all') {
+        const dLower = district.toLowerCase();
+        filtered = filtered.filter(p => {
+          const pDistrict = (p.district || '').toLowerCase();
+          const pCity = (p.city || '').toLowerCase();
+          return pDistrict === dLower || pCity === dLower || pDistrict.includes(dLower) || pCity.includes(dLower);
+        });
+      }
+
+      // 3. University Filter
+      if (uni !== 'all') {
+        filtered = filtered.filter(p => {
+          return p.university === uni ||
+                 p.universityId === uni ||
+                 (p.supportedUnis && p.supportedUnis.includes(uni)) ||
+                 (p.supportedUniversities && p.supportedUniversities.includes(uni));
+        });
+      }
+
+      // 4. Room Type Filter
+      if (roomType !== 'all') {
+        filtered = filtered.filter(p => p.roomType === roomType);
+      }
+
+      // If we have exact matches, render them immediately
+      if (filtered.length > 0) {
+        renderFindHomeProperties(filtered);
+        return;
+      }
+
+      // SMART FALLBACK RECOVERY: Never leave the student stranded with an empty screen!
+      let fallbackList = [];
+      let fallbackTitle = 'No exact matches found';
+      let fallbackMsg = '';
+      let badgeInfo = 'alternative recommendations';
+
+      // Case A: User filtered by a specific room type that didn't match in this city
+      if (district !== 'all' && roomType !== 'all') {
+        fallbackList = allFindProperties.filter(p => {
+          const pDistrict = (p.district || '').toLowerCase();
+          const pCity = (p.city || '').toLowerCase();
+          const dLower = district.toLowerCase();
+          return pDistrict === dLower || pCity === dLower || pDistrict.includes(dLower) || pCity.includes(dLower);
+        });
+
+        if (fallbackList.length > 0) {
+          fallbackTitle = `No ${roomType} rooms currently available in ${district}`;
+          fallbackMsg = `Here are ${fallbackList.length} other verified accommodations in ${district}. You can also reset room types to browse all available options.`;
+          badgeInfo = `verified options in ${district}`;
+          renderFindHomeProperties(fallbackList, { title: fallbackTitle, message: fallbackMsg, badgeText: badgeInfo });
+          return;
+        }
+      }
+
+      // Case B: Broaden to all accommodations in this country
+      if (country !== 'all') {
+        fallbackList = allFindProperties.filter(p => p.country === country || p.countryCode === country);
+        if (fallbackList.length > 0) {
+          const cName = globalCountryCityUniMap[country] ? globalCountryCityUniMap[country].name : country.toUpperCase();
+          fallbackTitle = `Broadening search to all homes in ${cName}`;
+          fallbackMsg = `No homes matched your specific combination, but here are ${fallbackList.length} verified residences across ${cName}.`;
+          badgeInfo = `all residences in ${cName}`;
+          renderFindHomeProperties(fallbackList, { title: fallbackTitle, message: fallbackMsg, badgeText: badgeInfo });
+          return;
+        }
+      }
+
+      // Case C: Fallback to all global properties
+      renderFindHomeProperties(allFindProperties, {
+        title: 'Showing all verified accommodations globally',
+        message: 'No homes matched this specific combination. Try choosing another city or resetting the filters.',
+        badgeText: 'global database'
+      });
+    }
+
+    function setQuickFilter(type) {
+      if (type === 'all') {
+        resetAllFilters();
+      } else if (type === 'under200') {
+        const list = allFindProperties.filter(p => (p.pricePerWeekGBP || p.priceGBP || 0) <= 200);
+        renderFindHomeProperties(list);
+      } else if (type === 'studios') {
+        document.getElementById('filter-room-type').value = 'studio';
+        applyFilters();
+      } else if (type === 'walk') {
+        const list = allFindProperties.filter(p => {
+          const c = p.commute || (p.commutes && p.commutes[0] ? p.commutes[0].time : '');
+          return c.includes('min walk') && parseInt(c) <= 10;
+        });
+        renderFindHomeProperties(list);
+      }
+    }
+
+    function resetAllFilters() {
+      allFindProperties = getSafeProperties();
+      document.getElementById('filter-country').value = 'all';
+      updateDropdownsForCountry('all', 'all', 'all');
+      document.getElementById('filter-district').value = 'all';
+      document.getElementById('filter-university').value = 'all';
+      document.getElementById('filter-room-type').value = 'all';
+      renderFindHomeProperties(allFindProperties);
+    }
+
+    // Read URL query params on initial load
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      let urlCountry = params.get('country');
+      if (!urlCountry) {
+        const savedCountry = localStorage.getItem('studentstay_active_country');
+        const user = (window.AuthManager && AuthManager.getCurrentUser()) ? AuthManager.getCurrentUser() : null;
+        const userCountry = (user && (user.destinationCountry || user.countryCode)) || null;
+        urlCountry = savedCountry || userCountry || 'all';
+      }
+
+      const urlCity = params.get('city') || params.get('district') || 'all';
+      const urlUni = params.get('uni') || 'all';
+      const urlType = params.get('type') || params.get('roomType') || 'all';
+
+      const countrySelect = document.getElementById('filter-country');
+      if (countrySelect) countrySelect.value = urlCountry;
+
+      updateDropdownsForCountry(urlCountry, urlCity, urlUni);
+
+      if (urlCity !== 'all') {
+        const districtSelect = document.getElementById('filter-district');
+        if (districtSelect) districtSelect.value = urlCity;
+        handleDistrictChange();
+      }
+
+      if (urlUni !== 'all') {
+        const uniSelect = document.getElementById('filter-university');
+        if (uniSelect) uniSelect.value = urlUni;
+        handleUniversityChange();
+      }
+
+      if (urlType !== 'all') {
+        const roomTypeSelect = document.getElementById('filter-room-type');
+        if (roomTypeSelect) roomTypeSelect.value = urlType;
+      }
+
+      applyFilters();
+    });
+  </script>
+</body>
+</html>

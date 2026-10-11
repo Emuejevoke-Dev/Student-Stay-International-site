@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Authentication & Portals | StudentStay International</title>
+  <meta name="description" content="Sign in or register for StudentStay. Access verified international student accommodations or manage tenancy portfolios in the Property Owner & Letting Agent Portal.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Tailwind CSS CDN with class-based Dark Mode -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              850: '#0c1a30',
+              900: '#070d18',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-slate-50 dark:bg-[#070d18] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col antialiased selection:bg-sky-500 selection:text-white">
+
+  <!-- Main Viewport Container -->
+  <div id="main-viewport-container" class="flex-1 flex flex-col w-full">
+
+    <!-- Dedicated Minimal Auth Header (Navigation Bar Completely Removed) -->
+    <header class="sticky top-0 z-40 bg-white/95 dark:bg-[#0b1324]/95 backdrop-blur-md border-b border-slate-200/90 dark:border-slate-800/80 shadow-xs transition-colors">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        
+        <!-- Brand Logo (Links to Home) -->
+        <a href="index.html" class="flex items-center space-x-2.5 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-sky-400 text-white flex items-center justify-center shadow-md shadow-sky-600/30 group-hover:scale-105 transition-transform">
+            <i class="fa-solid fa-house-chimney-window text-lg"></i>
+          </div>
+          <div>
+            <span class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white brand-font flex items-center">
+              Student<span class="text-sky-600 dark:text-sky-400">Stay</span>
+            </span>
+            <span class="text-[10px] font-semibold text-slate-400 tracking-wider uppercase block -mt-1">
+              Verified Global Living
+            </span>
+          </div>
+        </a>
+
+        <!-- Right Action Controls: Back to Home & Theme Toggle (NO Navigation Bar) -->
+        <div class="flex items-center space-x-2 sm:space-x-3">
+          <a href="index.html" class="inline-flex items-center space-x-2 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 px-3.5 py-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all border border-slate-200/60 dark:border-slate-700/60 shadow-xs">
+            <i class="fa-solid fa-arrow-left text-[11px]"></i>
+            <span class="hidden sm:inline">Back to Website</span>
+            <span class="sm:hidden">Exit</span>
+          </a>
+
+          <button class="theme-toggle-btn px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold flex items-center transition-all cursor-pointer shadow-xs text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" title="Toggle Dark / Light Mode">
+            <i class="fa-solid fa-moon mr-1.5"></i>
+            <span class="hidden sm:inline">Theme</span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main Authentication Section -->
+    <main class="flex-1 py-10 sm:py-14 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto w-full">
+      
+      <!-- Portal Role Selector: Student vs Property Owner & Letting Agent -->
+      <div class="flex items-center justify-center p-1 bg-slate-200/80 dark:bg-slate-800/90 rounded-2xl max-w-md mx-auto mb-6 border border-slate-300/60 dark:border-slate-700">
+        <button type="button" id="role-btn-student" onclick="switchPortalRole('student')" class="flex-1 py-2 px-3 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center space-x-2 bg-white dark:bg-slate-900 text-sky-600 dark:text-sky-400 shadow-sm">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span>Student Portal</span>
+        </button>
+        <button type="button" id="role-btn-agent" onclick="switchPortalRole('agent')" class="flex-1 py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center space-x-2 text-slate-600 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400">
+          <i class="fa-solid fa-user-tie text-amber-500"></i>
+          <span>Owner & Agent Portal</span>
+        </button>
+      </div>
+
+      <!-- Top Title & Badge -->
+      <div class="text-center max-w-xl mx-auto mb-6">
+        <div id="auth-header-badge" class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-sky-100 dark:bg-sky-950/80 text-sky-700 dark:text-sky-300 text-xs font-bold border border-sky-200 dark:border-sky-800 mb-2.5">
+          <i class="fa-solid fa-user-plus text-sky-600"></i>
+          <span>Create Your Student Account</span>
+        </div>
+        <h1 id="auth-header-title" class="text-3xl sm:text-4xl font-black text-slate-900 dark:text-slate-100 tracking-tight brand-font">
+          Join StudentStay International
+        </h1>
+        <p id="auth-header-subtitle" class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+          Select your study destination, state, and enrolled university to personalize your accommodation feed, 360° virtual tours, and local currency rates.
+        </p>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- 1. STUDENT PORTAL SECTION -->
+      <!-- ========================================== -->
+      <div id="portal-student-section">
+
+        <!-- Student Tab Switcher: Create Account vs Sign In -->
+        <div class="flex items-center justify-center p-1.5 bg-slate-200/70 dark:bg-slate-800/80 rounded-2xl max-w-md mx-auto mb-8 border border-slate-300/60 dark:border-slate-700">
+          <button type="button" id="tab-btn-signup" onclick="switchAuthTab('signup')" class="flex-1 py-2.5 px-4 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center space-x-2 bg-white dark:bg-slate-900 text-sky-600 dark:text-sky-400 shadow-sm border border-slate-200/50 dark:border-slate-700/50">
+            <i class="fa-solid fa-user-plus text-sky-600"></i>
+            <span>Create Account</span>
+          </button>
+          <button type="button" id="tab-btn-signin" onclick="switchAuthTab('signin')" class="flex-1 py-2.5 px-4 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center space-x-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+            <i class="fa-solid fa-arrow-right-to-bracket text-sky-600"></i>
+            <span>Student Sign In</span>
+          </button>
+        </div>
+
+        <!-- STUDENT REGISTRATION CARD (FIRST) -->
+        <div id="signup-card" class="bg-white dark:bg-[#0f1a30] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden p-6 sm:p-10 mb-8">
+          
+          <form id="signup-form" onsubmit="handleStudentSignup(event)" class="space-y-6">
+            
+            <!-- Row 1: Personal Info -->
+            <div>
+              <h3 class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-3 flex items-center">
+                <i class="fa-solid fa-id-card mr-2"></i> 1. Student Identity
+              </h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    Full Legal Name <span class="text-rose-500">*</span>
+                  </label>
+                  <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs">
+                      <i class="fa-regular fa-user"></i>
+                    </span>
+                    <input type="text" id="reg-name" required placeholder="e.g. Ama Konadu" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl pl-9 pr-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500 font-medium">
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    Email Address <span class="text-rose-500">*</span>
+                  </label>
+                  <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs">
+                      <i class="fa-regular fa-envelope"></i>
+                    </span>
+                    <input type="email" id="reg-email" required placeholder="e.g. student@university.ac.uk" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl pl-9 pr-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500 font-medium">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Destination Study Details -->
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-3 flex items-center">
+                <i class="fa-solid fa-earth-americas mr-2"></i> 2. Study Destination & Campus
+              </h3>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    Destination Country <span class="text-rose-500">*</span>
+                  </label>
+                  <select id="reg-country" onchange="handleSignupCountryChange()" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500 font-bold cursor-pointer">
+                    <option value="uk" selected>United Kingdom 🇬🇧</option>
+                    <option value="germany">Germany 🇩🇪</option>
+                    <option value="usa">United States 🇺🇸</option>
+                    <option value="canada">Canada 🇨🇦</option>
+                    <option value="australia">Australia 🇦🇺</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    State / Region / Province <span class="text-rose-500">*</span>
+                  </label>
+                  <select id="reg-state" onchange="handleSignupStateChange()" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500 font-semibold cursor-pointer">
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    Target University / College <span class="text-rose-500">*</span>
+                  </label>
+                  <select id="reg-university" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500 font-semibold cursor-pointer">
+                  </select>
+                </div>
+              </div>
+
+              <div class="mt-4">
+                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                  Nationality / Country of Origin
+                </label>
+                <input type="text" id="reg-nationality" placeholder="e.g. Ghana 🇬🇭 or Nigeria 🇳🇬" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500 font-medium">
+              </div>
+            </div>
+
+            <!-- Row 3: Tenancy Preferences -->
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-3 flex items-center">
+                <i class="fa-solid fa-bed mr-2"></i> 3. Tenancy Preferences
+              </h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    Intake Term
+                  </label>
+                  <select id="reg-intake" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500 font-medium cursor-pointer">
+                    <option value="Sept 2026">September 2026 (Autumn Intake)</option>
+                    <option value="Oct 2026">October 2026 Intake</option>
+                    <option value="Jan 2027">January 2027 (Spring Intake)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    Room Type Preference
+                  </label>
+                  <select id="reg-roomtype" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500 font-medium cursor-pointer">
+                    <option value="studio">Private En-suite Studio</option>
+                    <option value="ensuite">En-suite in Shared Apartment</option>
+                    <option value="apartment">1-Bedroom Private Apartment</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Trust & Protection Notice -->
+            <div class="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-900 dark:text-emerald-200 flex items-start space-x-3">
+              <i class="fa-solid fa-shield-check text-emerald-600 text-lg shrink-0 mt-0.5"></i>
+              <div>
+                <strong class="font-bold">100% Escrow Protection Guarantee:</strong>
+                <p class="text-[11px] mt-0.5 leading-relaxed">
+                  Holding deposits are secured in trust escrow and only released after you arrive on campus and inspect your room keys. 100% refund guarantee if your student visa is denied.
+                </p>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div class="text-xs text-slate-500 dark:text-slate-400">
+                Already have an account? <button type="button" onclick="switchAuthTab('signin')" class="text-sky-600 dark:text-sky-400 font-bold hover:underline cursor-pointer ml-1">Sign In here</button>
+              </div>
+
+              <button type="submit" class="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-600 text-white font-black text-xs sm:text-sm rounded-xl shadow-lg shadow-sky-600/30 transition-all flex items-center justify-center cursor-pointer">
+                <i class="fa-solid fa-check-circle mr-2"></i> Create Account & Personalize My Home
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+
+        <!-- STUDENT SIGN IN CARD (SECOND) -->
+        <div id="signin-card" class="bg-white dark:bg-[#0f1a30] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden p-6 sm:p-10 mb-8 hidden">
+          <div class="max-w-xl mx-auto">
+            
+            <!-- Rejection / Error Alert for Unknown / Strange Emails -->
+            <div id="signin-error-alert" class="hidden mb-5 p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 text-xs text-rose-800 dark:text-rose-200 shadow-xs">
+              <div class="flex items-start space-x-3">
+                <div class="w-8 h-8 rounded-xl bg-rose-100 dark:bg-rose-900/60 text-rose-600 dark:text-rose-300 flex items-center justify-center text-sm shrink-0 mt-0.5">
+                  <i class="fa-solid fa-circle-exclamation"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <h4 class="font-extrabold text-xs text-rose-900 dark:text-rose-100 mb-0.5">Account Not Found</h4>
+                  <p id="signin-error-message" class="text-[11px] text-rose-700 dark:text-rose-300 leading-relaxed mb-2.5">
+                    No registered StudentStay account was found for this email. Unregistered email addresses cannot sign in directly. Please create an account first.
+                  </p>
+                  <button type="button" onclick="redirectToSignupFromError()" class="px-3.5 py-1.5 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs rounded-xl transition-all shadow-xs inline-flex items-center space-x-1.5 cursor-pointer">
+                    <i class="fa-solid fa-user-plus text-[10px]"></i>
+                    <span>Create Account Now with This Email</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Last Signed-In / Remembered Account Quick Pill -->
+            <div id="remembered-account-container" class="hidden mb-5"></div>
+
+            <form id="signin-form" onsubmit="handleStudentSignIn(event)" class="space-y-5">
+              <div>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-sky-600 dark:text-sky-400 mb-3 flex items-center">
+                  <i class="fa-solid fa-id-badge mr-2"></i> 1. Enter Your Student Credentials
+                </h3>
+                <div class="space-y-4">
+                  <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                      Student Email Address <span class="text-rose-500">*</span>
+                    </label>
+                    <div class="relative">
+                      <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs">
+                        <i class="fa-regular fa-envelope"></i>
+                      </span>
+                      <input type="email" id="login-email" required placeholder="e.g. yourname@gmail.com or ama.k@gcu.ac.uk" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl pl-9 pr-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500 font-medium">
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                      Password / Student Access PIN
+                    </label>
+                    <div class="relative">
+                      <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs">
+                        <i class="fa-solid fa-lock"></i>
+                      </span>
+                      <input type="password" id="login-password" placeholder="••••••••" value="student2026" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl pl-9 pr-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500 font-medium">
+                    </div>
+                    <p class="text-[10px] text-slate-400 mt-1">Default demo access PIN: <code class="font-bold text-sky-600">student2026</code></p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-1 flex items-center justify-between text-xs">
+                <label class="flex items-center text-slate-600 dark:text-slate-400 cursor-pointer">
+                  <input type="checkbox" checked class="rounded text-sky-600 mr-2 focus:ring-0"> Remember me
+                </label>
+                <button type="button" onclick="alert('Password reset link sent to your registered university email.')" class="text-sky-600 dark:text-sky-400 font-semibold hover:underline cursor-pointer">
+                  Forgot password?
+                </button>
+              </div>
+
+              <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-600 text-white font-black text-xs sm:text-sm rounded-xl shadow-lg shadow-sky-600/30 transition-all flex items-center justify-center cursor-pointer">
+                <i class="fa-solid fa-arrow-right-to-bracket mr-2"></i> Sign In to StudentStay Portal
+              </button>
+            </form>
+
+            <div class="mt-7 pt-5 border-t border-slate-100 dark:border-slate-800 text-center text-xs text-slate-500">
+              Don't have an account yet? 
+              <button type="button" onclick="switchAuthTab('signup')" class="text-sky-600 dark:text-sky-400 font-bold hover:underline cursor-pointer ml-1">
+                Create New Student Account
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <!-- END STUDENT PORTAL SECTION -->
+
+      <!-- ========================================== -->
+      <!-- 2. OWNER & LETTING AGENT PORTAL SECTION -->
+      <!-- ========================================== -->
+      <div id="portal-agent-section" class="hidden">
+        
+        <!-- Agent Sub-Tabs: Sign In vs Company Registration -->
+        <div class="flex items-center justify-center p-1.5 bg-slate-200/70 dark:bg-slate-800/80 rounded-2xl max-w-md mx-auto mb-8 border border-slate-300/60 dark:border-slate-700">
+          <button type="button" id="tab-btn-agent-signin" onclick="switchAgentAuthTab('signin')" class="flex-1 py-2.5 px-4 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center space-x-2 bg-white dark:bg-slate-900 text-amber-600 dark:text-amber-400 shadow-sm border border-slate-200/50 dark:border-slate-700/50">
+            <i class="fa-solid fa-arrow-right-to-bracket text-amber-500"></i>
+            <span>Agent Sign In</span>
+          </button>
+          <button type="button" id="tab-btn-agent-signup" onclick="switchAgentAuthTab('signup')" class="flex-1 py-2.5 px-4 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center space-x-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+            <i class="fa-solid fa-building-circle-check text-amber-500"></i>
+            <span>Register Property Entity</span>
+          </button>
+        </div>
+
+        <!-- AGENT / OWNER SIGN IN CARD -->
+        <div id="agent-signin-card" class="bg-white dark:bg-[#0f1a30] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden p-6 sm:p-10 mb-8">
+          <div class="max-w-xl mx-auto">
+            <form id="agent-signin-form" onsubmit="handleAgentSignIn(event)" class="space-y-5">
+              <div>
+                <div class="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 text-[10px] font-black uppercase tracking-wider mb-2">
+                  <i class="fa-solid fa-lock"></i>
+                  <span>Letting Agent & Founder Command Center</span>
+                </div>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-3 flex items-center">
+                  <i class="fa-solid fa-user-tie mr-2"></i> Authorized Agent Credentials
+                </h3>
+                <div class="space-y-4">
+                  <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                      Official Work Email or Agent ID <span class="text-rose-500">*</span>
+                    </label>
+                    <div class="relative">
+                      <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs">
+                        <i class="fa-solid fa-envelope"></i>
+                      </span>
+                      <input type="email" id="agent-login-email" required placeholder="e.g. founder@studentstay.com or agent@studentroost.co.uk" value="founder@studentstay.com" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl pl-9 pr-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium">
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                      Agent Access Security PIN / Password <span class="text-rose-500">*</span>
+                    </label>
+                    <div class="relative">
+                      <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs">
+                        <i class="fa-solid fa-shield-halved"></i>
+                      </span>
+                      <input type="password" id="agent-login-pin" required placeholder="••••••••" value="agent2026" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl pl-9 pr-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium">
+                    </div>
+                    <p class="text-[10px] text-slate-400 mt-1">Default Demo Admin PIN: <code class="font-bold text-amber-600">agent2026</code></p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-1 flex items-center justify-between text-xs">
+                <label class="flex items-center text-slate-600 dark:text-slate-400 cursor-pointer">
+                  <input type="checkbox" checked class="rounded text-amber-600 mr-2 focus:ring-0"> Keep Agent Session Active
+                </label>
+                <span class="text-[11px] text-emerald-600 dark:text-emerald-400 font-semibold flex items-center">
+                  <i class="fa-solid fa-circle-check mr-1"></i> 256-Bit SSL Encrypted
+                </span>
+              </div>
+
+              <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-black text-xs sm:text-sm rounded-xl shadow-lg shadow-amber-600/30 transition-all flex items-center justify-center cursor-pointer">
+                <i class="fa-solid fa-arrow-right-to-bracket mr-2"></i> Launch Agent & Owner Dashboard
+              </button>
+            </form>
+
+            <!-- Quick One-Click Founder Access Pill -->
+            <div class="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+              <span class="text-slate-500">Need immediate command access?</span>
+              <button type="button" onclick="quickFounderLogin()" class="px-3.5 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-400/40 font-bold transition-all cursor-pointer flex items-center space-x-1.5">
+                <i class="fa-solid fa-crown text-amber-500"></i>
+                <span>1-Click Owner Sign In (E. Dev)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROPERTY COMPANY & AGENT REGISTRATION CARD -->
+        <div id="agent-signup-card" class="bg-white dark:bg-[#0f1a30] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden p-6 sm:p-10 mb-8 hidden">
+          <form id="agent-signup-form" onsubmit="handleAgentSignup(event)" class="space-y-6">
+            
+            <div>
+              <div class="inline-flex items-center space-x-1.5 px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 text-[10px] font-black uppercase tracking-wider mb-2">
+                <i class="fa-solid fa-handshake"></i>
+                <span>Accommodation Provider Onboarding</span>
+              </div>
+              <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-3 flex items-center">
+                <i class="fa-solid fa-building mr-2"></i> 1. Organization & Portfolio Profile
+              </h3>
+              
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    Company / Landlord Entity Name <span class="text-rose-500">*</span>
+                  </label>
+                  <input type="text" id="agent-company-name" required placeholder="e.g. Student Roost Living Ltd or Private Landlord" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium">
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    Authorized Representative Full Name <span class="text-rose-500">*</span>
+                  </label>
+                  <input type="text" id="agent-rep-name" required placeholder="e.g. Eleanor Vance, Letting Director" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium">
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-3 flex items-center">
+                <i class="fa-solid fa-address-book mr-2"></i> 2. Official Contact & Letting Authority
+              </h3>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    Official Business Email <span class="text-rose-500">*</span>
+                  </label>
+                  <input type="email" id="agent-rep-email" required placeholder="e.g. partners@studentroost.co.uk" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium">
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    Direct Phone / WhatsApp
+                  </label>
+                  <input type="tel" id="agent-rep-phone" placeholder="e.g. +44 141 552 9000" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium">
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    Managed Bed / Room Capacity
+                  </label>
+                  <select id="agent-units-count" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium cursor-pointer">
+                    <option value="1-15">1 – 15 Student Units (Private Landlord)</option>
+                    <option value="15-50">15 – 50 Units (Boutique Residence)</option>
+                    <option value="50-250" selected>50 – 250 Units (PBS Accommodation)</option>
+                    <option value="250+">250+ Units (Enterprise Operator)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-3 flex items-center">
+                <i class="fa-solid fa-file-contract mr-2"></i> 3. Compliance & Operating Regions
+              </h3>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    Primary Operating Market
+                  </label>
+                  <select id="agent-primary-country" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium cursor-pointer">
+                    <option value="uk">United Kingdom (Glasgow, Edinburgh, London, Manchester)</option>
+                    <option value="germany">Germany (Munich, Berlin, Frankfurt)</option>
+                    <option value="usa">United States (New York, Boston, California)</option>
+                    <option value="canada">Canada (Toronto, Waterloo, Vancouver)</option>
+                    <option value="australia">Australia (Sydney, Melbourne)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">
+                    Landlord / Letting Agent License #
+                  </label>
+                  <input type="text" id="agent-license-num" placeholder="e.g. LARN1902045 or Landlord Reg #39281" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-amber-500 font-medium">
+                </div>
+              </div>
+            </div>
+
+            <!-- Barclays Escrow Agreement Notice -->
+            <div class="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-xs text-amber-900 dark:text-amber-200 flex items-start space-x-3">
+              <i class="fa-solid fa-shield-halved text-amber-600 text-lg shrink-0 mt-0.5"></i>
+              <div>
+                <strong class="font-bold">Barclays Bank Trust Escrow Protocol:</strong>
+                <p class="text-[11px] mt-0.5 leading-relaxed">
+                  By onboarding your properties onto StudentStay, student holding deposits are placed into statutory client escrow protection, preventing lease abandonment and ensuring 100% verified occupancy.
+                </p>
+              </div>
+            </div>
+
+            <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-black text-xs sm:text-sm rounded-xl shadow-lg shadow-amber-600/30 transition-all flex items-center justify-center cursor-pointer">
+              <i class="fa-solid fa-check-circle mr-2"></i> Register Property Entity & Launch Command Dashboard
+            </button>
+          </form>
+        </div>
+
+      </div>
+      <!-- END OWNER & LETTING AGENT PORTAL SECTION -->
+
+    </main>
+
+    <!-- Universal Footer -->
+    <footer class="bg-white dark:bg-[#0b1324] border-t border-slate-200 dark:border-slate-800 py-8 text-xs text-slate-500 text-center">
+      <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p>© 2026 StudentStay International. All tenancies protected under government-registered escrow schemes.</p>
+        <div class="flex items-center space-x-4">
+          <a href="index.html" class="hover:text-sky-600">Home</a>
+          <a href="about.html" class="hover:text-sky-600">About</a>
+          <a href="agent.html" class="text-amber-500 font-bold hover:underline">Agent Portal</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    // Cascading Destination Database
+    const destinationData = {
+      uk: {
+        currency: 'GBP',
+        states: [
+          {
+            id: 'scotland',
+            name: 'Scotland (Glasgow, Edinburgh, Aberdeen)',
+            unis: [
+              { id: 'gcu', name: 'Glasgow Caledonian University (GCU)' },
+              { id: 'strath', name: 'University of Strathclyde' },
+              { id: 'uofg', name: 'University of Glasgow' },
+              { id: 'uoe', name: 'University of Edinburgh' },
+              { id: 'abdn', name: 'University of Aberdeen' }
+            ]
+          },
+          {
+            id: 'england',
+            name: 'England (London, Manchester, Birmingham)',
+            unis: [
+              { id: 'ucl', name: 'University College London (UCL)' },
+              { id: 'kcl', name: 'King’s College London (KCL)' },
+              { id: 'man', name: 'University of Manchester' }
+            ]
+          }
+        ]
+      },
+      germany: {
+        currency: 'EUR',
+        states: [
+          {
+            id: 'bavaria',
+            name: 'Bavaria (Munich, Nuremberg)',
+            unis: [
+              { id: 'tum', name: 'Technical University of Munich (TUM)' },
+              { id: 'lmu', name: 'Ludwig Maximilian University of Munich (LMU)' }
+            ]
+          },
+          {
+            id: 'berlin',
+            name: 'Berlin (Berlin Central)',
+            unis: [
+              { id: 'hu-berlin', name: 'Humboldt University of Berlin' },
+              { id: 'fu-berlin', name: 'Free University of Berlin' },
+              { id: 'tu-berlin', name: 'Technical University of Berlin' }
+            ]
+          }
+        ]
+      },
+      usa: {
+        currency: 'USD',
+        states: [
+          {
+            id: 'new-york',
+            name: 'New York (NYC & Upstate)',
+            unis: [
+              { id: 'columbia', name: 'Columbia University (Morningside Heights)' },
+              { id: 'nyu', name: 'New York University (NYU)' }
+            ]
+          },
+          {
+            id: 'massachusetts',
+            name: 'Massachusetts (Boston & Cambridge)',
+            unis: [
+              { id: 'harvard', name: 'Harvard University' },
+              { id: 'mit', name: 'Massachusetts Institute of Technology (MIT)' },
+              { id: 'bu', name: 'Boston University' }
+            ]
+          }
+        ]
+      },
+      canada: {
+        currency: 'USD',
+        states: [
+          {
+            id: 'ontario',
+            name: 'Ontario (Toronto & Waterloo)',
+            unis: [
+              { id: 'uoft', name: 'University of Toronto (St. George Campus)' },
+              { id: 'waterloo', name: 'University of Waterloo' },
+              { id: 'york', name: 'York University' }
+            ]
+          },
+          {
+            id: 'bc',
+            name: 'British Columbia (Vancouver)',
+            unis: [
+              { id: 'ubc', name: 'University of British Columbia (UBC)' }
+            ]
+          }
+        ]
+      },
+      australia: {
+        currency: 'USD',
+        states: [
+          {
+            id: 'nsw',
+            name: 'New South Wales (Sydney)',
+            unis: [
+              { id: 'usyd', name: 'University of Sydney (Camperdown/Darlington)' },
+              { id: 'unsw', name: 'UNSW Sydney' }
+            ]
+          },
+          {
+            id: 'vic',
+            name: 'Victoria (Melbourne)',
+            unis: [
+              { id: 'unimelb', name: 'University of Melbourne' }
+            ]
+          }
+        ]
+      }
+    };
+
+    function handleSignupCountryChange() {
+      const country = document.getElementById('reg-country').value;
+      const stateSelect = document.getElementById('reg-state');
+      const uniSelect = document.getElementById('reg-university');
+      if (!stateSelect || !uniSelect) return;
+
+      const data = destinationData[country];
+      if (!data) return;
+
+      stateSelect.innerHTML = data.states.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+      handleSignupStateChange();
+    }
+
+    function handleSignupStateChange() {
+      const country = document.getElementById('reg-country').value;
+      const stateId = document.getElementById('reg-state').value;
+      const uniSelect = document.getElementById('reg-university');
+      if (!uniSelect) return;
+
+      const countryData = destinationData[country];
+      if (!countryData) return;
+
+      const stateData = countryData.states.find(s => s.id === stateId) || countryData.states[0];
+      if (!stateData) return;
+
+      uniSelect.innerHTML = stateData.unis.map(u => `<option value="${u.name}">${u.name}</option>`).join('');
+    }
+
+    function switchPortalRole(role) {
+      const studentSection = document.getElementById('portal-student-section');
+      const agentSection = document.getElementById('portal-agent-section');
+      const btnStudent = document.getElementById('role-btn-student');
+      const btnAgent = document.getElementById('role-btn-agent');
+      const badge = document.getElementById('auth-header-badge');
+      const title = document.getElementById('auth-header-title');
+      const subtitle = document.getElementById('auth-header-subtitle');
+
+      if (role === 'agent') {
+        studentSection.classList.add('hidden');
+        agentSection.classList.remove('hidden');
+
+        btnAgent.className = "flex-1 py-2 px-3 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center space-x-2 bg-amber-500 text-slate-950 shadow-md shadow-amber-500/25";
+        btnStudent.className = "flex-1 py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center space-x-2 text-slate-600 dark:text-slate-400 hover:text-sky-500 dark:hover:text-sky-400";
+
+        if (badge) badge.innerHTML = '<i class="fa-solid fa-user-tie text-amber-500"></i><span>Letting Agent & Owner Portal</span>';
+        if (title) title.textContent = 'Property Owner & Agent Command';
+        if (subtitle) subtitle.textContent = 'Sign in or register your accommodation entity to monitor global student tenancies, live activity feeds, reviews, and issue resolution.';
+        switchAgentAuthTab('signin');
+      } else {
+        studentSection.classList.remove('hidden');
+        agentSection.classList.add('hidden');
+
+        btnStudent.className = "flex-1 py-2 px-3 rounded-xl text-xs font-black transition-all cursor-pointer flex items-center justify-center space-x-2 bg-white dark:bg-slate-900 text-sky-600 dark:text-sky-400 shadow-sm";
+        btnAgent.className = "flex-1 py-2 px-3 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center space-x-2 text-slate-600 dark:text-slate-400 hover:text-amber-500 dark:hover:text-amber-400";
+
+        switchAuthTab('signup');
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function redirectToSignupFromError() {
+      const emailInput = document.getElementById('login-email');
+      const email = emailInput ? emailInput.value.trim() : '';
+      switchAuthTab('signup');
+      if (email) {
+        const regEmail = document.getElementById('reg-email');
+        if (regEmail) regEmail.value = email;
+      }
+      const regName = document.getElementById('reg-name');
+      if (regName) regName.focus();
+    }
+
+    function switchAuthTab(tab) {
+      const signinCard = document.getElementById('signin-card');
+      const signupCard = document.getElementById('signup-card');
+      const btnSignin = document.getElementById('tab-btn-signin');
+      const btnSignup = document.getElementById('tab-btn-signup');
+      const badge = document.getElementById('auth-header-badge');
+      const title = document.getElementById('auth-header-title');
+      const subtitle = document.getElementById('auth-header-subtitle');
+
+      // Clear any prior rejection error alert
+      const errorAlert = document.getElementById('signin-error-alert');
+      if (errorAlert) errorAlert.classList.add('hidden');
+      const emailInput = document.getElementById('login-email');
+      if (emailInput) emailInput.classList.remove('border-rose-500', 'focus:ring-rose-500');
+
+      if (tab === 'signin') {
+        signinCard.classList.remove('hidden');
+        signupCard.classList.add('hidden');
+
+        btnSignin.className = "flex-1 py-2.5 px-4 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center space-x-2 bg-white dark:bg-slate-900 text-sky-600 dark:text-sky-400 shadow-sm border border-slate-200/50 dark:border-slate-700/50";
+        btnSignup.className = "flex-1 py-2.5 px-4 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center space-x-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white";
+
+        if (badge) badge.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket text-sky-600"></i><span>Student Sign In</span>';
+        if (title) title.textContent = 'Sign In to StudentStay';
+        if (subtitle) subtitle.textContent = 'Welcome back! Sign in to access your booked accommodations, 100% escrow guarantee, and room transfers.';
+      } else {
+        signinCard.classList.add('hidden');
+        signupCard.classList.remove('hidden');
+
+        btnSignup.className = "flex-1 py-2.5 px-4 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center space-x-2 bg-white dark:bg-slate-900 text-sky-600 dark:text-sky-400 shadow-sm border border-slate-200/50 dark:border-slate-700/50";
+        btnSignin.className = "flex-1 py-2.5 px-4 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center space-x-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white";
+
+        if (badge) badge.innerHTML = '<i class="fa-solid fa-user-plus text-sky-600"></i><span>Create Your Student Account</span>';
+        if (title) title.textContent = 'Join StudentStay International';
+        if (subtitle) subtitle.textContent = 'Select your study destination, state, and enrolled university to personalize your accommodation feed, 360° virtual tours, and local currency rates.';
+      }
+    }
+
+    function switchAgentAuthTab(tab) {
+      const signinCard = document.getElementById('agent-signin-card');
+      const signupCard = document.getElementById('agent-signup-card');
+      const btnSignin = document.getElementById('tab-btn-agent-signin');
+      const btnSignup = document.getElementById('tab-btn-agent-signup');
+
+      if (tab === 'signin') {
+        signinCard.classList.remove('hidden');
+        signupCard.classList.add('hidden');
+
+        btnSignin.className = "flex-1 py-2.5 px-4 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center space-x-2 bg-white dark:bg-slate-900 text-amber-600 dark:text-amber-400 shadow-sm border border-slate-200/50 dark:border-slate-700/50";
+        btnSignup.className = "flex-1 py-2.5 px-4 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center space-x-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white";
+      } else {
+        signinCard.classList.add('hidden');
+        signupCard.classList.remove('hidden');
+
+        btnSignup.className = "flex-1 py-2.5 px-4 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center space-x-2 bg-white dark:bg-slate-900 text-amber-600 dark:text-amber-400 shadow-sm border border-slate-200/50 dark:border-slate-700/50";
+        btnSignin.className = "flex-1 py-2.5 px-4 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center space-x-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white";
+      }
+    }
+
+    function handleStudentSignIn(e) {
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
+      const emailInput = document.getElementById('login-email');
+      const email = emailInput ? emailInput.value.trim().toLowerCase() : '';
+      if (!email) return;
+
+      let usersDb = {};
+      try {
+        usersDb = JSON.parse(localStorage.getItem('studentstay_users_db') || '{}');
+      } catch(err) {}
+
+      // 1. Check in persistent users DB (accounts created through Create Account)
+      let matched = usersDb[email];
+
+      // 2. Check in studentstay_custom_user
+      if (!matched) {
+        const customUserJson = localStorage.getItem('studentstay_custom_user');
+        if (customUserJson) {
+          try {
+            const cu = JSON.parse(customUserJson);
+            if (cu.email && cu.email.toLowerCase() === email) {
+              matched = cu;
+            }
+          } catch(err) {}
+        }
+      }
+
+      // 3. Match sample user if any
+      if (!matched && window.AuthManager && AuthManager.sampleUsers) {
+        matched = AuthManager.sampleUsers.find(u => u.email && u.email.toLowerCase() === email);
+      }
+
+      // 4. REJECT EVERY EMAIL THAT DID NOT CREATE AN ACCOUNT!
+      if (!matched) {
+        const errorAlert = document.getElementById('signin-error-alert');
+        const errorMessage = document.getElementById('signin-error-message');
+        if (errorAlert && errorMessage) {
+          errorMessage.innerHTML = `No student account was found for <strong class="text-rose-950 dark:text-rose-100 font-extrabold underline">${escapeHtml(email)}</strong>. You must create an account first before signing in.`;
+          errorAlert.classList.remove('hidden');
+        }
+        if (emailInput) {
+          emailInput.classList.add('border-rose-500', 'focus:ring-rose-500');
+          emailInput.focus();
+        }
+        return;
+      }
+
+      // 5. User recognized: clear error states & log in
+      const errorAlert = document.getElementById('signin-error-alert');
+      if (errorAlert) errorAlert.classList.add('hidden');
+      if (emailInput) emailInput.classList.remove('border-rose-500', 'focus:ring-rose-500');
+
+      // Clear logged out flag
+      localStorage.removeItem('studentstay_logged_out');
+      localStorage.setItem('studentstay_last_email', email);
+
+      // Save user to users DB & active session
+      usersDb[email] = matched;
+      localStorage.setItem('studentstay_users_db', JSON.stringify(usersDb));
+      localStorage.setItem('studentstay_custom_user', JSON.stringify(matched));
+      localStorage.setItem('studentstay_current_user', matched.id);
+      localStorage.setItem('studentstay_active_country', matched.destinationCountry || matched.countryCode || 'uk');
+      localStorage.setItem('studentstay_active_university', matched.university || 'Glasgow Caledonian University (GCU)');
+
+      window.location.href = 'index.html';
+    }
+
+    function handleStudentSignup(e) {
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim().toLowerCase();
+      const country = document.getElementById('reg-country').value;
+      const uniName = document.getElementById('reg-university').value;
+      const nationality = document.getElementById('reg-nationality').value.trim() || 'International Student';
+      const intake = document.getElementById('reg-intake').value;
+
+      const nameParts = name.trim().split(/\s+/).filter(Boolean);
+      let initials = 'ST';
+      if (nameParts.length >= 2) {
+        initials = (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase();
+      } else if (nameParts.length === 1 && nameParts[0].length >= 2) {
+        initials = nameParts[0].slice(0, 2).toUpperCase();
+      } else if (nameParts.length === 1) {
+        initials = nameParts[0].toUpperCase();
+      }
+
+      const newUser = {
+        id: 'user-' + Date.now(),
+        name: name,
+        email: email,
+        university: uniName,
+        country: nationality,
+        countryCode: country,
+        destinationCountry: country,
+        destinationCountryName: country.toUpperCase(),
+        initials: initials,
+        course: 'Enrolled Degree Student',
+        intake: intake,
+        avatar: '', // empty so initials appear
+        activeBooking: {
+          propertyId: 'buchanan-view',
+          propertyName: 'Buchanan View - City Centre',
+          roomType: 'Bronze En-suite Studio (18m²)',
+          weeklyPriceGBP: 189,
+          depositPaidGBP: 150,
+          status: 'Secured & Escrow Protected',
+          checkIn: '12 September 2026',
+          leaseDuration: '51 Weeks',
+          bookingRef: 'STAY-' + Date.now().toString().slice(-5),
+          roomNumber: 'Studio Flat',
+          city: 'Glasgow, Scotland',
+          airport: 'Glasgow Intl (GLA)',
+          address: '33 Calgary St, Glasgow G4 0XG'
+        }
+      };
+
+      localStorage.removeItem('studentstay_logged_out');
+
+      // Save to usersDb
+      let usersDb = {};
+      try {
+        usersDb = JSON.parse(localStorage.getItem('studentstay_users_db') || '{}');
+      } catch(err) {}
+      usersDb[email] = newUser;
+      localStorage.setItem('studentstay_users_db', JSON.stringify(usersDb));
+
+      // Save active session keys
+      localStorage.setItem('studentstay_custom_user', JSON.stringify(newUser));
+      localStorage.setItem('studentstay_current_user', newUser.id);
+      localStorage.setItem('studentstay_last_email', email);
+      localStorage.setItem('studentstay_active_country', country);
+      localStorage.setItem('studentstay_active_university', uniName);
+
+      window.location.href = 'index.html';
+    }
+
+    function initRememberedAccount() {
+      const lastEmail = localStorage.getItem('studentstay_last_email');
+      const emailInput = document.getElementById('login-email');
+      if (lastEmail && emailInput && !emailInput.value) {
+        emailInput.value = lastEmail;
+      }
+
+      // Look up user details for the last email
+      let user = null;
+      if (lastEmail) {
+        try {
+          const usersDb = JSON.parse(localStorage.getItem('studentstay_users_db') || '{}');
+          user = usersDb[lastEmail.toLowerCase()];
+        } catch(e) {}
+        if (!user) {
+          const cu = localStorage.getItem('studentstay_custom_user');
+          if (cu) {
+            try {
+              const parsed = JSON.parse(cu);
+              if (parsed.email && parsed.email.toLowerCase() === lastEmail.toLowerCase()) {
+                user = parsed;
+              }
+            } catch(e) {}
+          }
+        }
+        if (!user && window.AuthManager && AuthManager.sampleUsers) {
+          user = AuthManager.sampleUsers.find(u => u.email && u.email.toLowerCase() === lastEmail.toLowerCase());
+        }
+      }
+
+      const container = document.getElementById('remembered-account-container');
+      if (container && user) {
+        container.innerHTML = `
+          <div class="p-3.5 rounded-2xl bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800/80 flex items-center justify-between shadow-xs">
+            <div class="flex items-center space-x-3 min-w-0">
+              <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-600 to-indigo-600 text-white font-black text-sm flex items-center justify-center shadow-md shadow-sky-600/30 shrink-0">
+                ${user.initials || 'ST'}
+              </div>
+              <div class="min-w-0">
+                <div class="flex items-center space-x-1.5">
+                  <span class="text-xs font-bold text-slate-900 dark:text-slate-100 truncate">Continue as ${user.name}</span>
+                  <span class="text-[9px] px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-extrabold uppercase tracking-wider shrink-0">Saved</span>
+                </div>
+                <p class="text-[11px] text-slate-500 dark:text-slate-400 font-mono truncate">${user.email}</p>
+              </div>
+            </div>
+            <button type="button" onclick="quickSignInRemembered()" class="ml-2 px-3 py-2 bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold rounded-xl transition-all shadow-xs flex items-center space-x-1 cursor-pointer shrink-0">
+              <span>Sign In</span>
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </button>
+          </div>
+        `;
+        container.classList.remove('hidden');
+      }
+    }
+
+    function quickSignInRemembered() {
+      const lastEmail = localStorage.getItem('studentstay_last_email');
+      if (lastEmail) {
+        const input = document.getElementById('login-email');
+        if (input) input.value = lastEmail;
+        handleStudentSignIn(new Event('submit'));
+      }
+    }
+
+    function handleAgentSignIn(e) {
+      e.preventDefault();
+      const email = document.getElementById('agent-login-email').value.trim();
+      localStorage.setItem('studentstay_active_agent', JSON.stringify({
+        email: email,
+        name: 'E. Dev (Platform Founder)',
+        role: 'Verified Letting Authority'
+      }));
+      window.location.href = 'agent.html';
+    }
+
+    function handleAgentSignup(e) {
+      e.preventDefault();
+      const company = document.getElementById('agent-company-name').value.trim();
+      const rep = document.getElementById('agent-rep-name').value.trim();
+      const email = document.getElementById('agent-rep-email').value.trim();
+      const units = document.getElementById('agent-units-count').value;
+
+      localStorage.setItem('studentstay_active_agent', JSON.stringify({
+        company: company,
+        rep: rep,
+        email: email,
+        units: units,
+        role: 'Registered Accommodation Provider'
+      }));
+
+      window.location.href = 'agent.html';
+    }
+
+    function quickFounderLogin() {
+      localStorage.setItem('studentstay_active_agent', JSON.stringify({
+        email: 'founder@studentstay.com',
+        name: 'Founder (E. Dev)',
+        role: 'Head of Tenancy Operations'
+      }));
+      window.location.href = 'agent.html';
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      handleSignupCountryChange();
+      initRememberedAccount();
+
+      // Real-time error dismissal when user edits the email field
+      const loginEmailInput = document.getElementById('login-email');
+      if (loginEmailInput) {
+        loginEmailInput.addEventListener('input', () => {
+          const errorAlert = document.getElementById('signin-error-alert');
+          if (errorAlert && !errorAlert.classList.contains('hidden')) {
+            errorAlert.classList.add('hidden');
+            loginEmailInput.classList.remove('border-rose-500', 'focus:ring-rose-500');
+          }
+        });
+      }
+
+      // Check URL query parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('portal') === 'agent' || urlParams.get('role') === 'agent') {
+        switchPortalRole('agent');
+      } else if (urlParams.get('mode') === 'signin') {
+        // User specifically clicked Sign In
+        switchPortalRole('student');
+        switchAuthTab('signin');
+      } else {
+        // Default: Create Account comes before Sign In!
+        switchPortalRole('student');
+        switchAuthTab('signup');
+      }
+    });
+  </script>
+</body>
+</html>

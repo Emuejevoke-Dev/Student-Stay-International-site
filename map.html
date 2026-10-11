@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Global Transit & Campus Map | StudentStay</title>
+  <meta name="description" content="Interactive map of student accommodations, universities, transit stations, and verified commute walking routes across Glasgow, Edinburgh, London, New York and Toronto.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              600: '#0284c7',
+              700: '#0369a1',
+              900: '#070d18'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Leaflet CSS & JS for Professional Interactive Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    .leaflet-popup-content-wrapper {
+      border-radius: 16px;
+      padding: 4px;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.2);
+    }
+    .leaflet-popup-content {
+      margin: 8px 12px;
+      line-height: 1.4;
+    }
+    .custom-map-pin {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      color: white;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-[#070d18] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col antialiased">
+
+  <!-- Universal Header Navigation -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-[#0b1324]/95 backdrop-blur-md border-b border-slate-200/90 dark:border-slate-800/80 shadow-xs transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="h-16 flex items-center justify-between">
+        <a href="index.html" class="flex items-center space-x-2.5">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-700 to-sky-500 text-white flex items-center justify-center shadow-md">
+            <i class="fa-solid fa-house-chimney-window text-lg"></i>
+          </div>
+          <div>
+            <span class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white brand-font">
+              Student<span class="text-sky-600 dark:text-sky-400">Stay</span>
+            </span>
+            <span class="text-[10px] font-semibold text-slate-400 tracking-wider uppercase block -mt-1">
+              Verified Global Living
+            </span>
+          </div>
+        </a>
+
+        <div class="flex items-center space-x-2 sm:space-x-3">
+          <!-- Theme Switcher -->
+          <button class="theme-toggle-btn px-3 py-1.5 rounded-xl border text-xs font-semibold flex items-center transition-all cursor-pointer shadow-xs">
+            <i class="fa-solid fa-moon mr-1.5"></i>
+            <span class="hidden sm:inline">Theme</span>
+          </button>
+
+          <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl px-2 py-1 border border-slate-200 dark:border-slate-700 text-xs">
+            <i class="fa-solid fa-coins text-sky-600 dark:text-sky-400 mr-1.5"></i>
+            <select id="currency-selector" class="bg-transparent text-xs font-bold text-slate-800 dark:text-slate-200 outline-none cursor-pointer">
+              <option value="GBP">£ GBP</option>
+              <option value="USD">$ USD</option>
+              <option value="EUR">€ EUR</option>
+              <option value="NGN">₦ NGN</option>
+              <option value="INR">₹ INR</option>
+              <option value="CNY">¥ CNY</option>
+            </select>
+          </div>
+
+          <!-- Dynamic Auth Container -->
+          <div class="auth-container"></div>
+
+          <a href="tours.html" class="hidden sm:inline-flex px-4 py-2 text-xs font-bold text-white bg-sky-600 hover:bg-sky-700 rounded-xl shadow-sm transition-all items-center">
+            <i class="fa-solid fa-arrows-spin mr-1.5"></i> Open 360° Tours
+          </a>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation Tabs Toggle Row (Positioned down at the left hand side) -->
+      <div class="md:hidden py-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-start">
+        <button type="button" id="mobile-nav-toggle" aria-label="Toggle navigation tabs" aria-expanded="false" class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 text-xs font-bold transition-all shadow-xs cursor-pointer border border-slate-200/80 dark:border-slate-700">
+          <i id="mobile-nav-toggle-icon" class="fa-solid fa-bars text-sky-600 dark:text-sky-400 text-xs"></i>
+          <span>All Tabs</span>
+          <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 dark:text-slate-500 ml-0.5"></i>
+        </button>
+      </div>
+
+      <!-- Navigation Tabs (Desktop only; on small screens only the toggle tab is shown) -->
+      <nav class="hidden md:flex items-center space-x-1 sm:space-x-2 py-2 overflow-x-auto no-scrollbar border-t border-slate-100 dark:border-slate-800 text-xs font-semibold">
+        <a href="index.html" class="px-3.5 sm:px-4 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0">
+          <i class="fa-solid fa-house mr-1.5 text-sky-600 text-[11px]"></i> Home
+        </a>
+        <a href="about.html" class="px-3.5 sm:px-4 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0">
+          <i class="fa-solid fa-circle-info mr-1.5 text-sky-600 text-[11px]"></i> About Us
+        </a>
+        <a href="find-home.html" class="px-3.5 sm:px-4 py-2 rounded-xl font-bold bg-sky-600 text-white shadow-xs whitespace-nowrap transition-all flex items-center shrink-0">
+          <i class="fa-solid fa-magnifying-glass-location mr-1.5 text-[11px]"></i> Find Your New Home
+        </a>
+        <a href="profile.html" class="px-3.5 sm:px-4 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0">
+          <i class="fa-solid fa-id-badge mr-1.5 text-sky-600 text-[11px]"></i> Student Profile
+        </a>
+      </nav>
+
+      <!-- Mobile Expandable Navigation Drawer (Showing All Tabs on Small Screens) -->
+      <div id="mobile-nav-menu" class="hidden md:hidden border-t border-slate-200/80 dark:border-slate-800 bg-white/98 dark:bg-[#0b1324]/98 backdrop-blur-xl py-4 px-3 sm:px-4 shadow-xl transition-all">
+        <div class="space-y-4">
+          <!-- 1. Core Navigation Tabs -->
+          <div>
+            <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2 flex items-center justify-between">
+              <span>Core Navigation Tabs</span>
+              <span class="text-[9px] text-sky-600 dark:text-sky-400 font-extrabold uppercase">Primary 4</span>
+            </div>
+            <div class="grid grid-cols-2 gap-1.5">
+              <a href="index.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl font-bold text-xs transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-page="index.html">
+                <div class="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-house text-xs"></i>
+                </div>
+                <span class="truncate">Home</span>
+              </a>
+              <a href="about.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl font-bold text-xs transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-page="about.html">
+                <div class="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-circle-info text-xs"></i>
+                </div>
+                <span class="truncate">About Us</span>
+              </a>
+              <a href="find-home.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl font-bold text-xs transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-page="find-home.html">
+                <div class="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-magnifying-glass-location text-xs"></i>
+                </div>
+                <span class="truncate">Find Home</span>
+              </a>
+              <a href="profile.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl font-bold text-xs transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-page="profile.html">
+                <div class="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-id-badge text-xs"></i>
+                </div>
+                <span class="truncate">Student Profile</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 2. Exploration & Community Tools -->
+          <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80">
+            <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2 flex items-center justify-between">
+              <span>Exploration & Living Tools</span>
+              <span class="text-[9px] text-emerald-600 dark:text-emerald-400 font-extrabold uppercase">Interactive</span>
+            </div>
+            <div class="grid grid-cols-2 gap-1.5">
+              <a href="tours.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="tours.html">
+                <div class="w-7 h-7 rounded-lg bg-indigo-100 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-arrows-spin text-xs"></i>
+                </div>
+                <span class="truncate">360° Tours</span>
+              </a>
+              <a href="map.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl font-bold text-xs transition-all bg-sky-600 text-white shadow-xs" data-page="map.html">
+                <div class="w-7 h-7 rounded-lg bg-white/20 text-white flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-map-location-dot text-xs"></i>
+                </div>
+                <span class="truncate">Campus Map</span>
+              </a>
+              <a href="insights.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="insights.html">
+                <div class="w-7 h-7 rounded-lg bg-purple-100 dark:bg-purple-950/80 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-chart-line text-xs"></i>
+                </div>
+                <span class="truncate">Rent Insights</span>
+              </a>
+              <a href="residents.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="residents.html">
+                <div class="w-7 h-7 rounded-lg bg-amber-100 dark:bg-amber-950/80 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-users text-xs"></i>
+                </div>
+                <span class="truncate">Residents</span>
+              </a>
+              <a href="chat.html" class="mobile-nav-link col-span-2 flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="chat.html">
+                <div class="w-7 h-7 rounded-lg bg-teal-100 dark:bg-teal-950/80 text-teal-600 dark:text-teal-400 flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-comments text-xs"></i>
+                </div>
+                <div class="flex-1 min-w-0 flex items-center justify-between">
+                  <span class="truncate">Direct Landlord Chat</span>
+                  <span class="text-[9px] px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 font-extrabold uppercase">Live Escrow</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- 3. Portals & Quick Account Access -->
+          <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2 text-xs">
+            <a href="agent.html" class="flex-1 py-2.5 px-3 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-400/40 font-bold transition-all flex items-center justify-center space-x-1.5">
+              <i class="fa-solid fa-user-tie text-amber-500 text-xs"></i>
+              <span>Owner Portal</span>
+            </a>
+            <a href="signup.html" class="flex-1 py-2.5 px-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold transition-all shadow-xs flex items-center justify-center space-x-1.5">
+              <i class="fa-solid fa-user-plus text-xs"></i>
+              <span>Create Account</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-Navigation Toolbar (Under Find Your New Home) -->
+      <div class="py-2 border-t border-slate-200/80 dark:border-slate-800 flex items-center space-x-2 overflow-x-auto no-scrollbar text-xs">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mr-1 shrink-0 flex items-center">
+          <i class="fa-solid fa-compass mr-1 text-sky-600"></i> Explore Tools:
+        </span>
+        <a href="find-home.html" class="px-3.5 py-1.5 rounded-lg font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-600 whitespace-nowrap flex items-center shrink-0 transition-colors">
+          <i class="fa-solid fa-list mr-1.5 text-[10px]"></i> All Verified Homes
+        </a>
+        <a href="tours.html" class="px-3.5 py-1.5 rounded-lg font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-600 whitespace-nowrap flex items-center shrink-0 transition-colors">
+          <i class="fa-solid fa-arrows-spin mr-1.5 text-[10px]"></i> 360° Virtual Tours
+        </a>
+        <a href="residents.html" class="px-3.5 py-1.5 rounded-lg font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-600 whitespace-nowrap flex items-center shrink-0 transition-colors">
+          <i class="fa-solid fa-users mr-1.5 text-[10px]"></i> Ask Residents
+        </a>
+        <a href="chat.html" class="px-3.5 py-1.5 rounded-lg font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-600 whitespace-nowrap flex items-center shrink-0 transition-colors">
+          <i class="fa-solid fa-comments mr-1.5 text-[10px]"></i> Live Peer Chat
+        </a>
+        <a href="map.html" class="px-3.5 py-1.5 rounded-lg font-bold bg-sky-600 text-white shadow-xs whitespace-nowrap flex items-center shrink-0">
+          <i class="fa-solid fa-map-location-dot mr-1.5 text-[10px]"></i> Campus Transit Map
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    
+    <div class="flex flex-wrap items-end justify-between mb-6 gap-4">
+      <div class="max-w-2xl">
+        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-sky-100 dark:bg-sky-950/60 text-sky-800 dark:text-sky-300 text-xs font-bold mb-2 border border-sky-200 dark:border-sky-800">
+          <i class="fa-solid fa-route text-sky-600"></i>
+          <span>Professional Campus Proximity & Distance Radius Map</span>
+        </div>
+        <h1 class="text-3xl font-black text-slate-900 dark:text-slate-100 mb-1">
+          Interactive Campus Transit Map
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+          Accurate GPS navigation, distance rings (500m & 1000m walking radius), and verified transit routes connecting accommodations to university lecture halls.
+        </p>
+      </div>
+
+      <!-- City Switcher Pills -->
+      <div class="flex items-center space-x-1.5 bg-white dark:bg-slate-900 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
+        <button onclick="switchCityMap('glasgow')" id="map-btn-glasgow" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-sky-600 text-white transition-all">
+          Glasgow 🏴󠁧󠁢󠁳󠁣󠁴󠁿
+        </button>
+        <button onclick="switchCityMap('edinburgh')" id="map-btn-edinburgh" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+          Edinburgh 🏴󠁧󠁢󠁳󠁣󠁴󠁿
+        </button>
+        <button onclick="switchCityMap('london')" id="map-btn-london" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+          London 🇬🇧
+        </button>
+        <button onclick="switchCityMap('newyork')" id="map-btn-newyork" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+          New York 🇺🇸
+        </button>
+        <button onclick="switchCityMap('toronto')" id="map-btn-toronto" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+          Toronto 🇨🇦
+        </button>
+        <button onclick="switchCityMap('sydney')" id="map-btn-sydney" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+          Sydney 🇦🇺
+        </button>
+        <button onclick="switchCityMap('munich')" id="map-btn-munich" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+          Munich 🇩🇪
+        </button>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-12">
+      <!-- Interactive Leaflet Map Container -->
+      <div class="lg:col-span-8 bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-md p-4 sm:p-5 flex flex-col justify-between">
+        
+        <div class="flex items-center justify-between mb-3 text-xs">
+          <div class="flex items-center space-x-2">
+            <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span id="map-status-text" class="font-bold text-slate-800 dark:text-slate-200">Interactive OpenStreetMap Active</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-sky-100 dark:bg-sky-950/60 text-sky-800 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
+              <i class="fa-solid fa-location-crosshairs mr-1"></i> Walking Distance Rings Active
+            </span>
+          </div>
+        </div>
+
+        <!-- The Leaflet Map Element -->
+        <div id="leaflet-map" class="h-[480px] w-full rounded-2xl border border-slate-200 dark:border-slate-800 z-10 overflow-hidden shadow-inner"></div>
+
+        <!-- Interactive Legend & Stats -->
+        <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between text-xs text-slate-500 dark:text-slate-400 gap-2">
+          <div class="flex items-center space-x-4">
+            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-sky-600 mr-1.5"></span> Student Residence</span>
+            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-indigo-600 mr-1.5"></span> University Campus</span>
+            <span class="flex items-center"><span class="w-2.5 h-2.5 rounded-full bg-emerald-600 mr-1.5"></span> Metro / Train Station</span>
+          </div>
+          <span class="font-semibold text-slate-700 dark:text-slate-300">Click any marker to open 360° virtual tour</span>
+        </div>
+      </div>
+
+      <!-- Right Column: Commute Breakdown & Walking Times -->
+      <div class="lg:col-span-4 space-y-4">
+        
+        <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-md p-5">
+          <h3 class="font-bold text-slate-900 dark:text-slate-100 text-sm mb-3 flex items-center">
+            <i class="fa-solid fa-person-walking text-sky-600 mr-2"></i> Verified Commute Breakdown
+          </h3>
+
+          <div id="commute-cards-list" class="space-y-2.5">
+            <!-- Populated via script -->
+          </div>
+        </div>
+
+        <!-- Safe Living & Free Bus Travel Card -->
+        <div class="bg-gradient-to-br from-sky-600 to-sky-700 text-white rounded-3xl p-5 shadow-lg">
+          <div class="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-sky-200 mb-1">
+            <i class="fa-solid fa-gift"></i>
+            <span>Scottish Student Benefit</span>
+          </div>
+          <h4 class="text-base font-black mb-2">Free Bus Travel Across Scotland!</h4>
+          <p class="text-xs text-sky-100 leading-relaxed mb-3">
+            All international students aged 21 and under are legally entitled to 100% free bus travel across Scotland via the Scottish National Entitlement Card.
+          </p>
+          <div class="p-2.5 bg-sky-800/80 rounded-xl text-xs text-sky-200">
+            ✓ StudentStay concierge team helps incoming students activate this on arrival!
+          </div>
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm p-4 text-xs text-slate-600 dark:text-slate-400">
+          <div class="font-bold text-slate-900 dark:text-slate-200 mb-1 flex items-center">
+            <i class="fa-solid fa-circle-info text-sky-600 mr-1.5"></i> Distance Accuracy Guarantee
+          </div>
+          All distances are calculated from main reception turnstiles to university library entrances along pedestrian walkways with street lighting and CCTV.
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+
+  <!-- Interactive Leaflet Map Script -->
+  <script>
+    let mapInstance = null;
+    let currentMapCity = 'glasgow';
+
+    const cityMapData = {
+      glasgow: {
+        center: [55.8655, -4.2505],
+        zoom: 15,
+        status: 'Glasgow Central Campus Network',
+        points: [
+          {
+            title: 'Buchanan View (StudentStay Verified ★)',
+            coords: [55.8665, -4.2505],
+            type: 'property',
+            id: 'buchanan-view',
+            badge: 'Verified Accommodation',
+            desc: '33 Calgary Street • En-suite Studio from £189/wk',
+            image: 'assets/images/buchanan_view.jpg'
+          },
+          {
+            title: 'The Foundry (Merchant City)',
+            coords: [55.8582, -4.2410],
+            type: 'property',
+            id: 'the-foundry',
+            badge: 'Verified Accommodation',
+            desc: '47 High Street • Studio from £215/wk',
+            image: 'assets/images/merchant_studios.jpg'
+          },
+          {
+            title: 'Glasgow Caledonian University (GCU)',
+            coords: [55.8668, -4.2500],
+            type: 'campus',
+            desc: 'Cowcaddens Rd • 8 min walk (0.4 mi) from Buchanan View'
+          },
+          {
+            title: 'University of Strathclyde',
+            coords: [55.8617, -4.2429],
+            type: 'campus',
+            desc: 'George St • 12 min walk / 6 min bus from Buchanan View'
+          },
+          {
+            title: 'University of Glasgow (Gilmorehill)',
+            coords: [55.8724, -4.2882],
+            type: 'campus',
+            desc: 'West End • 18 min subway via Buchanan Street Station'
+          },
+          {
+            title: 'Buchanan Street Subway & Queen St Train',
+            coords: [55.8624, -4.2530],
+            type: 'transit',
+            desc: 'Subway & National Rail hub • 6 min walk'
+          }
+        ],
+        routes: [
+          [[55.8665, -4.2505], [55.8668, -4.2500]], // Buchanan View to GCU
+          [[55.8665, -4.2505], [55.8624, -4.2530]], // Buchanan View to Subway
+          [[55.8665, -4.2505], [55.8617, -4.2429]]  // Buchanan View to Strathclyde
+        ],
+        commutes: [
+          { dest: 'Glasgow Caledonian (GCU)', time: '8 mins walk', dist: '0.4 mi flat paved Cowcaddens route', color: 'emerald' },
+          { dest: 'Univ of Strathclyde', time: '12 mins walk', dist: '0.7 mi or 6 mins on No. 19 bus', color: 'sky' },
+          { dest: 'University of Glasgow', time: '18 mins subway', dist: 'Buchanan St Subway directly to Hillhead', color: 'indigo' },
+          { dest: 'Buchanan Bus Station & Rail', time: '6 mins walk', dist: 'Direct links to Edinburgh and Glasgow Airport', color: 'amber' }
+        ]
+      },
+      edinburgh: {
+        center: [55.9445, -3.1870],
+        zoom: 15,
+        status: 'Edinburgh Central University Network',
+        points: [
+          {
+            title: 'Salisbury Court - Edinburgh Old Town ★',
+            coords: [55.9405, -3.1810],
+            type: 'property',
+            id: 'salisbury-court',
+            badge: 'Verified Accommodation',
+            desc: '22 Salisbury Place • Ensuite Room £220/wk',
+            image: 'assets/images/merchant_studios.jpg'
+          },
+          {
+            title: 'University of Edinburgh (George Square)',
+            coords: [55.9430, -3.1885],
+            type: 'campus',
+            desc: 'Central Campus • 9 min walk from Salisbury Court'
+          },
+          {
+            title: 'Edinburgh Waverley Train Station',
+            coords: [55.9520, -3.1895],
+            type: 'transit',
+            desc: 'National Rail & Tram link to Edinburgh Airport'
+          }
+        ],
+        routes: [
+          [[55.9405, -3.1810], [55.9430, -3.1885]]
+        ],
+        commutes: [
+          { dest: 'University of Edinburgh (George Sq)', time: '9 mins walk', dist: '0.5 mi through scenic Newington', color: 'emerald' },
+          { dest: 'King\'s Buildings Campus', time: '14 mins bus', dist: '1.2 mi on Edinburgh bus route 41', color: 'sky' },
+          { dest: 'Waverley Train Station', time: '18 mins walk / 8 mins bus', dist: 'Direct connection across the UK', color: 'indigo' }
+        ]
+      },
+      london: {
+        center: [51.5245, -0.1340],
+        zoom: 15,
+        status: 'Central London Bloomsbury University Network',
+        points: [
+          {
+            title: 'Bloomsbury Student Quarters ★',
+            coords: [51.5245, -0.1300],
+            type: 'property',
+            id: 'bloomsbury-residence',
+            badge: 'Verified Accommodation',
+            desc: '15 Woburn Place • Superior Studio £310/wk',
+            image: 'assets/images/buchanan_view.jpg'
+          },
+          {
+            title: 'University College London (UCL)',
+            coords: [51.5246, -0.1340],
+            type: 'campus',
+            desc: 'Gower Street Main Quad • 6 min walk'
+          },
+          {
+            title: 'Russell Square Underground Station',
+            coords: [51.5230, -0.1245],
+            type: 'transit',
+            desc: 'Piccadilly Line • Zone 1'
+          }
+        ],
+        routes: [
+          [[51.5245, -0.1300], [51.5246, -0.1340]]
+        ],
+        commutes: [
+          { dest: 'University College London (UCL)', time: '6 mins walk', dist: '0.3 mi through historic Bloomsbury', color: 'emerald' },
+          { dest: 'King\'s College London (Strand)', time: '16 mins bus / tube', dist: '1.1 mi via Russell Square', color: 'sky' }
+        ]
+      },
+      newyork: {
+        center: [40.8075, -73.9626],
+        zoom: 15,
+        status: 'New York City Morningside Heights Network',
+        points: [
+          {
+            title: 'Manhattan Student Loft ★',
+            coords: [40.8065, -73.9650],
+            type: 'property',
+            id: 'manhattan-student-loft',
+            badge: 'Verified Accommodation',
+            desc: '610 W 114th St • Studio from £395/wk',
+            image: 'assets/images/student_lounge.jpg'
+          },
+          {
+            title: 'Columbia University Main Quad',
+            coords: [40.8075, -73.9626],
+            type: 'campus',
+            desc: 'Broadway & 116th St • 7 min walk'
+          },
+          {
+            title: '116 St - Columbia Univ Subway',
+            coords: [40.8076, -73.9641],
+            type: 'transit',
+            desc: '1 Train to Times Square & Downtown'
+          }
+        ],
+        routes: [
+          [[40.8065, -73.9650], [40.8075, -73.9626]]
+        ],
+        commutes: [
+          { dest: 'Columbia University Main Quad', time: '7 mins walk', dist: '0.3 mi through Broadway', color: 'emerald' },
+          { dest: 'Times Square & Midtown', time: '18 mins subway', dist: 'Direct on 1 Train', color: 'sky' }
+        ]
+      },
+      toronto: {
+        center: [43.6629, -79.3957],
+        zoom: 15,
+        status: 'Toronto Downtown Discovery District Network',
+        points: [
+          {
+            title: 'Bay & Bloor Student Residence ★',
+            coords: [43.6690, -79.3890],
+            type: 'property',
+            id: 'bay-street-suites',
+            badge: 'Verified Accommodation',
+            desc: '88 Bloor St W • Single Ensuite £285/wk',
+            image: 'assets/images/merchant_studios.jpg'
+          },
+          {
+            title: 'University of Toronto (St. George)',
+            coords: [43.6629, -79.3957],
+            type: 'campus',
+            desc: 'King\'s College Circle • 8 min walk'
+          },
+          {
+            title: 'Bay Subway Station (TTC)',
+            coords: [43.6700, -79.3900],
+            type: 'transit',
+            desc: 'Line 2 Bloor-Danforth'
+          }
+        ],
+        routes: [
+          [[43.6690, -79.3890], [43.6629, -79.3957]]
+        ],
+        commutes: [
+          { dest: 'University of Toronto (St. George)', time: '8 mins walk', dist: '0.4 mi along Queens Park', color: 'emerald' },
+          { dest: 'Toronto Metropolitan Univ (TMU)', time: '12 mins subway', dist: '1.1 mi Line 1 subway', color: 'sky' }
+        ]
+      },
+      sydney: {
+        center: [-33.8830, 151.1990],
+        zoom: 15,
+        status: 'Sydney Broadway & Camperdown University Network',
+        points: [
+          {
+            title: 'Broadway Student Living ★',
+            coords: [-33.8845, 151.1960],
+            type: 'property',
+            id: 'broadway-sydney-lodge',
+            badge: 'Verified Accommodation',
+            desc: '185 Broadway • Studio Suite £285/wk',
+            image: 'assets/images/buchanan_view.jpg'
+          },
+          {
+            title: 'University of Sydney Camperdown Quad',
+            coords: [-33.8885, 151.1873],
+            type: 'campus',
+            desc: 'Main Historic Quad • 6 min walk'
+          },
+          {
+            title: 'Central Railway Station',
+            coords: [-33.8832, 151.2065],
+            type: 'transit',
+            desc: 'Sydney Trains & Light Rail'
+          }
+        ],
+        routes: [
+          [[-33.8845, 151.1960], [-33.8885, 151.1873]]
+        ],
+        commutes: [
+          { dest: 'University of Sydney Camperdown', time: '6 mins walk', dist: '0.4 mi along Victoria Park', color: 'emerald' },
+          { dest: 'UNSW Kensington Campus', time: '20 mins light rail', dist: '3.1 mi direct L2 light rail', color: 'sky' }
+        ]
+      },
+      munich: {
+        center: [48.1490, 11.5680],
+        zoom: 15,
+        status: 'Munich Maxvorstadt & Kunstareal University Network',
+        points: [
+          {
+            title: 'Maxvorstadt Student Quarters ★',
+            coords: [-48.1495, 11.5670],
+            type: 'property',
+            id: 'bavaria-student-quarters',
+            badge: 'Verified Accommodation',
+            desc: 'Theresienstraße 40 • Einzelapartment £175/wk',
+            image: 'assets/images/merchant_studios.jpg'
+          },
+          {
+            title: 'Technical University of Munich (TUM)',
+            coords: [48.1480, 11.5680],
+            type: 'campus',
+            desc: 'Arcisstraße Main Campus • 4 min walk'
+          },
+          {
+            title: 'Theresienstraße U-Bahn (U2/U8)',
+            coords: [48.1510, 11.5645],
+            type: 'transit',
+            desc: 'Direct link to Munich Central Station'
+          }
+        ],
+        routes: [
+          [[48.1495, 11.5670], [48.1480, 11.5680]]
+        ],
+        commutes: [
+          { dest: 'TUM Main Campus Arcisstraße', time: '4 mins walk', dist: '0.2 mi paved university campus route', color: 'emerald' },
+          { dest: 'LMU Munich Geschwister-Scholl-Platz', time: '8 mins walk', dist: '0.5 mi through Maxvorstadt', color: 'sky' }
+        ]
+      }
+    };
+
+    function initLeafletMap(cityKey = 'glasgow') {
+      const data = cityMapData[cityKey];
+      if (!data) return;
+
+      const mapContainer = document.getElementById('leaflet-map');
+      if (!mapContainer) return;
+
+      if (mapInstance) {
+        mapInstance.remove();
+        mapInstance = null;
+      }
+
+      // Initialize Leaflet Map
+      mapInstance = L.map('leaflet-map', {
+        scrollWheelZoom: false
+      }).setView(data.center, data.zoom);
+
+      // OpenStreetMap Tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19
+      }).addTo(mapInstance);
+
+      // Distance Circles around primary property (500m & 1000m walking radius)
+      const primaryProp = data.points.find(p => p.type === 'property');
+      if (primaryProp) {
+        // 500m radius (~6 min walk)
+        L.circle(primaryProp.coords, {
+          color: '#0284c7',
+          fillColor: '#38bdf8',
+          fillOpacity: 0.12,
+          radius: 500,
+          dashArray: '5, 5',
+          weight: 2
+        }).addTo(mapInstance).bindTooltip('500m Radius (~6 min walk)', { permanent: false });
+
+        // 1000m radius (~12 min walk)
+        L.circle(primaryProp.coords, {
+          color: '#6366f1',
+          fillColor: '#818cf8',
+          fillOpacity: 0.06,
+          radius: 1000,
+          dashArray: '6, 6',
+          weight: 1.5
+        }).addTo(mapInstance).bindTooltip('1000m Radius (~12 min walk)', { permanent: false });
+      }
+
+      // Walking Route Polylines
+      if (data.routes) {
+        data.routes.forEach(route => {
+          L.polyline(route, {
+            color: '#0284c7',
+            weight: 4,
+            opacity: 0.75,
+            dashArray: '8, 8'
+          }).addTo(mapInstance);
+        });
+      }
+
+      // Add Custom Markers
+      data.points.forEach(point => {
+        let pinColor = '#0284c7';
+        let iconHtml = '<i class="fa-solid fa-house-chimney text-white text-xs"></i>';
+        
+        if (point.type === 'campus') {
+          pinColor = '#4f46e5';
+          iconHtml = '<i class="fa-solid fa-graduation-cap text-white text-xs"></i>';
+        } else if (point.type === 'transit') {
+          pinColor = '#059669';
+          iconHtml = '<i class="fa-solid fa-train-subway text-white text-xs"></i>';
+        }
+
+        const customIcon = L.divIcon({
+          className: 'custom-leaflet-marker',
+          html: `<div style="background-color: ${pinColor}; width: 32px; height: 32px; border-radius: 50%; border: 2.5px solid white; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transform: translate(-8px, -8px);">${iconHtml}</div>`,
+          iconSize: [32, 32],
+          iconAnchor: [16, 16]
+        });
+
+        const marker = L.marker(point.coords, { icon: customIcon }).addTo(mapInstance);
+
+        const popupContent = `
+          <div style="min-width: 200px;">
+            ${point.image ? `<img src="${point.image}" style="width: 100%; height: 90px; object-fit: cover; border-radius: 10px; margin-bottom: 6px;">` : ''}
+            <div style="font-weight: bold; font-size: 13px; color: #0f172a; margin-bottom: 2px;">${point.title}</div>
+            <div style="font-size: 11px; color: #64748b; margin-bottom: 6px;">${point.desc}</div>
+            ${point.id ? `
+              <button onclick="open360Tour('${point.id}')" style="width: 100%; padding: 6px 10px; background-color: #0284c7; color: white; font-weight: bold; font-size: 11px; border-radius: 8px; border: none; cursor: pointer;">
+                Launch 360° Virtual Tour
+              </button>
+            ` : ''}
+          </div>
+        `;
+
+        marker.bindPopup(popupContent);
+        if (point.type === 'property' && point.id === 'buchanan-view') {
+          marker.openPopup();
+        }
+      });
+
+      // Update Commute Cards List
+      const commuteList = document.getElementById('commute-cards-list');
+      if (commuteList && data.commutes) {
+        commuteList.innerHTML = data.commutes.map(c => `
+          <div class="p-3 bg-${c.color}-50 dark:bg-${c.color}-950/40 rounded-xl border border-${c.color}-200 dark:border-${c.color}-800 text-xs">
+            <div class="font-bold text-${c.color}-900 dark:text-${c.color}-300 flex justify-between">
+              <span>${c.dest}</span>
+              <span>${c.time}</span>
+            </div>
+            <div class="text-[11px] text-${c.color}-700 dark:text-${c.color}-400 mt-0.5">${c.dist}</div>
+          </div>
+        `).join('');
+      }
+
+      const statusEl = document.getElementById('map-status-text');
+      if (statusEl) {
+        statusEl.innerText = data.status;
+      }
+    }
+
+    function switchCityMap(cityKey) {
+      currentMapCity = cityKey;
+      document.querySelectorAll('.city-map-btn').forEach(btn => {
+        btn.classList.remove('bg-sky-600', 'text-white');
+        btn.classList.add('text-slate-700', 'dark:text-slate-300');
+      });
+
+      const activeBtn = document.getElementById(`map-btn-${cityKey}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-sky-600', 'text-white');
+        activeBtn.classList.remove('text-slate-700', 'dark:text-slate-300');
+      }
+
+      initLeafletMap(cityKey);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const params = new URLSearchParams(window.location.search);
+        let city = params.get('city');
+        if (!city) {
+          const savedCountry = localStorage.getItem('studentstay_active_country');
+          const user = (window.AuthManager && AuthManager.getCurrentUser()) ? AuthManager.getCurrentUser() : null;
+          const activeCountry = savedCountry || (user && (user.destinationCountry || user.countryCode)) || 'uk';
+          if (activeCountry === 'germany') city = 'munich';
+          else if (activeCountry === 'australia') city = 'sydney';
+          else city = 'glasgow';
+        }
+        switchCityMap(city || 'glasgow');
+      }, 200);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | StudentStay - Scam-Free Global Student Living</title>
+  <meta name="description" content="Learn why StudentStay was founded: eradicating international student housing fraud through 360° virtual tours, licensed escrow protection, and verified peer ambassadorship.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Tailwind CSS CDN with class-based Dark Mode -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              850: '#0c1a30',
+              900: '#070d18',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-slate-50 dark:bg-[#070d18] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col antialiased selection:bg-sky-500 selection:text-white">
+
+  <!-- Top Announcement Bar -->
+  <div class="bg-gradient-to-r from-sky-900 via-sky-800 to-slate-900 text-white text-xs py-2 px-4 shadow-inner border-b border-sky-700/40">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center space-x-2">
+        <span id="top-announcement-tag" class="top-intake-announcement-tag bg-sky-500/30 text-sky-200 border border-sky-400/40 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full">
+          Our Story
+        </span>
+        <span id="top-announcement-text" class="top-intake-announcement-text text-slate-200 font-medium">
+          Founded by international students, for students studying across Germany, the UK, USA, Canada & Australia.
+        </span>
+      </div>
+      <div class="flex items-center space-x-4 text-slate-300 text-xs">
+        <span class="font-semibold text-emerald-300 flex items-center">
+          <i class="fa-solid fa-shield-halved text-emerald-400 mr-1.5"></i> 100% Escrow Protected Tenancies
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Viewport Container -->
+  <div id="main-viewport-container" class="flex-1 flex flex-col w-full">
+
+    <!-- Universal Navigation Header -->
+    <header class="sticky top-0 z-40 bg-white/95 dark:bg-[#0b1324]/95 backdrop-blur-md border-b border-slate-200/90 dark:border-slate-800/80 shadow-xs transition-colors">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="h-16 flex items-center justify-between">
+          <a href="index.html" class="flex items-center space-x-2.5 group">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-sky-400 text-white flex items-center justify-center shadow-md shadow-sky-600/30 group-hover:scale-105 transition-transform">
+              <i class="fa-solid fa-house-chimney-window text-lg"></i>
+            </div>
+            <div>
+              <span class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white brand-font flex items-center">
+                Student<span class="text-sky-600 dark:text-sky-400">Stay</span>
+              </span>
+              <span class="text-[10px] font-semibold text-slate-400 tracking-wider uppercase block -mt-1">
+                Verified Global Living
+              </span>
+            </div>
+          </a>
+
+          <div class="flex items-center space-x-2 sm:space-x-3">
+            <button class="theme-toggle-btn px-2.5 sm:px-3 py-1.5 rounded-xl border text-xs font-semibold flex items-center transition-all cursor-pointer shadow-xs" title="Toggle Dark / Light Mode">
+              <i class="fa-solid fa-moon sm:mr-1.5"></i>
+              <span class="hidden sm:inline">Theme</span>
+            </button>
+
+            <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl px-2 py-1 border border-slate-200 dark:border-slate-700 text-xs">
+              <i class="fa-solid fa-coins text-sky-600 dark:text-sky-400 mr-1 sm:mr-1.5 text-[11px]"></i>
+              <select id="currency-selector" class="bg-transparent text-xs font-bold text-slate-800 dark:text-slate-200 outline-none cursor-pointer">
+                <option value="GBP">£ GBP</option>
+                <option value="USD">$ USD</option>
+                <option value="EUR">€ EUR</option>
+                <option value="NGN">₦ NGN</option>
+                <option value="INR">₹ INR</option>
+                <option value="CNY">¥ CNY</option>
+              </select>
+            </div>
+
+            <div class="auth-container"></div>
+
+            <a href="find-home.html" class="hidden sm:inline-flex px-4 py-2 text-xs font-bold text-white bg-sky-600 hover:bg-sky-700 rounded-xl shadow-xs transition-all items-center">
+              Find Your Home →
+            </a>
+          </div>
+        </div>
+
+        <!-- Mobile Navigation Tabs Toggle Row (Positioned down at the left hand side) -->
+        <div class="md:hidden py-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-start">
+          <button type="button" id="mobile-nav-toggle" aria-label="Toggle navigation tabs" aria-expanded="false" class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 text-xs font-bold transition-all shadow-xs cursor-pointer border border-slate-200/80 dark:border-slate-700">
+            <i id="mobile-nav-toggle-icon" class="fa-solid fa-bars text-sky-600 dark:text-sky-400 text-xs"></i>
+            <span>All Tabs</span>
+            <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 dark:text-slate-500 ml-0.5"></i>
+          </button>
+        </div>
+
+        <!-- Navigation Tabs (Desktop only; on small screens only the toggle tab is shown) -->
+        <nav class="hidden md:flex items-center space-x-1 sm:space-x-2 py-2 overflow-x-auto no-scrollbar border-t border-slate-100 dark:border-slate-800 text-xs font-semibold">
+          <a href="index.html" class="px-3.5 sm:px-4 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0">
+            <i class="fa-solid fa-house mr-1.5 text-sky-600 text-[11px]"></i> Home
+          </a>
+          <a href="about.html" class="px-3.5 sm:px-4 py-2 rounded-xl font-bold bg-sky-600 text-white shadow-xs whitespace-nowrap transition-all flex items-center shrink-0">
+            <i class="fa-solid fa-circle-info mr-1.5 text-[11px]"></i> About Us
+          </a>
+          <a href="find-home.html" class="px-3.5 sm:px-4 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0">
+            <i class="fa-solid fa-magnifying-glass-location mr-1.5 text-sky-600 text-[11px]"></i> Find Your New Home
+          </a>
+          <a href="profile.html" class="px-3.5 sm:px-4 py-2 rounded-xl text-slate-700 dark:text-slate-300 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 whitespace-nowrap transition-all flex items-center shrink-0">
+            <i class="fa-solid fa-id-badge mr-1.5 text-sky-600 text-[11px]"></i> Student Profile
+          </a>
+        </nav>
+
+        <!-- Mobile Expandable Navigation Drawer (Showing All Tabs on Small Screens) -->
+        <div id="mobile-nav-menu" class="hidden md:hidden border-t border-slate-200/80 dark:border-slate-800 bg-white/98 dark:bg-[#0b1324]/98 backdrop-blur-xl py-4 px-3 sm:px-4 shadow-xl transition-all">
+          <div class="space-y-4">
+            <!-- 1. Core Navigation Tabs -->
+            <div>
+              <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2 flex items-center justify-between">
+                <span>Core Navigation Tabs</span>
+                <span class="text-[9px] text-sky-600 dark:text-sky-400 font-extrabold uppercase">Primary 4</span>
+              </div>
+              <div class="grid grid-cols-2 gap-1.5">
+                <a href="index.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl font-bold text-xs transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-page="index.html">
+                  <div class="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-house text-xs"></i>
+                  </div>
+                  <span class="truncate">Home</span>
+                </a>
+                <a href="about.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl font-bold text-xs transition-all bg-sky-600 text-white shadow-xs" data-page="about.html">
+                  <div class="w-7 h-7 rounded-lg bg-white/20 text-white flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-circle-info text-xs"></i>
+                  </div>
+                  <span class="truncate">About Us</span>
+                </a>
+                <a href="find-home.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl font-bold text-xs transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-page="find-home.html">
+                  <div class="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-magnifying-glass-location text-xs"></i>
+                  </div>
+                  <span class="truncate">Find Home</span>
+                </a>
+                <a href="profile.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl font-bold text-xs transition-all text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" data-page="profile.html">
+                  <div class="w-7 h-7 rounded-lg bg-sky-100 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-id-badge text-xs"></i>
+                  </div>
+                  <span class="truncate">Student Profile</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- 2. Exploration & Community Tools -->
+            <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80">
+              <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2 flex items-center justify-between">
+                <span>Exploration & Living Tools</span>
+                <span class="text-[9px] text-emerald-600 dark:text-emerald-400 font-extrabold uppercase">Interactive</span>
+              </div>
+              <div class="grid grid-cols-2 gap-1.5">
+                <a href="tours.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="tours.html">
+                  <div class="w-7 h-7 rounded-lg bg-indigo-100 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-arrows-spin text-xs"></i>
+                  </div>
+                  <span class="truncate">360° Tours</span>
+                </a>
+                <a href="map.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="map.html">
+                  <div class="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-map-location-dot text-xs"></i>
+                  </div>
+                  <span class="truncate">Campus Map</span>
+                </a>
+                <a href="insights.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="insights.html">
+                  <div class="w-7 h-7 rounded-lg bg-purple-100 dark:bg-purple-950/80 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-chart-line text-xs"></i>
+                  </div>
+                  <span class="truncate">Rent Insights</span>
+                </a>
+                <a href="residents.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="residents.html">
+                  <div class="w-7 h-7 rounded-lg bg-amber-100 dark:bg-amber-950/80 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-users text-xs"></i>
+                  </div>
+                  <span class="truncate">Residents</span>
+                </a>
+                <a href="chat.html" class="mobile-nav-link col-span-2 flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="chat.html">
+                  <div class="w-7 h-7 rounded-lg bg-teal-100 dark:bg-teal-950/80 text-teal-600 dark:text-teal-400 flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-comments text-xs"></i>
+                  </div>
+                  <div class="flex-1 min-w-0 flex items-center justify-between">
+                    <span class="truncate">Direct Landlord Chat</span>
+                    <span class="text-[9px] px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 font-extrabold uppercase">Live Escrow</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <!-- 3. Portals & Quick Account Access -->
+            <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2 text-xs">
+              <a href="agent.html" class="flex-1 py-2.5 px-3 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-400/40 font-bold transition-all flex items-center justify-center space-x-1.5">
+                <i class="fa-solid fa-user-tie text-amber-500 text-xs"></i>
+                <span>Owner Portal</span>
+              </a>
+              <a href="signup.html" class="flex-1 py-2.5 px-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold transition-all shadow-xs flex items-center justify-center space-x-1.5">
+                <i class="fa-solid fa-user-plus text-xs"></i>
+                <span>Create Account</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main Content Flow -->
+    <main class="flex-1 pb-16">
+
+      <!-- HERO BANNER -->
+      <section class="relative bg-gradient-to-b from-sky-50/80 via-white to-slate-50 dark:from-[#0b1324] dark:via-[#070d18] dark:to-[#070d18] pt-12 pb-16 border-b border-slate-200/80 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
+          <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-sky-100 dark:bg-sky-900/60 text-sky-800 dark:text-sky-200 text-xs font-bold mb-4 border border-sky-200 dark:border-sky-800">
+            <i class="fa-solid fa-shield-heart text-sky-600 dark:text-sky-400"></i>
+            <span>Who We Are & Why We Are Doing This</span>
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-black text-slate-900 dark:text-slate-100 tracking-tight leading-tight brand-font mb-4">
+            Eradicating International Student <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 via-indigo-600 to-sky-500">Accommodation Fraud Worldwide</span>
+          </h1>
+          <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-normal">
+            Moving to a new country to study is an extraordinary life milestone. It shouldn't begin with rental scams, fake landlord wires, frozen deposits, or frozen radiator pipes. We created StudentStay to give every student radical transparency, 360° truth, and escrow safety.
+          </p>
+        </div>
+      </section>
+
+      <!-- STORY & MISSION -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          
+          <div class="lg:col-span-6 space-y-6">
+            <div class="inline-flex items-center space-x-2 text-xs font-bold text-sky-600 uppercase tracking-wider">
+              <i class="fa-solid fa-sparkles"></i>
+              <span>Our Founding Story</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-100 brand-font leading-snug">
+              We Were International Students Who Lost Money To Phantom Landlords.
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              In 2023, two international students arriving at Glasgow Airport from Ghana and India were told that the flat they paid a £1,200 deposit for didn't exist. The Facebook landlord vanished, leaving them stranded with heavy suitcases in the Scottish rain.
+            </p>
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              We swore no incoming student should ever experience that helplessness. We built StudentStay with a simple promise: <strong>zero scam risk</strong>. Every house is physically inspected by resident ambassadors, every room can be inspected in interactive 360°, and every deposit is locked in government-compliant escrow trust accounts until you hold the physical room keys.
+            </p>
+
+            <div class="grid grid-cols-2 gap-4 pt-2">
+              <div class="bg-white dark:bg-[#0f1a30] p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
+                <div class="text-2xl font-black text-sky-600 dark:text-sky-400 brand-font mb-1">14,200+</div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Students Safely Housed</div>
+              </div>
+              <div class="bg-white dark:bg-[#0f1a30] p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
+                <div class="text-2xl font-black text-emerald-600 dark:text-emerald-400 brand-font mb-1">£0.00</div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Lost to Scams (100% Escrow)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-6">
+            <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800 ring-1 ring-slate-200 dark:ring-slate-700">
+              <img src="assets/images/diverse_students.jpg" alt="StudentStay community of international students" class="w-full h-[420px] object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent flex flex-col justify-end p-6 text-white">
+                <span class="text-xs font-bold text-sky-300 uppercase tracking-wider mb-1">Global Student Network</span>
+                <h4 class="text-lg font-bold">140+ Nationalities United In Scotland & The UK</h4>
+                <p class="text-xs text-slate-200 mt-1">Real students verifying real homes for incoming international peers.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- WHY CHOOSE US VS TRADITIONAL PORTALS (WHAT MAKES US UNIQUE) -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-200/60 dark:border-slate-800">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <span class="text-xs font-bold uppercase tracking-wider text-sky-600 block mb-1">
+            Why Choose StudentStay
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-100 brand-font">
+            How We Are Different From Traditional Rental Sites
+          </h2>
+          <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed">
+            Compare StudentStay with traditional classified websites, unverified agent portals, and social media housing groups.
+          </p>
+        </div>
+
+        <div class="bg-white dark:bg-[#0f1a30] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-lg overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-slate-100 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 uppercase font-black tracking-wider">
+                  <th class="py-4 px-6">Core Guarantee & Feature</th>
+                  <th class="py-4 px-6 text-sky-700 dark:text-sky-300 bg-sky-50/70 dark:bg-sky-950/40">
+                    <i class="fa-solid fa-house-chimney-window mr-1.5"></i> StudentStay Platform
+                  </th>
+                  <th class="py-4 px-6 text-slate-500">Traditional Classifieds / Facebook</th>
+                  <th class="py-4 px-6 text-slate-500">Commercial Letting Agents</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+                <tr>
+                  <td class="py-4 px-6 font-bold text-slate-900 dark:text-slate-100">
+                    Holding Deposit Safety
+                  </td>
+                  <td class="py-4 px-6 font-bold text-emerald-600 dark:text-emerald-400 bg-sky-50/40 dark:bg-sky-950/20">
+                    <i class="fa-solid fa-check-circle mr-1"></i> 100% Escrow Protected Trust
+                  </td>
+                  <td class="py-4 px-6 text-red-500">
+                    <i class="fa-solid fa-xmark mr-1"></i> Wire directly to stranger (High scam risk)
+                  </td>
+                  <td class="py-4 px-6 text-amber-600">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> Non-refundable admin fee
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="py-4 px-6 font-bold text-slate-900 dark:text-slate-100">
+                    Room Inspection Before Booking
+                  </td>
+                  <td class="py-4 px-6 font-bold text-emerald-600 dark:text-emerald-400 bg-sky-50/40 dark:bg-sky-950/20">
+                    <i class="fa-solid fa-check-circle mr-1"></i> 360° Multi-Angle Panoramic VR
+                  </td>
+                  <td class="py-4 px-6 text-red-500">
+                    <i class="fa-solid fa-xmark mr-1"></i> 3-5 staged photos from 2018
+                  </td>
+                  <td class="py-4 px-6 text-amber-600">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> "Must view in-person" (impossible abroad)
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="py-4 px-6 font-bold text-slate-900 dark:text-slate-100">
+                    Peer Verification
+                  </td>
+                  <td class="py-4 px-6 font-bold text-emerald-600 dark:text-emerald-400 bg-sky-50/40 dark:bg-sky-950/20">
+                    <i class="fa-solid fa-check-circle mr-1"></i> 1-on-1 Chat with Current Residents
+                  </td>
+                  <td class="py-4 px-6 text-red-500">
+                    <i class="fa-solid fa-xmark mr-1"></i> None (Fake bot reviews)
+                  </td>
+                  <td class="py-4 px-6 text-amber-600">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> High-pressure sales agents
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="py-4 px-6 font-bold text-slate-900 dark:text-slate-100">
+                    Visa Refusal Refund Policy
+                  </td>
+                  <td class="py-4 px-6 font-bold text-emerald-600 dark:text-emerald-400 bg-sky-50/40 dark:bg-sky-950/20">
+                    <i class="fa-solid fa-check-circle mr-1"></i> 100% Refund within 48 Hours
+                  </td>
+                  <td class="py-4 px-6 text-red-500">
+                    <i class="fa-solid fa-xmark mr-1"></i> 0% (Scammer disappears)
+                  </td>
+                  <td class="py-4 px-6 text-amber-600">
+                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> Penalty forfeits or strict lease lock
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="py-4 px-6 font-bold text-slate-900 dark:text-slate-100">
+                    Campus Commute Accuracy
+                  </td>
+                  <td class="py-4 px-6 font-bold text-emerald-600 dark:text-emerald-400 bg-sky-50/40 dark:bg-sky-950/20">
+                    <i class="fa-solid fa-check-circle mr-1"></i> GPS Walk & Subway Verified to Quad
+                  </td>
+                  <td class="py-4 px-6 text-red-500">
+                    <i class="fa-solid fa-xmark mr-1"></i> "Near university" (actually 12 miles away)
+                  </td>
+                  <td class="py-4 px-6 text-slate-500">
+                    Vague postcode estimates
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- GLOBAL AMBASSADORS NETWORK -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 border-t border-slate-200/60 dark:border-slate-800">
+        <div class="flex flex-wrap items-end justify-between mb-10 gap-4">
+          <div>
+            <div class="inline-flex items-center space-x-2 text-xs font-bold text-sky-600 uppercase tracking-wider mb-1">
+              <i class="fa-solid fa-people-roof"></i>
+              <span>Our Student Community</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-slate-100 brand-font">
+              Meet Our Verified Resident Ambassadors
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+              Real international students currently living in our partner accommodations who physically inspect properties and mentor new arrivals.
+            </p>
+          </div>
+          <a href="residents.html" class="px-5 py-2.5 rounded-xl bg-sky-600 text-white font-bold text-xs hover:bg-sky-700 transition-all">
+            View All Ambassadors →
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- Ambassador 1: Ama Konadu -->
+          <div class="bg-white dark:bg-[#0f1a30] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm text-center flex flex-col justify-between">
+            <div>
+              <img src="assets/images/ama.jpg" alt="Ama Konadu" class="w-20 h-20 rounded-full object-cover mx-auto mb-4 border-2 border-sky-500 shadow-md">
+              <h4 class="font-extrabold text-base text-slate-900 dark:text-slate-100">Ama Konadu 🇬🇭</h4>
+              <div class="text-xs text-sky-600 dark:text-sky-400 font-bold mt-0.5">Glasgow Caledonian (GCU)</div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">MSc International Business</p>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-3 italic leading-relaxed">
+                "I inspect Buchanan View and assist students from West Africa settling into Scottish student living."
+              </p>
+            </div>
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800 mt-4">
+              <a href="chat.html?resident=ama-k" class="text-xs font-bold text-sky-600 dark:text-sky-400 hover:underline">
+                Message Ama →
+              </a>
+            </div>
+          </div>
+
+          <!-- Ambassador 2: David Smith -->
+          <div class="bg-white dark:bg-[#0f1a30] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm text-center flex flex-col justify-between">
+            <div>
+              <img src="assets/images/james.jpg" alt="David Smith" class="w-20 h-20 rounded-full object-cover mx-auto mb-4 border-2 border-sky-500 shadow-md">
+              <h4 class="font-extrabold text-base text-slate-900 dark:text-slate-100">David Smith 🇬🇧</h4>
+              <div class="text-xs text-sky-600 dark:text-sky-400 font-bold mt-0.5">Univ of Strathclyde</div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">BSc Mechanical Engineering</p>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-3 italic leading-relaxed">
+                "Local Scottish resident living in Merchant Studios. I guide students on local transport, banking, and winter gear."
+              </p>
+            </div>
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800 mt-4">
+              <a href="chat.html?resident=david-s" class="text-xs font-bold text-sky-600 dark:text-sky-400 hover:underline">
+                Message David →
+              </a>
+            </div>
+          </div>
+
+          <!-- Ambassador 3: Priya Patel -->
+          <div class="bg-white dark:bg-[#0f1a30] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm text-center flex flex-col justify-between">
+            <div>
+              <img src="assets/images/meilin.jpg" alt="Priya Patel" class="w-20 h-20 rounded-full object-cover mx-auto mb-4 border-2 border-sky-500 shadow-md">
+              <h4 class="font-extrabold text-base text-slate-900 dark:text-slate-100">Priya Patel 🇮🇳</h4>
+              <div class="text-xs text-sky-600 dark:text-sky-400 font-bold mt-0.5">University of Glasgow</div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">MSc Data Analytics</p>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-3 italic leading-relaxed">
+                "Living at Riverside Quay. I help students from South Asia with grocery spots, halal/veg foods, and subway shortcuts."
+              </p>
+            </div>
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800 mt-4">
+              <a href="chat.html?resident=priya-p" class="text-xs font-bold text-sky-600 dark:text-sky-400 hover:underline">
+                Message Priya →
+              </a>
+            </div>
+          </div>
+
+          <!-- Ambassador 4: Chen Wei -->
+          <div class="bg-white dark:bg-[#0f1a30] rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm text-center flex flex-col justify-between">
+            <div>
+              <img src="assets/images/ravi.jpg" alt="Chen Wei" class="w-20 h-20 rounded-full object-cover mx-auto mb-4 border-2 border-sky-500 shadow-md">
+              <h4 class="font-extrabold text-base text-slate-900 dark:text-slate-100">Chen Wei 🇨🇳</h4>
+              <div class="text-xs text-sky-600 dark:text-sky-400 font-bold mt-0.5">UCL London</div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">MSc Financial Technology</p>
+              <p class="text-xs text-slate-600 dark:text-slate-300 mt-3 italic leading-relaxed">
+                "Kings Cross Resident Ambassador. Helping Chinese & East Asian students navigate tenancy agreements and study hubs."
+              </p>
+            </div>
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800 mt-4">
+              <a href="chat.html?resident=chen-w" class="text-xs font-bold text-sky-600 dark:text-sky-400 hover:underline">
+                Message Chen →
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- CTA BANNER -->
+      <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div class="bg-gradient-to-r from-sky-600 via-sky-500 to-indigo-600 rounded-3xl p-8 sm:p-12 text-white shadow-xl text-center">
+          <h3 class="text-2xl sm:text-3xl font-black brand-font mb-3">Ready to Find Your Dream Accommodation?</h3>
+          <p class="text-slate-100 text-xs sm:text-sm max-w-xl mx-auto mb-6">
+            Search verified residences, inspect every room in 360°, and lock your room with full escrow security.
+          </p>
+          <div class="flex flex-wrap items-center justify-center gap-3">
+            <a href="find-home.html" class="px-6 py-3.5 rounded-2xl bg-white text-sky-700 font-black text-xs shadow-md hover:scale-105 transition-all">
+              Find Your New Home Now →
+            </a>
+            <a href="tours.html" class="px-6 py-3.5 rounded-2xl bg-white/20 hover:bg-white/30 text-white font-bold text-xs backdrop-blur-md transition-all">
+              Launch 360° Tours
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- TRUST FOOTER -->
+    <footer class="bg-slate-900 text-slate-300 pt-12 pb-16 border-t border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-10">
+          <div class="lg:col-span-2 space-y-4">
+            <div class="flex items-center space-x-2">
+              <div class="w-8 h-8 rounded-lg bg-sky-500 text-white flex items-center justify-center">
+                <i class="fa-solid fa-house-chimney-window"></i>
+              </div>
+              <span class="text-xl font-black text-white brand-font">Student<span class="text-sky-400">Stay</span></span>
+            </div>
+            <p class="text-xs text-slate-400 max-w-sm leading-relaxed">
+              Find, inspect in 360°, and lock verified student rooms safely with escrow. Built for international students moving to Scotland and the UK.
+            </p>
+          </div>
+          <div>
+            <h5 class="text-xs font-bold text-white uppercase tracking-wider mb-3">Explore</h5>
+            <ul class="space-y-2 text-xs text-slate-400">
+              <li><a href="find-home.html" class="hover:text-white">Find Your New Home</a></li>
+              <li><a href="tours.html" class="hover:text-white">360° Virtual Tours</a></li>
+              <li><a href="residents.html" class="hover:text-white">Ask Residents</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5 class="text-xs font-bold text-white uppercase tracking-wider mb-3">Community</h5>
+            <ul class="space-y-2 text-xs text-slate-400">
+              <li><a href="chat.html" class="hover:text-white">Live Peer Chat</a></li>
+              <li><a href="map.html" class="hover:text-white">Campus Transit Map</a></li>
+              <li><a href="about.html" class="hover:text-white">About Us</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5 class="text-xs font-bold text-white uppercase tracking-wider mb-3">Portals & Agent</h5>
+            <ul class="space-y-2 text-xs text-slate-400">
+              <li><a href="profile.html" class="hover:text-white">Student Profile</a></li>
+              <li><a href="agent.html" class="hover:text-amber-400 text-amber-300 font-bold flex items-center"><i class="fa-solid fa-user-tie mr-1 text-xs"></i> Agent & Founder Portal</a></li>
+              <li><a href="about.html" class="hover:text-white">100% Escrow Policy</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="pt-8 border-t border-slate-800 text-xs text-slate-500">
+          © 2026 StudentStay International. All rights reserved.
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
