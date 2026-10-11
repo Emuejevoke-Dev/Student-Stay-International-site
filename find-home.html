@@ -50,17 +50,29 @@
 <body class="bg-slate-50 dark:bg-[#070d18] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col antialiased selection:bg-sky-500 selection:text-white">
 
   <!-- Top Announcement Bar -->
-  <div class="bg-gradient-to-r from-sky-900 via-sky-800 to-slate-900 text-white text-xs py-2 px-4 shadow-inner border-b border-sky-700/40">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-      <div class="flex items-center space-x-2">
-        <span id="top-announcement-tag" class="top-intake-announcement-tag bg-sky-500/30 text-sky-200 border border-sky-400/40 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full">
-          Global Verified Search
+  <div class="bg-gradient-to-r from-sky-900 via-sky-800 to-slate-900 text-white text-xs py-1.5 sm:py-2 px-3 sm:px-4 shadow-inner border-b border-sky-700/40">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <!-- Mobile Clean Single-Line Ticker (Never Wraps, 100% Professional) -->
+      <div class="sm:hidden flex items-center justify-between w-full text-[11px] font-medium text-slate-200">
+        <span class="flex items-center truncate mr-2">
+          <i class="fa-solid fa-plane-arrival text-sky-400 mr-1.5 shrink-0"></i>
+          <span class="truncate">🇬🇧 2026/27 Intake Open • Free Airport Shuttle</span>
         </span>
-        <span id="top-announcement-text" class="top-intake-announcement-text text-slate-200 font-medium">
-          Filter student residences by country, enrolled campus, and room budget with live multi-currency conversion.
+        <span class="text-[10px] text-emerald-400 flex items-center font-bold shrink-0">
+          <i class="fa-solid fa-shield-halved mr-1"></i> 100% Escrow
         </span>
       </div>
-      <div class="flex items-center space-x-4 text-slate-300 text-xs">
+
+      <!-- Desktop & Tablet Layout -->
+      <div class="hidden sm:flex items-center space-x-2.5">
+        <span id="top-announcement-tag" class="top-intake-announcement-tag bg-sky-500/30 text-sky-200 border border-sky-400/40 text-[10px] uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full flex items-center shadow-xs">
+          2026/27 Intake Open 🇬🇧
+        </span>
+        <span id="top-announcement-text" class="top-intake-announcement-text text-slate-200 font-medium text-xs">
+          🇬🇧 Coming to Glasgow, Edinburgh, London, or Manchester? Zero deposit guarantee & free airport welcome shuttle!
+        </span>
+      </div>
+      <div class="hidden sm:flex items-center space-x-4 text-slate-300 text-xs">
         <span class="font-semibold text-emerald-300 flex items-center">
           <i class="fa-solid fa-shield-halved text-emerald-400 mr-1.5"></i> 100% Escrow Protected Tenancies
         </span>
@@ -115,23 +127,21 @@
               </select>
             </div>
 
-            <!-- Dynamic Auth Container -->
-            <div class="auth-container"></div>
+            <!-- Dynamic Auth Container (Desktop) -->
+            <div class="auth-container hidden md:flex items-center"></div>
 
             <!-- Reserve Room Button -->
             <button onclick="openBookingModal('buchanan-view')" class="hidden sm:inline-flex px-4 py-2 text-xs font-bold text-white bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-600 rounded-xl shadow-md shadow-sky-600/20 transition-all items-center cursor-pointer">
               <i class="fa-solid fa-key mr-1.5 text-[10px]"></i> Reserve Room
             </button>
-          </div>
-        </div>
 
-        <!-- Mobile Navigation Tabs Toggle Row (Positioned down at the left hand side) -->
-        <div class="md:hidden py-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-start">
-          <button type="button" id="mobile-nav-toggle" aria-label="Toggle navigation tabs" aria-expanded="false" class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 text-xs font-bold transition-all shadow-xs cursor-pointer border border-slate-200/80 dark:border-slate-700">
-            <i id="mobile-nav-toggle-icon" class="fa-solid fa-bars text-sky-600 dark:text-sky-400 text-xs"></i>
-            <span>All Tabs</span>
-            <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 dark:text-slate-500 ml-0.5"></i>
-          </button>
+            <!-- Mobile Navigation Toggle Sign (Clean, Sleek in Top Row on Small Screens) -->
+            <button type="button" id="mobile-nav-toggle" aria-label="Toggle navigation tabs" aria-expanded="false" class="md:hidden inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border border-sky-200 dark:border-sky-800/80 bg-sky-50 dark:bg-sky-950/60 hover:bg-sky-100 dark:hover:bg-sky-900/60 text-sky-700 dark:text-sky-300 text-xs font-bold transition-all shadow-xs cursor-pointer">
+              <i id="mobile-nav-toggle-icon" class="fa-solid fa-bars text-sky-600 dark:text-sky-400 text-xs"></i>
+              <span>All Tabs</span>
+              <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 dark:text-slate-500 ml-0.5"></i>
+            </button>
+          </div>
         </div>
 
         <!-- Bottom Row: Navigation Tabs (Desktop only; on small screens only the toggle tab is shown) -->
@@ -288,6 +298,71 @@
             </div>
           </div>
 
+          <!-- UK 2026/27 Intake & Escrow Spotlight Banner -->
+          <div class="mb-6 p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-gradient-to-r from-sky-900/90 via-slate-900 to-indigo-950 text-white shadow-lg border border-sky-500/30 relative overflow-hidden">
+            <!-- Subtle background decorative glow -->
+            <div class="absolute -right-10 -bottom-10 w-44 h-44 rounded-full bg-sky-500/10 blur-2xl pointer-events-none"></div>
+
+            <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+              <!-- Left side: Badge, Headline & Location tags -->
+              <div class="space-y-2">
+                <div class="flex flex-wrap items-center gap-2">
+                  <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-sky-500/30 border border-sky-400/40 text-sky-200 text-xs font-black tracking-wide uppercase shadow-xs">
+                    <i class="fa-solid fa-calendar-check text-[11px] text-sky-300"></i>
+                    <span>2026/27 Intake Open 🇬🇧</span>
+                  </span>
+                  <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-bold shadow-xs">
+                    <i class="fa-solid fa-shield-halved text-[11px] text-emerald-400"></i>
+                    <span>100% Escrow Protected Tenancies</span>
+                  </span>
+                </div>
+
+                <h3 class="text-base sm:text-lg font-black text-white tracking-tight flex items-center flex-wrap gap-1.5 pt-1">
+                  <span>Coming to</span>
+                  <button type="button" onclick="selectQuickCity('Glasgow')" class="underline decoration-sky-400 decoration-2 underline-offset-4 hover:text-sky-300 font-black cursor-pointer transition-colors">Glasgow</button>,
+                  <button type="button" onclick="selectQuickCity('Edinburgh')" class="underline decoration-sky-400 decoration-2 underline-offset-4 hover:text-sky-300 font-black cursor-pointer transition-colors">Edinburgh</button>,
+                  <button type="button" onclick="selectQuickCity('London')" class="underline decoration-sky-400 decoration-2 underline-offset-4 hover:text-sky-300 font-black cursor-pointer transition-colors">London</button>, or
+                  <button type="button" onclick="selectQuickCity('Manchester')" class="underline decoration-sky-400 decoration-2 underline-offset-4 hover:text-sky-300 font-black cursor-pointer transition-colors">Manchester</button>?
+                </h3>
+
+                <!-- Key Value Guarantees / Perks -->
+                <div class="flex flex-wrap items-center gap-2 sm:gap-3 pt-1 text-xs text-slate-300">
+                  <span class="inline-flex items-center text-sky-200 font-semibold">
+                    <i class="fa-solid fa-circle-check text-sky-400 mr-1.5 text-xs"></i>
+                    Zero Deposit Guarantee
+                  </span>
+                  <span class="hidden sm:inline text-slate-600">•</span>
+                  <span class="inline-flex items-center text-amber-200 font-semibold">
+                    <i class="fa-solid fa-van-shuttle text-amber-400 mr-1.5 text-xs"></i>
+                    Free Airport Welcome Shuttle
+                  </span>
+                  <span class="hidden sm:inline text-slate-600">•</span>
+                  <span class="inline-flex items-center text-emerald-200 font-semibold">
+                    <i class="fa-solid fa-lock text-emerald-400 mr-1.5 text-xs"></i>
+                    100% Escrow Safety
+                  </span>
+                </div>
+              </div>
+
+              <!-- Right side: Quick City Filter Pill Actions -->
+              <div class="flex flex-wrap items-center gap-2 pt-2 lg:pt-0 shrink-0">
+                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 w-full sm:w-auto">Quick City Filter:</span>
+                <button type="button" onclick="selectQuickCity('Glasgow')" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-sky-600 text-white font-bold text-xs border border-white/15 hover:border-sky-500 transition-all cursor-pointer shadow-xs">
+                  🇬🇧 Glasgow
+                </button>
+                <button type="button" onclick="selectQuickCity('Edinburgh')" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-sky-600 text-white font-bold text-xs border border-white/15 hover:border-sky-500 transition-all cursor-pointer shadow-xs">
+                  🇬🇧 Edinburgh
+                </button>
+                <button type="button" onclick="selectQuickCity('London')" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-sky-600 text-white font-bold text-xs border border-white/15 hover:border-sky-500 transition-all cursor-pointer shadow-xs">
+                  🇬🇧 London
+                </button>
+                <button type="button" onclick="selectQuickCity('Manchester')" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-sky-600 text-white font-bold text-xs border border-white/15 hover:border-sky-500 transition-all cursor-pointer shadow-xs">
+                  🇬🇧 Manchester
+                </button>
+              </div>
+            </div>
+          </div>
+
           <!-- DEDICATED SUB-NAVIGATION BAR (UNDER "FIND YOUR NEW HOME") -->
           <div class="pt-4 border-t border-slate-200/80 dark:border-slate-800 flex items-center space-x-2 overflow-x-auto no-scrollbar pb-1 text-xs">
             <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mr-2 shrink-0 flex items-center">
@@ -299,6 +374,9 @@
             <a href="tours.html" class="px-4 py-2 rounded-xl font-semibold bg-white dark:bg-[#0f1a30] text-slate-700 dark:text-slate-200 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 whitespace-nowrap flex items-center shrink-0 transition-colors">
               <i class="fa-solid fa-arrows-spin mr-1.5 text-sky-600 text-[11px]"></i> 360° Virtual Tours
               <span class="ml-1.5 text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-sky-100 dark:bg-sky-900 text-sky-700 dark:text-sky-300">VR</span>
+            </a>
+            <a href="insights.html" class="px-4 py-2 rounded-xl font-semibold bg-white dark:bg-[#0f1a30] text-slate-700 dark:text-slate-200 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 whitespace-nowrap flex items-center shrink-0 transition-colors">
+              <i class="fa-solid fa-chart-line mr-1.5 text-sky-600 text-[11px]"></i> Rent Insights
             </a>
             <a href="residents.html" class="px-4 py-2 rounded-xl font-semibold bg-white dark:bg-[#0f1a30] text-slate-700 dark:text-slate-200 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 whitespace-nowrap flex items-center shrink-0 transition-colors">
               <i class="fa-solid fa-users mr-1.5 text-sky-600 text-[11px]"></i> Ask Residents
@@ -1250,6 +1328,37 @@
       document.getElementById('filter-university').value = 'all';
       document.getElementById('filter-room-type').value = 'all';
       renderFindHomeProperties(allFindProperties);
+    }
+
+    function selectQuickCity(cityName) {
+      allFindProperties = getSafeProperties();
+      const countrySelect = document.getElementById('filter-country');
+      if (countrySelect) {
+        countrySelect.value = 'uk';
+        localStorage.setItem('studentstay_active_country', 'uk');
+        if (window.IntakeAnnouncementManager) {
+          IntakeAnnouncementManager.update('uk');
+        }
+        if (window.CurrencyManager) {
+          CurrencyManager.setCurrency('GBP');
+        }
+        updateDropdownsForCountry('uk', cityName, 'all');
+      }
+      const districtSelect = document.getElementById('filter-district');
+      if (districtSelect) {
+        districtSelect.value = cityName;
+      }
+      const uniSelect = document.getElementById('filter-university');
+      if (uniSelect) uniSelect.value = 'all';
+      const roomSelect = document.getElementById('filter-room-type');
+      if (roomSelect) roomSelect.value = 'all';
+
+      applyFilters();
+
+      const resultsSection = document.getElementById('find-home-grid');
+      if (resultsSection) {
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
 
     // Read URL query params on initial load

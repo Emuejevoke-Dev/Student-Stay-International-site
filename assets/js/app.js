@@ -225,8 +225,13 @@ const MobileNavManager = {
           </div>
         `;
       } else {
+        const path = typeof window !== 'undefined' && window.location ? window.location.pathname : '';
+        let page = path.split('/').pop() || 'index.html';
+        if (!page || page === '') page = 'index.html';
+        const isExploreContext = ['find-home.html', 'tours.html', 'map.html', 'insights.html', 'residents.html', 'chat.html'].includes(page);
+
         menu.innerHTML = `
-          <div class="space-y-4">
+          <div class="space-y-3.5">
             <!-- 1. Primary Student Navigation Tabs -->
             <div>
               <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2 flex items-center justify-between">
@@ -261,7 +266,8 @@ const MobileNavManager = {
               </div>
             </div>
 
-            <!-- 2. Exploration & Community Tools -->
+            ${isExploreContext ? `
+            <!-- 2. Exploration & Community Tools (Dedicated to Find Home & Living Tools) -->
             <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80">
               <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2 flex items-center justify-between">
                 <span>Exploration & Living Tools</span>
@@ -303,6 +309,27 @@ const MobileNavManager = {
                 </a>
               </div>
             </div>
+            ` : `
+            <!-- Gateway to Find Your New Home (Where Exploration & Living Tools Live) -->
+            <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80">
+              <a href="find-home.html" class="block p-3 rounded-2xl bg-gradient-to-r from-sky-50 via-sky-50/50 to-indigo-50/60 dark:from-sky-950/40 dark:via-sky-950/20 dark:to-indigo-950/30 border border-sky-200/90 dark:border-sky-800/80 group hover:border-sky-400 transition-all shadow-xs">
+                <div class="flex items-center space-x-3">
+                  <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-600 to-sky-400 text-white flex items-center justify-center shrink-0 shadow-sm shadow-sky-600/30 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-compass text-base"></i>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="text-xs font-bold text-slate-900 dark:text-slate-100 flex items-center justify-between">
+                      <span>Explore Accommodations</span>
+                      <i class="fa-solid fa-arrow-right text-[10px] text-sky-600 dark:text-sky-400 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                    <div class="text-[10px] text-slate-500 dark:text-slate-400 truncate mt-0.5">
+                      360° Tours • Campus Map • Rent Insights • Peer Chat
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+            `}
 
             <!-- 3. Portals & Quick Account Access -->
             <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2 text-xs">
@@ -425,6 +452,101 @@ const MobileNavManager = {
         iconBox.className = "w-7 h-7 rounded-lg bg-white/20 text-white flex items-center justify-center shrink-0";
       }
     });
+  }
+};
+
+// ==========================================
+// 1B. NATIVE-FEEL MOBILE BOTTOM NAVIGATION
+// ==========================================
+const MobileBottomBar = {
+  init() {
+    if (typeof document === 'undefined') return;
+    if (document.getElementById('mobile-bottom-bar')) return;
+
+    const pathname = window.location ? window.location.pathname : '';
+    if (pathname.includes('signup.html')) return; // Minimal onboarding layout for signup
+
+    const isAgent = pathname.includes('agent.html');
+    let currentPage = pathname.split('/').pop() || 'index.html';
+    if (!currentPage || currentPage === '') currentPage = 'index.html';
+
+    const bar = document.createElement('nav');
+    bar.id = 'mobile-bottom-bar';
+    bar.setAttribute('aria-label', 'Mobile Quick Navigation');
+    bar.className = 'md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-[#0b1324]/95 backdrop-blur-lg border-t border-slate-200/90 dark:border-slate-800 shadow-xl px-2 py-1.5 flex items-center justify-around transition-colors';
+
+    if (isAgent) {
+      bar.innerHTML = `
+        <a href="#section-kpis" class="mobile-bottom-tab flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:text-amber-500 active:scale-95 transition-all">
+          <i class="fa-solid fa-chart-pie text-sm mb-0.5"></i>
+          <span class="text-[9px] font-bold">KPIs</span>
+        </a>
+        <a href="#section-roster" class="mobile-bottom-tab flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:text-amber-500 active:scale-95 transition-all">
+          <i class="fa-solid fa-users text-sm mb-0.5"></i>
+          <span class="text-[9px] font-bold">Roster</span>
+        </a>
+        <a href="#section-refunds" class="mobile-bottom-tab flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:text-amber-500 active:scale-95 transition-all">
+          <i class="fa-solid fa-vault text-sm mb-0.5"></i>
+          <span class="text-[9px] font-bold">Escrow</span>
+        </a>
+        <a href="#section-companies" class="mobile-bottom-tab flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:text-amber-500 active:scale-95 transition-all">
+          <i class="fa-solid fa-city text-sm mb-0.5"></i>
+          <span class="text-[9px] font-bold">Units</span>
+        </a>
+        <a href="index.html" class="mobile-bottom-tab flex flex-col items-center justify-center py-1 px-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:text-amber-500 active:scale-95 transition-all">
+          <i class="fa-solid fa-graduation-cap text-sm mb-0.5"></i>
+          <span class="text-[9px] font-bold">Student View</span>
+        </a>
+      `;
+    } else {
+      const isExploreContext = ['find-home.html', 'tours.html', 'map.html', 'insights.html', 'residents.html', 'chat.html'].includes(currentPage);
+      
+      if (isExploreContext) {
+        bar.innerHTML = `
+          <a href="index.html" class="mobile-bottom-tab flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 active:scale-95 transition-all ${currentPage === 'index.html' ? 'active-bottom-tab text-sky-600 dark:text-sky-400 font-extrabold' : ''}" data-page="index.html">
+            <i class="fa-solid fa-house text-sm mb-0.5"></i>
+            <span class="text-[9px] font-bold">Home</span>
+          </a>
+          <a href="find-home.html" class="mobile-bottom-tab flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 active:scale-95 transition-all ${currentPage === 'find-home.html' ? 'active-bottom-tab text-sky-600 dark:text-sky-400 font-extrabold' : ''}" data-page="find-home.html">
+            <i class="fa-solid fa-magnifying-glass-location text-sm mb-0.5"></i>
+            <span class="text-[9px] font-bold">Find Home</span>
+          </a>
+          <a href="tours.html" class="mobile-bottom-tab flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 active:scale-95 transition-all ${currentPage === 'tours.html' ? 'active-bottom-tab text-sky-600 dark:text-sky-400 font-extrabold' : ''}" data-page="tours.html">
+            <i class="fa-solid fa-arrows-spin text-sm mb-0.5"></i>
+            <span class="text-[9px] font-bold">360° Tours</span>
+          </a>
+          <a href="chat.html" class="mobile-bottom-tab flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 active:scale-95 transition-all ${currentPage === 'chat.html' ? 'active-bottom-tab text-sky-600 dark:text-sky-400 font-extrabold' : ''}" data-page="chat.html">
+            <i class="fa-regular fa-comment-dots text-sm mb-0.5"></i>
+            <span class="text-[9px] font-bold">Peer Chat</span>
+          </a>
+          <a href="profile.html" class="mobile-bottom-tab flex flex-col items-center justify-center py-1 px-2 rounded-xl text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 active:scale-95 transition-all ${currentPage === 'profile.html' ? 'active-bottom-tab text-sky-600 dark:text-sky-400 font-extrabold' : ''}" data-page="profile.html">
+            <i class="fa-solid fa-id-badge text-sm mb-0.5"></i>
+            <span class="text-[9px] font-bold">Profile</span>
+          </a>
+        `;
+      } else {
+        bar.innerHTML = `
+          <a href="index.html" class="mobile-bottom-tab flex flex-col items-center justify-center py-1 px-3 rounded-xl text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 active:scale-95 transition-all ${currentPage === 'index.html' ? 'active-bottom-tab text-sky-600 dark:text-sky-400 font-extrabold' : ''}" data-page="index.html">
+            <i class="fa-solid fa-house text-sm mb-0.5"></i>
+            <span class="text-[9px] font-bold">Home</span>
+          </a>
+          <a href="find-home.html" class="mobile-bottom-tab flex flex-col items-center justify-center py-1 px-3 rounded-xl text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 active:scale-95 transition-all ${currentPage === 'find-home.html' ? 'active-bottom-tab text-sky-600 dark:text-sky-400 font-extrabold' : ''}" data-page="find-home.html">
+            <i class="fa-solid fa-magnifying-glass-location text-sm mb-0.5"></i>
+            <span class="text-[9px] font-bold">Find Home</span>
+          </a>
+          <a href="about.html" class="mobile-bottom-tab flex flex-col items-center justify-center py-1 px-3 rounded-xl text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 active:scale-95 transition-all ${currentPage === 'about.html' ? 'active-bottom-tab text-sky-600 dark:text-sky-400 font-extrabold' : ''}" data-page="about.html">
+            <i class="fa-solid fa-circle-info text-sm mb-0.5"></i>
+            <span class="text-[9px] font-bold">About Us</span>
+          </a>
+          <a href="profile.html" class="mobile-bottom-tab flex flex-col items-center justify-center py-1 px-3 rounded-xl text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 active:scale-95 transition-all ${currentPage === 'profile.html' ? 'active-bottom-tab text-sky-600 dark:text-sky-400 font-extrabold' : ''}" data-page="profile.html">
+            <i class="fa-solid fa-id-badge text-sm mb-0.5"></i>
+            <span class="text-[9px] font-bold">Profile</span>
+          </a>
+        `;
+      }
+    }
+
+    document.body.appendChild(bar);
   }
 };
 
@@ -2731,6 +2853,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   HomeSearchManager.init();
+  MobileBottomBar.init();
 
   // Listen for storage events across tabs
   window.addEventListener('storage', (e) => {
@@ -2761,6 +2884,7 @@ if (typeof window !== 'undefined') {
   window.CurrencyManager = CurrencyManager;
   window.IntakeAnnouncementManager = IntakeAnnouncementManager;
   window.MobileNavManager = MobileNavManager;
+  window.MobileBottomBar = MobileBottomBar;
   window.AuthManager = AuthManager;
   window.HeroCarousel = HeroCarousel;
   window.StudentTasteEngine = StudentTasteEngine;
@@ -2774,6 +2898,7 @@ if (typeof module !== 'undefined' && module.exports) {
     CurrencyManager,
     IntakeAnnouncementManager,
     MobileNavManager,
+    MobileBottomBar,
     AuthManager,
     HeroCarousel,
     StudentTasteEngine,

@@ -34,17 +34,22 @@
 <body class="bg-slate-50 dark:bg-[#070d18] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col antialiased">
 
   <!-- Top Announcement Bar -->
-  <div class="bg-gradient-to-r from-sky-900 via-sky-800 to-slate-900 text-white text-xs py-2 px-4 shadow-inner">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-      <div class="flex items-center space-x-2">
+  <div class="bg-gradient-to-r from-sky-900 via-sky-800 to-slate-900 text-white text-xs py-1.5 sm:py-2 px-3 sm:px-4 shadow-inner">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="hidden sm:flex items-center space-x-2">
         <span id="top-announcement-tag" class="top-intake-announcement-tag bg-sky-500/30 text-sky-200 border border-sky-400/40 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full">
           Verified Peer Network
         </span>
-        <span id="top-announcement-text" class="top-intake-announcement-text text-slate-200">
+        <span id="top-announcement-text" class="top-intake-announcement-text text-slate-200 text-xs">
           Connect directly with verified students studying across Munich, Berlin, New York, Toronto, Sydney, and the UK!
         </span>
       </div>
-      <div class="text-xs text-slate-300">
+      <!-- Ultra-clean single-line ticker on mobile -->
+      <div class="sm:hidden flex items-center justify-between w-full text-[11px] font-medium text-slate-200">
+        <span class="flex items-center"><i class="fa-solid fa-users text-sky-400 mr-1.5"></i> Verified Peer Network</span>
+        <span class="text-[10px] text-emerald-400 flex items-center"><i class="fa-solid fa-shield-halved mr-1"></i> 100% Escrow</span>
+      </div>
+      <div class="hidden sm:block text-xs text-slate-300">
         <span class="font-medium"><i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> 100% Verified Tenancies</span>
       </div>
     </div>
@@ -90,21 +95,20 @@
             </select>
           </div>
 
-          <div class="auth-container"></div>
+          <!-- Dynamic Auth Container (Desktop) -->
+          <div class="auth-container hidden md:flex items-center"></div>
 
           <a href="chat.html" class="hidden sm:flex px-4 py-2 text-xs font-bold text-white bg-sky-600 hover:bg-sky-700 rounded-xl shadow-sm transition-all items-center">
             <i class="fa-regular fa-comment-dots mr-1.5"></i> Start Peer Chat
           </a>
-        </div>
-      </div>
 
-      <!-- Mobile Navigation Tabs Toggle Row (Positioned down at the left hand side) -->
-      <div class="md:hidden py-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-start">
-        <button type="button" id="mobile-nav-toggle" aria-label="Toggle navigation tabs" aria-expanded="false" class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 text-xs font-bold transition-all shadow-xs cursor-pointer border border-slate-200/80 dark:border-slate-700">
-          <i id="mobile-nav-toggle-icon" class="fa-solid fa-bars text-sky-600 dark:text-sky-400 text-xs"></i>
-          <span>All Tabs</span>
-          <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 dark:text-slate-500 ml-0.5"></i>
-        </button>
+          <!-- Mobile Navigation Toggle Sign (Clean, Sleek in Top Row on Small Screens) -->
+          <button type="button" id="mobile-nav-toggle" aria-label="Toggle navigation tabs" aria-expanded="false" class="md:hidden inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border border-sky-200 dark:border-sky-800/80 bg-sky-50 dark:bg-sky-950/60 hover:bg-sky-100 dark:hover:bg-sky-900/60 text-sky-700 dark:text-sky-300 text-xs font-bold transition-all shadow-xs cursor-pointer">
+            <i id="mobile-nav-toggle-icon" class="fa-solid fa-bars text-sky-600 dark:text-sky-400 text-xs"></i>
+            <span>All Tabs</span>
+            <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 dark:text-slate-500 ml-0.5"></i>
+          </button>
+        </div>
       </div>
 
       <!-- Navigation Tabs (Desktop only; on small screens only the toggle tab is shown) -->
@@ -247,32 +251,32 @@
     
     <!-- Title Section -->
     <div class="max-w-3xl mb-8">
-      <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-sky-100 text-sky-800 text-xs font-bold mb-3 border border-sky-200">
-        <i class="fa-solid fa-user-check text-sky-600"></i>
-        <span>Screen 2 • Verified Student Resident Directory</span>
+      <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-sky-100 dark:bg-sky-950/80 text-sky-800 dark:text-sky-300 text-xs font-bold mb-3 border border-sky-200 dark:border-sky-800">
+        <i class="fa-solid fa-user-check text-sky-600 dark:text-sky-400"></i>
+        <span>Verified Student Resident Directory</span>
       </div>
-      <h1 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight mb-2">
+      <h1 class="text-2xl sm:text-4xl font-black text-slate-900 dark:text-slate-100 tracking-tight leading-tight mb-2 brand-font">
         Ask Someone Who Lives Here
       </h1>
-      <p class="text-sm text-slate-600 leading-relaxed">
+      <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
         Don’t rely on marketing brochures. Chat directly with international students who sleep in the rooms, cook in the kitchens, and walk to your university daily.
       </p>
     </div>
 
     <!-- Nationality / Topic Filter Bar -->
-    <div class="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-sm mb-8 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex flex-wrap items-center gap-2" id="resident-filter-buttons">
-        <span class="text-xs font-bold text-slate-500 mr-1">Filter by Country:</span>
-        <button onclick="filterResidentsByCountry('all')" class="res-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-sky-600 text-white shadow-xs">All Peers (5)</button>
-        <button onclick="filterResidentsByCountry('ghana')" class="res-filter-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200">Ghana 🇬🇭</button>
-        <button onclick="filterResidentsByCountry('malaysia')" class="res-filter-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200">Malaysia 🇲🇾</button>
-        <button onclick="filterResidentsByCountry('india')" class="res-filter-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200">India 🇮🇳</button>
-        <button onclick="filterResidentsByCountry('uk')" class="res-filter-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200">UK 🇬🇧</button>
-        <button onclick="filterResidentsByCountry('germany')" class="res-filter-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200">Germany 🇩🇪</button>
+    <div class="bg-white dark:bg-[#0f1a30] rounded-2xl p-3.5 sm:p-4 border border-slate-200/90 dark:border-slate-800 shadow-sm mb-8 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar max-w-full" id="resident-filter-buttons">
+        <span class="text-xs font-bold text-slate-500 dark:text-slate-400 mr-1 shrink-0">Filter:</span>
+        <button onclick="filterResidentsByCountry('all')" class="res-filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-sky-600 text-white shadow-xs shrink-0">All Peers (5)</button>
+        <button onclick="filterResidentsByCountry('ghana')" class="res-filter-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 shrink-0">Ghana 🇬🇭</button>
+        <button onclick="filterResidentsByCountry('malaysia')" class="res-filter-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 shrink-0">Malaysia 🇲🇾</button>
+        <button onclick="filterResidentsByCountry('india')" class="res-filter-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 shrink-0">India 🇮🇳</button>
+        <button onclick="filterResidentsByCountry('uk')" class="res-filter-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 shrink-0">UK 🇬🇧</button>
+        <button onclick="filterResidentsByCountry('germany')" class="res-filter-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 shrink-0">Germany 🇩🇪</button>
       </div>
 
-      <div class="text-xs text-slate-500">
-        <span class="font-bold text-emerald-600"><i class="fa-solid fa-circle text-[8px] mr-1"></i> 3 Ambassadors Online Now</span>
+      <div class="text-xs text-slate-500 dark:text-slate-400 shrink-0">
+        <span class="font-bold text-emerald-600 dark:text-emerald-400"><i class="fa-solid fa-circle text-[8px] mr-1"></i> 3 Ambassadors Online Now</span>
       </div>
     </div>
 

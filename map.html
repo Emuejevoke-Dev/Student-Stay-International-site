@@ -95,22 +95,20 @@
             </select>
           </div>
 
-          <!-- Dynamic Auth Container -->
-          <div class="auth-container"></div>
+          <!-- Dynamic Auth Container (Desktop) -->
+          <div class="auth-container hidden md:flex items-center"></div>
 
           <a href="tours.html" class="hidden sm:inline-flex px-4 py-2 text-xs font-bold text-white bg-sky-600 hover:bg-sky-700 rounded-xl shadow-sm transition-all items-center">
             <i class="fa-solid fa-arrows-spin mr-1.5"></i> Open 360° Tours
           </a>
-        </div>
-      </div>
 
-      <!-- Mobile Navigation Tabs Toggle Row (Positioned down at the left hand side) -->
-      <div class="md:hidden py-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-start">
-        <button type="button" id="mobile-nav-toggle" aria-label="Toggle navigation tabs" aria-expanded="false" class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 text-xs font-bold transition-all shadow-xs cursor-pointer border border-slate-200/80 dark:border-slate-700">
-          <i id="mobile-nav-toggle-icon" class="fa-solid fa-bars text-sky-600 dark:text-sky-400 text-xs"></i>
-          <span>All Tabs</span>
-          <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 dark:text-slate-500 ml-0.5"></i>
-        </button>
+          <!-- Mobile Navigation Toggle Sign (Clean, Sleek in Top Row on Small Screens) -->
+          <button type="button" id="mobile-nav-toggle" aria-label="Toggle navigation tabs" aria-expanded="false" class="md:hidden inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border border-sky-200 dark:border-sky-800/80 bg-sky-50 dark:bg-sky-950/60 hover:bg-sky-100 dark:hover:bg-sky-900/60 text-sky-700 dark:text-sky-300 text-xs font-bold transition-all shadow-xs cursor-pointer">
+            <i id="mobile-nav-toggle-icon" class="fa-solid fa-bars text-sky-600 dark:text-sky-400 text-xs"></i>
+            <span>All Tabs</span>
+            <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 dark:text-slate-500 ml-0.5"></i>
+          </button>
+        </div>
       </div>
 
       <!-- Navigation Tabs (Desktop only; on small screens only the toggle tab is shown) -->
@@ -265,27 +263,27 @@
         </p>
       </div>
 
-      <!-- City Switcher Pills -->
-      <div class="flex items-center space-x-1.5 bg-white dark:bg-slate-900 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
-        <button onclick="switchCityMap('glasgow')" id="map-btn-glasgow" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-sky-600 text-white transition-all">
+      <!-- City Switcher Pills (Smooth horizontal scroll on mobile) -->
+      <div class="flex items-center space-x-1.5 bg-white dark:bg-slate-900 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs overflow-x-auto no-scrollbar max-w-full">
+        <button onclick="switchCityMap('glasgow')" id="map-btn-glasgow" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-sky-600 text-white transition-all shrink-0">
           Glasgow 🏴󠁧󠁢󠁳󠁣󠁴󠁿
         </button>
-        <button onclick="switchCityMap('edinburgh')" id="map-btn-edinburgh" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+        <button onclick="switchCityMap('edinburgh')" id="map-btn-edinburgh" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all shrink-0">
           Edinburgh 🏴󠁧󠁢󠁳󠁣󠁴󠁿
         </button>
-        <button onclick="switchCityMap('london')" id="map-btn-london" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+        <button onclick="switchCityMap('london')" id="map-btn-london" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all shrink-0">
           London 🇬🇧
         </button>
-        <button onclick="switchCityMap('newyork')" id="map-btn-newyork" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+        <button onclick="switchCityMap('newyork')" id="map-btn-newyork" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all shrink-0">
           New York 🇺🇸
         </button>
-        <button onclick="switchCityMap('toronto')" id="map-btn-toronto" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+        <button onclick="switchCityMap('toronto')" id="map-btn-toronto" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all shrink-0">
           Toronto 🇨🇦
         </button>
-        <button onclick="switchCityMap('sydney')" id="map-btn-sydney" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+        <button onclick="switchCityMap('sydney')" id="map-btn-sydney" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all shrink-0">
           Sydney 🇦🇺
         </button>
-        <button onclick="switchCityMap('munich')" id="map-btn-munich" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+        <button onclick="switchCityMap('munich')" id="map-btn-munich" class="city-map-btn px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all shrink-0">
           Munich 🇩🇪
         </button>
       </div>

@@ -643,25 +643,60 @@ html, body {
   }
 }
 
-/* Mobile Nav Toggle Button Down (Left Hand Side) Interactive Transitions */
-#mobile-nav-toggle .fa-chevron-down,
-#owner-mobile-nav-toggle .fa-chevron-down {
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+/* ========================================================
+   MODERN MOBILE APP EXPERIENCE (BOTTOM BAR & POLISH)
+   Provides an ultra-clean, native-app feel on small screens
+   ======================================================== */
+#mobile-bottom-bar {
+  padding-bottom: max(6px, env(safe-area-inset-bottom));
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
 }
 
-#mobile-nav-toggle[aria-expanded="true"] .fa-chevron-down,
-#owner-mobile-nav-toggle[aria-expanded="true"] .fa-chevron-down {
-  transform: rotate(180deg);
+html.dark #mobile-bottom-bar {
+  box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.45);
 }
 
-#mobile-nav-toggle[aria-expanded="true"] {
-  border-color: rgba(2, 132, 199, 0.5) !important;
-  box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2) !important;
+.mobile-bottom-tab {
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-#owner-mobile-nav-toggle[aria-expanded="true"] {
-  border-color: rgba(245, 158, 11, 0.6) !important;
-  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2) !important;
+.mobile-bottom-tab.active-bottom-tab {
+  color: #0284c7 !important;
 }
+
+html.dark .mobile-bottom-tab.active-bottom-tab {
+  color: #38bdf8 !important;
+}
+
+.mobile-bottom-tab.active-bottom-tab i {
+  transform: translateY(-2px) scale(1.1);
+}
+
+.mobile-bottom-tab.active-bottom-tab span {
+  font-weight: 800;
+}
+
+/* Ensure main content is not hidden behind the fixed bottom bar on mobile */
+@media (max-width: 767px) {
+  main {
+    padding-bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* Prevent awkward double-tap zoom delay on buttons */
+  button, a {
+    touch-action: manipulation;
+  }
+
+  /* Hide scrollbars cleanly on mobile touch carousels and pill selectors */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 
 

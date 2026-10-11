@@ -46,17 +46,22 @@
 <body class="bg-slate-50 dark:bg-[#070d18] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col antialiased selection:bg-sky-500 selection:text-white">
 
   <!-- Top Announcement Bar -->
-  <div class="bg-gradient-to-r from-sky-900 via-sky-800 to-slate-900 text-white text-xs py-2 px-4 shadow-inner border-b border-sky-700/40">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-      <div class="flex items-center space-x-2">
+  <div class="bg-gradient-to-r from-sky-900 via-sky-800 to-slate-900 text-white text-xs py-1.5 sm:py-2 px-3 sm:px-4 shadow-inner border-b border-sky-700/40">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="hidden sm:flex items-center space-x-2">
         <span id="top-announcement-tag" class="top-intake-announcement-tag bg-sky-500/30 text-sky-200 border border-sky-400/40 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full">
           Student Portal
         </span>
-        <span id="top-announcement-text" class="top-intake-announcement-text text-slate-200 font-medium">
+        <span id="top-announcement-text" class="top-intake-announcement-text text-slate-200 font-medium text-xs">
           Manage your booked accommodation, request room swaps, and track your escrow deposit protection.
         </span>
       </div>
-      <div class="flex items-center space-x-4 text-slate-300 text-xs">
+      <!-- Ultra-clean single-line ticker on mobile -->
+      <div class="sm:hidden flex items-center justify-between w-full text-[11px] font-medium text-slate-200">
+        <span class="flex items-center"><i class="fa-solid fa-id-badge text-sky-400 mr-1.5"></i> Student Portal</span>
+        <span class="text-[10px] text-emerald-400 flex items-center"><i class="fa-solid fa-shield-halved mr-1"></i> 100% Escrow</span>
+      </div>
+      <div class="hidden sm:flex items-center space-x-4 text-slate-300 text-xs">
         <span class="font-semibold text-emerald-300 flex items-center">
           <i class="fa-solid fa-shield-halved text-emerald-400 mr-1.5"></i> 100% Escrow Protected Tenancy
         </span>
@@ -104,22 +109,21 @@
               </select>
             </div>
 
-            <div class="auth-container"></div>
+            <!-- Dynamic Auth Container (Desktop) -->
+            <div class="auth-container hidden md:flex items-center"></div>
 
             <!-- Reserve Room Action in Student Portal -->
             <button onclick="openBookingModal()" class="hidden sm:inline-flex px-4 py-2 text-xs font-bold text-white bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-600 rounded-xl shadow-md shadow-sky-600/20 transition-all items-center cursor-pointer">
               <i class="fa-solid fa-key mr-1.5 text-[10px]"></i> Reserve Room
             </button>
-          </div>
-        </div>
 
-        <!-- Mobile Navigation Tabs Toggle Row (Positioned down at the left hand side) -->
-        <div class="md:hidden py-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-start">
-          <button type="button" id="mobile-nav-toggle" aria-label="Toggle navigation tabs" aria-expanded="false" class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 text-xs font-bold transition-all shadow-xs cursor-pointer border border-slate-200/80 dark:border-slate-700">
-            <i id="mobile-nav-toggle-icon" class="fa-solid fa-bars text-sky-600 dark:text-sky-400 text-xs"></i>
-            <span>All Tabs</span>
-            <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 dark:text-slate-500 ml-0.5"></i>
-          </button>
+            <!-- Mobile Navigation Toggle Sign (Clean, Sleek in Top Row on Small Screens) -->
+            <button type="button" id="mobile-nav-toggle" aria-label="Toggle navigation tabs" aria-expanded="false" class="md:hidden inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border border-sky-200 dark:border-sky-800/80 bg-sky-50 dark:bg-sky-950/60 hover:bg-sky-100 dark:hover:bg-sky-900/60 text-sky-700 dark:text-sky-300 text-xs font-bold transition-all shadow-xs cursor-pointer">
+              <i id="mobile-nav-toggle-icon" class="fa-solid fa-bars text-sky-600 dark:text-sky-400 text-xs"></i>
+              <span>All Tabs</span>
+              <i class="fa-solid fa-chevron-down text-[9px] text-slate-400 dark:text-slate-500 ml-0.5"></i>
+            </button>
+          </div>
         </div>
 
         <!-- Navigation Tabs (Desktop only; on small screens only the toggle tab is shown) -->
@@ -175,47 +179,24 @@
               </div>
             </div>
 
-            <!-- 2. Exploration & Community Tools -->
+            <!-- Gateway to Find Your New Home (Where Exploration & Living Tools Live) -->
             <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80">
-              <div class="text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-2 flex items-center justify-between">
-                <span>Exploration & Living Tools</span>
-                <span class="text-[9px] text-emerald-600 dark:text-emerald-400 font-extrabold uppercase">Interactive</span>
-              </div>
-              <div class="grid grid-cols-2 gap-1.5">
-                <a href="tours.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="tours.html">
-                  <div class="w-7 h-7 rounded-lg bg-indigo-100 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
-                    <i class="fa-solid fa-arrows-spin text-xs"></i>
+              <a href="find-home.html" class="block p-3 rounded-2xl bg-gradient-to-r from-sky-50 via-sky-50/50 to-indigo-50/60 dark:from-sky-950/40 dark:via-sky-950/20 dark:to-indigo-950/30 border border-sky-200/90 dark:border-sky-800/80 group hover:border-sky-400 transition-all shadow-xs">
+                <div class="flex items-center space-x-3">
+                  <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-600 to-sky-400 text-white flex items-center justify-center shrink-0 shadow-sm shadow-sky-600/30 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-compass text-base"></i>
                   </div>
-                  <span class="truncate">360° Tours</span>
-                </a>
-                <a href="map.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="map.html">
-                  <div class="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-                    <i class="fa-solid fa-map-location-dot text-xs"></i>
+                  <div class="flex-1 min-w-0">
+                    <div class="text-xs font-bold text-slate-900 dark:text-slate-100 flex items-center justify-between">
+                      <span>Explore Accommodations</span>
+                      <i class="fa-solid fa-arrow-right text-[10px] text-sky-600 dark:text-sky-400 group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                    <div class="text-[10px] text-slate-500 dark:text-slate-400 truncate mt-0.5">
+                      360° Tours • Campus Map • Rent Insights • Peer Chat
+                    </div>
                   </div>
-                  <span class="truncate">Campus Map</span>
-                </a>
-                <a href="insights.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="insights.html">
-                  <div class="w-7 h-7 rounded-lg bg-purple-100 dark:bg-purple-950/80 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0">
-                    <i class="fa-solid fa-chart-line text-xs"></i>
-                  </div>
-                  <span class="truncate">Rent Insights</span>
-                </a>
-                <a href="residents.html" class="mobile-nav-link flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="residents.html">
-                  <div class="w-7 h-7 rounded-lg bg-amber-100 dark:bg-amber-950/80 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
-                    <i class="fa-solid fa-users text-xs"></i>
-                  </div>
-                  <span class="truncate">Residents</span>
-                </a>
-                <a href="chat.html" class="mobile-nav-link col-span-2 flex items-center space-x-2.5 p-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-semibold transition-all" data-page="chat.html">
-                  <div class="w-7 h-7 rounded-lg bg-teal-100 dark:bg-teal-950/80 text-teal-600 dark:text-teal-400 flex items-center justify-center shrink-0">
-                    <i class="fa-solid fa-comments text-xs"></i>
-                  </div>
-                  <div class="flex-1 min-w-0 flex items-center justify-between">
-                    <span class="truncate">Direct Landlord Chat</span>
-                    <span class="text-[9px] px-2 py-0.5 rounded-full bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300 font-extrabold uppercase">Live Escrow</span>
-                  </div>
-                </a>
-              </div>
+                </div>
+              </a>
             </div>
 
             <!-- 3. Portals & Quick Account Access -->

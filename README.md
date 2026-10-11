@@ -14,6 +14,7 @@
 ## 🚀 Key Features
 
 ### 1. 🔐 Safe Authentication & Account Security
+- **Direct Sign Up Link Gateway**: When visitors click the link to the site without an active session, they are automatically directed to the sign up portal (`signup.html`) to register or sign in before entering the home dashboard.
 - **Create Account First**: Seamless onboarding prioritizing account registration before sign in.
 - **Strict Email Verification**: Rejection logic that prevents unregistered or strange emails from signing in without creating an account first, with one-click transition to registration.
 - **Remembered Initials & Accounts**: Remembers the last registered/signed-in user with dynamic monogram initials (e.g. `JD` for Jane Doe, `MA` for Madonna) across the navbar and portal greetings.

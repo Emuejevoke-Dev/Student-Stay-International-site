@@ -37,15 +37,20 @@
 <body class="bg-slate-50 dark:bg-[#070d18] text-slate-900 dark:text-slate-100 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-white">
 
   <!-- Founder Security Notice Top Bar -->
-  <div class="bg-slate-950 text-white text-xs py-2 px-4 border-b border-amber-500/30">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-      <div class="flex items-center space-x-2">
+  <div class="bg-slate-950 text-white text-xs py-1.5 sm:py-2 px-3 sm:px-4 border-b border-amber-500/30">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="hidden sm:flex items-center space-x-2">
         <span class="bg-amber-500/20 text-amber-300 border border-amber-400/40 text-[10px] uppercase font-black tracking-wider px-2 py-0.5 rounded-full flex items-center">
           <i class="fa-solid fa-shield-halved mr-1"></i> Authorized Personnel Only
         </span>
-        <span class="text-slate-300">StudentStay Official Letting Agent & Founder Command Center • 256-Bit SSL Encrypted</span>
+        <span class="text-slate-300 text-xs">StudentStay Official Letting Agent & Founder Command Center • 256-Bit SSL Encrypted</span>
       </div>
-      <div class="flex items-center space-x-4 text-xs">
+      <!-- Ultra-clean single-line ticker on mobile -->
+      <div class="sm:hidden flex items-center justify-between w-full text-[11px] font-medium text-slate-200">
+        <span class="flex items-center text-amber-300 font-semibold"><i class="fa-solid fa-user-shield mr-1.5 text-amber-400"></i> Agent Command Center</span>
+        <span class="text-[10px] text-emerald-400 font-bold flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1 animate-pulse"></span> Escrow Live</span>
+      </div>
+      <div class="hidden sm:flex items-center space-x-4 text-xs">
         <span class="text-slate-400">Escrow Trustee: <strong class="text-white">Barclays Bank UK PLC</strong></span>
         <span class="text-emerald-400 font-bold flex items-center">
           <span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span> Escrow Live (£27,600 Held)
@@ -104,7 +109,7 @@
             </div>
 
             <!-- Agent Profile Monogram & Name -->
-            <div class="flex items-center space-x-2 bg-slate-100 dark:bg-slate-800 py-1 px-2.5 rounded-xl border border-slate-200 dark:border-slate-700">
+            <div class="hidden md:flex items-center space-x-2 bg-slate-100 dark:bg-slate-800 py-1 px-2.5 rounded-xl border border-slate-200 dark:border-slate-700">
               <div id="owner-header-avatar" class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-black text-[11px] flex items-center justify-center">
                 ED
               </div>
@@ -123,16 +128,14 @@
             <button onclick="quickExportAuditCSV()" class="hidden sm:inline-flex px-3.5 py-1.5 text-xs font-bold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 rounded-xl border border-slate-200 dark:border-slate-700 transition-all items-center cursor-pointer">
               <i class="fa-solid fa-download mr-1.5 text-sky-600"></i> Export Audit
             </button>
-          </div>
-        </div>
 
-        <!-- Mobile Owner Navigation Toggle Row (Positioned down at the left hand side) -->
-        <div class="lg:hidden py-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-start">
-          <button type="button" id="owner-mobile-nav-toggle" aria-label="Toggle owner sections" aria-expanded="false" class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/60 hover:bg-amber-100 dark:hover:bg-amber-900/60 text-amber-900 dark:text-amber-200 text-xs font-bold transition-all shadow-xs cursor-pointer border border-amber-300 dark:border-amber-700">
-            <i id="owner-mobile-nav-toggle-icon" class="fa-solid fa-bars text-amber-600 dark:text-amber-400 text-xs"></i>
-            <span>All 7 Tabs</span>
-            <i class="fa-solid fa-chevron-down text-[9px] text-amber-600 dark:text-amber-400 ml-0.5"></i>
-          </button>
+            <!-- Agent Mobile Navigation Toggle Sign (Clean, Sleek in Top Row on Small Screens) -->
+            <button type="button" id="owner-mobile-nav-toggle" aria-label="Toggle owner sections" aria-expanded="false" class="lg:hidden inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/60 hover:bg-amber-100 dark:hover:bg-amber-900/60 text-amber-900 dark:text-amber-200 text-xs font-bold transition-all shadow-xs cursor-pointer border border-amber-300 dark:border-amber-700">
+              <i id="owner-mobile-nav-toggle-icon" class="fa-solid fa-bars text-amber-600 dark:text-amber-400 text-xs"></i>
+              <span>All 7 Tabs</span>
+              <i class="fa-solid fa-chevron-down text-[9px] text-amber-600 dark:text-amber-400 ml-0.5"></i>
+            </button>
+          </div>
         </div>
 
         <!-- Dedicated Owner & Letting Agent Dashboard Navigation Bar (Desktop only) -->

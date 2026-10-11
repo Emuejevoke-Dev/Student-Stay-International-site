@@ -687,8 +687,8 @@ var APP_DATA = {
     "allBillsIncluded": true,
     "rating": 4.88,
     "reviewsCount": 64,
-    "heroImage": "assets/images/glasgow_campus.jpg",
-    "image": "assets/images/glasgow_campus.jpg",
+    "heroImage": "assets/images/ensuite_interior.jpg",
+    "image": "assets/images/ensuite_interior.jpg",
     "commute": "6 min walk to UofG • 12 min subway to GCU",
     "commutes": [
       {
@@ -710,14 +710,14 @@ var APP_DATA = {
     "residentName": "Priya Patel",
     "residentId": "priya-p",
     "tourData": {
-      "panoImage": "assets/images/glasgow_campus.jpg",
+      "panoImage": "assets/images/ensuite_interior.jpg",
       "roomTypeTitle": "Deluxe Ensuite in 4-Bed Flat (19m²)",
       "scenes": [
         {
           "id": "ensuite-bedroom",
           "name": "Ensuite Room",
           "sub": "Deluxe Ensuite",
-          "image": "assets/images/glasgow_campus.jpg",
+          "image": "assets/images/ensuite_interior.jpg",
           "isPano": true,
           "icon": "fa-bed"
         }
@@ -782,7 +782,7 @@ var APP_DATA = {
     ],
     "gallery": [
       {
-        "src": "assets/images/glasgow_campus.jpg",
+        "src": "assets/images/ensuite_interior.jpg",
         "label": "Kelvin Court - Glasgow West End"
       },
       {
@@ -1382,8 +1382,8 @@ var APP_DATA = {
     "allBillsIncluded": true,
     "rating": 4.84,
     "reviewsCount": 48,
-    "heroImage": "assets/images/glasgow_campus.jpg",
-    "image": "assets/images/glasgow_campus.jpg",
+    "heroImage": "assets/images/ensuite_interior.jpg",
+    "image": "assets/images/ensuite_interior.jpg",
     "commute": "10 min walk to University of Aberdeen King’s College",
     "commutes": [
       {
@@ -1398,14 +1398,14 @@ var APP_DATA = {
     "residentName": "David Smith",
     "residentId": "david-s",
     "tourData": {
-      "panoImage": "assets/images/glasgow_campus.jpg",
+      "panoImage": "assets/images/ensuite_interior.jpg",
       "roomTypeTitle": "Standard En-suite Room (18m²)",
       "scenes": [
         {
           "id": "ensuite",
           "name": "Ensuite",
           "sub": "Standard",
-          "image": "assets/images/glasgow_campus.jpg",
+          "image": "assets/images/ensuite_interior.jpg",
           "isPano": true,
           "icon": "fa-bed"
         }
@@ -1470,7 +1470,7 @@ var APP_DATA = {
     ],
     "gallery": [
       {
-        "src": "assets/images/glasgow_campus.jpg",
+        "src": "assets/images/ensuite_interior.jpg",
         "label": "King’s Links Student Lodge - Aberdeen"
       },
       {
@@ -2871,8 +2871,8 @@ var APP_DATA = {
     "allBillsIncluded": true,
     "rating": 4.83,
     "reviewsCount": 47,
-    "heroImage": "assets/images/glasgow_campus.jpg",
-    "image": "assets/images/glasgow_campus.jpg",
+    "heroImage": "assets/images/ensuite_interior.jpg",
+    "image": "assets/images/ensuite_interior.jpg",
     "commute": "14 min train / bus to University of Birmingham",
     "commutes": [
       {
@@ -2887,14 +2887,14 @@ var APP_DATA = {
     "residentName": "David Smith",
     "residentId": "david-s",
     "tourData": {
-      "panoImage": "assets/images/glasgow_campus.jpg",
+      "panoImage": "assets/images/ensuite_interior.jpg",
       "roomTypeTitle": "Silver En-suite Room",
       "scenes": [
         {
           "id": "room",
           "name": "Room",
           "sub": "Silver Ensuite",
-          "image": "assets/images/glasgow_campus.jpg",
+          "image": "assets/images/ensuite_interior.jpg",
           "isPano": true,
           "icon": "fa-bed"
         }
@@ -2959,7 +2959,7 @@ var APP_DATA = {
     ],
     "gallery": [
       {
-        "src": "assets/images/glasgow_campus.jpg",
+        "src": "assets/images/ensuite_interior.jpg",
         "label": "Aston Brook Student Quarters - Birmingham"
       },
       {
@@ -3545,8 +3545,8 @@ var APP_DATA = {
     "allBillsIncluded": true,
     "rating": 4.93,
     "reviewsCount": 56,
-    "heroImage": "assets/images/glasgow_campus.jpg",
-    "image": "assets/images/glasgow_campus.jpg",
+    "heroImage": "assets/images/ensuite_interior.jpg",
+    "image": "assets/images/ensuite_interior.jpg",
     "commute": "4 min walk to Harvard Yard • 12 min Red Line to MIT",
     "commutes": [
       {
@@ -3568,14 +3568,14 @@ var APP_DATA = {
     "residentName": "Alex Turner",
     "residentId": "alex-t",
     "tourData": {
-      "panoImage": "assets/images/glasgow_campus.jpg",
+      "panoImage": "assets/images/ensuite_interior.jpg",
       "roomTypeTitle": "Harvard Square Studio (22m²)",
       "scenes": [
         {
           "id": "studio",
           "name": "Studio",
           "sub": "Harvard Studio",
-          "image": "assets/images/glasgow_campus.jpg",
+          "image": "assets/images/ensuite_interior.jpg",
           "isPano": true,
           "icon": "fa-bed"
         }
@@ -3640,7 +3640,7 @@ var APP_DATA = {
     ],
     "gallery": [
       {
-        "src": "assets/images/glasgow_campus.jpg",
+        "src": "assets/images/ensuite_interior.jpg",
         "label": "Cambridge Common Student Residence - Boston"
       },
       {
@@ -4628,8 +4628,8 @@ var APP_DATA = {
     "allBillsIncluded": true,
     "rating": 4.88,
     "reviewsCount": 58,
-    "heroImage": "assets/images/glasgow_campus.jpg",
-    "image": "assets/images/glasgow_campus.jpg",
+    "heroImage": "assets/images/ensuite_interior.jpg",
+    "image": "assets/images/ensuite_interior.jpg",
     "commute": "5 min walk to UofT Engineering and Science buildings",
     "commutes": [
       {
@@ -4644,14 +4644,14 @@ var APP_DATA = {
     "residentName": "Jason Roy",
     "residentId": "jason-r",
     "tourData": {
-      "panoImage": "assets/images/glasgow_campus.jpg",
+      "panoImage": "assets/images/ensuite_interior.jpg",
       "roomTypeTitle": "College Street En-suite Room",
       "scenes": [
         {
           "id": "room",
           "name": "Room",
           "sub": "En-suite",
-          "image": "assets/images/glasgow_campus.jpg",
+          "image": "assets/images/ensuite_interior.jpg",
           "isPano": true,
           "icon": "fa-bed"
         }
@@ -4716,7 +4716,7 @@ var APP_DATA = {
     ],
     "gallery": [
       {
-        "src": "assets/images/glasgow_campus.jpg",
+        "src": "assets/images/ensuite_interior.jpg",
         "label": "Varsity Commons Downtown - Toronto"
       },
       {
@@ -5845,8 +5845,8 @@ var APP_DATA = {
     "allBillsIncluded": true,
     "rating": 4.88,
     "reviewsCount": 72,
-    "heroImage": "assets/images/glasgow_campus.jpg",
-    "image": "assets/images/glasgow_campus.jpg",
+    "heroImage": "assets/images/ensuite_interior.jpg",
+    "image": "assets/images/ensuite_interior.jpg",
     "commute": "4 min walk to UNSW Gate 9 & Lower Campus",
     "commutes": [
       {
@@ -5861,14 +5861,14 @@ var APP_DATA = {
     "residentName": "Ravi Sharma",
     "residentId": "ravi-s",
     "tourData": {
-      "panoImage": "assets/images/glasgow_campus.jpg",
+      "panoImage": "assets/images/ensuite_interior.jpg",
       "roomTypeTitle": "Kensington Sunlit En-suite Room",
       "scenes": [
         {
           "id": "room",
           "name": "Room",
           "sub": "En-suite",
-          "image": "assets/images/glasgow_campus.jpg",
+          "image": "assets/images/ensuite_interior.jpg",
           "isPano": true,
           "icon": "fa-bed"
         }
@@ -5933,7 +5933,7 @@ var APP_DATA = {
     ],
     "gallery": [
       {
-        "src": "assets/images/glasgow_campus.jpg",
+        "src": "assets/images/ensuite_interior.jpg",
         "label": "Kensington Terraces Student Living - Sydney"
       },
       {
@@ -6932,8 +6932,8 @@ var APP_DATA = {
     "allBillsIncluded": true,
     "rating": 4.88,
     "reviewsCount": 70,
-    "heroImage": "assets/images/glasgow_campus.jpg",
-    "image": "assets/images/glasgow_campus.jpg",
+    "heroImage": "assets/images/ensuite_interior.jpg",
+    "image": "assets/images/ensuite_interior.jpg",
     "commute": "8 min walk to Humboldt University Unter den Linden",
     "commutes": [
       {
@@ -6948,14 +6948,14 @@ var APP_DATA = {
     "residentName": "Sophie Müller",
     "residentId": "sophie-m",
     "tourData": {
-      "panoImage": "assets/images/glasgow_campus.jpg",
+      "panoImage": "assets/images/ensuite_interior.jpg",
       "roomTypeTitle": "Einzelapartment (Single Studio) (20m²)",
       "scenes": [
         {
           "id": "studio",
           "name": "Studio",
           "sub": "Berlin Studio",
-          "image": "assets/images/glasgow_campus.jpg",
+          "image": "assets/images/ensuite_interior.jpg",
           "isPano": true,
           "icon": "fa-bed"
         }
@@ -7020,7 +7020,7 @@ var APP_DATA = {
     ],
     "gallery": [
       {
-        "src": "assets/images/glasgow_campus.jpg",
+        "src": "assets/images/ensuite_interior.jpg",
         "label": "Mitte Student Quarters - Berlin"
       },
       {

@@ -146,6 +146,21 @@ if (
   responsiveCheckPassed = false;
 }
 
+// 6. Test Direct Link to Signup Gateway
+console.log('\n--- Checking Direct Link Signup Gateway ---');
+const indexHtmlContent = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+const serverJsContent = fs.readFileSync(path.join(__dirname, '..', 'server.js'), 'utf8');
+
+const hasIndexGateway = indexHtmlContent.includes("window.location.replace('signup.html')");
+const hasServerRedirect = serverJsContent.includes("res.writeHead(302, { 'Location': '/signup.html' })");
+
+if (hasIndexGateway && hasServerRedirect) {
+  console.log('[PASS] When people click on the link, they are taken directly to the sign up page (index.html gateway + server.js redirect).');
+} else {
+  console.error(`[FAIL] Missing direct signup redirect: hasIndexGateway=${hasIndexGateway}, hasServerRedirect=${hasServerRedirect}`);
+  responsiveCheckPassed = false;
+}
+
 console.log('\n=======================================');
 console.log(responsiveCheckPassed ? 'ALL VERIFICATION CHECKS PASSED (100%)' : 'SOME VERIFICATIONS FAILED');
 console.log('=======================================');
